@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:writing_app/screens/notes/note.dart';
-import 'package:writing_app/utils/theme.dart';
 
 class NoteCard extends StatelessWidget {
   final Note note;
@@ -10,7 +9,6 @@ class NoteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: AppColors.verylight,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       elevation: 0,
       child: SizedBox(
@@ -34,36 +32,51 @@ class NoteCard extends StatelessWidget {
                       ),
                     ),
 
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 8,
-                      children: [
-                        DecoratedBox(
-                            decoration: BoxDecoration(
-                                color: AppColors.accentcolour2
-                                    .withValues(alpha: 0.5),
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 2.0, horizontal: 8.0),
-                              child: Text(
-                                note.category,
-                                style: AppTextStyles.body,
-                              ),
-                            )),
-                        Text(
-                          note.title,
-                          style: AppTextStyles.bolded,
-                          softWrap: true,
-                          maxLines: 3, // Allow two lines
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Icon(Icons.more_horiz)
+                  NoteInfo(note: note),
+                  InkWell(onTap: () => {}, child: Icon(Icons.more_horiz))
                 ])),
+      ),
+    );
+  }
+}
+
+class NoteInfo extends StatelessWidget {
+  const NoteInfo({
+    super.key,
+    required this.note,
+  });
+
+  final Note note;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 8,
+        children: [
+          DecoratedBox(
+              decoration: BoxDecoration(
+                  color: Theme.of(context)
+                      .colorScheme
+                      .secondary
+                      .withValues(alpha: 0.4),
+                  borderRadius: BorderRadius.circular(10)),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 2.0, horizontal: 8.0),
+                child: Text(note.category,
+                    style: Theme.of(context).textTheme.labelSmall),
+              )),
+          Text(
+            note.title,
+            style: Theme.of(context).textTheme.labelMedium,
+
+            softWrap: true,
+            maxLines: 3, // Allow two lines
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
       ),
     );
   }

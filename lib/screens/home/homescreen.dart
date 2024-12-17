@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:writing_app/utils/theme.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -7,7 +6,7 @@ class HomeScreen extends StatelessWidget {
     return Center(
       child: Text(
         'Welcome to the Writing App!',
-        style: AppTextStyles.dashboardTitle,
+        style: Theme.of(context).textTheme.bodyLarge,
       ),
     );
   }

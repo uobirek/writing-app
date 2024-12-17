@@ -1,75 +1,101 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AppColors {
-  static const Color accentcolour1 = Color(0xFFEFB11D);
-  static const Color accentcolour2 = Color(0xFFA7A3EB);
-  static const Color background = Color(0xFFFCFCFC);
-  static const Color verylight = Color(0xFFFEFEFE);
-  static const Color text = Color(0xFF07182B);
-  static const Color bigsquaregrey = Color(0xFFF4F4F4);
-  static const Color darkergrey = Color(0xFFEAEAEA);
-}
+class GlobalThemeData {
+  static final Color _lightFocusColor = Colors.black.withOpacity(0.12);
+  static final Color _darkFocusColor = Colors.white.withOpacity(0.12);
+  static ThemeData themeData(ColorScheme colorScheme, Color focusColor) {
+    return ThemeData(
+      colorScheme: colorScheme,
+      canvasColor: colorScheme.background,
+      scaffoldBackgroundColor: colorScheme.background,
+      highlightColor: Colors.transparent,
+      focusColor: focusColor,
+      textTheme: TextTheme(
+        // Big Title
+        displayLarge: GoogleFonts.workSans(
+          fontSize: 64,
+          fontWeight: FontWeight.bold,
+          color: colorScheme.onPrimary,
+          letterSpacing: -1,
+        ),
 
-class AppTextStyles {
-  static final TextStyle bigTitle = GoogleFonts.workSans(
-      fontSize: 64,
-      fontWeight: FontWeight.bold,
-      color: AppColors.text,
-      letterSpacing: -1);
+        // Dashboard Title
+        titleLarge: GoogleFonts.workSans(
+          fontSize: 32,
+          fontWeight: FontWeight.w600,
+          color: colorScheme.onPrimary,
+        ),
 
-  static final TextStyle dashboardTitle = GoogleFonts.workSans(
-    fontSize: 32,
-    fontWeight: FontWeight.w600,
-    color: AppColors.text,
-  );
+        // Body Text
+        bodyMedium: GoogleFonts.workSans(
+          fontSize: 16,
+          fontWeight: FontWeight.normal,
+          color: colorScheme.onPrimary,
+          letterSpacing: 0.02,
+        ),
 
-  static final TextStyle body = GoogleFonts.workSans(
-      fontSize: 16,
-      fontWeight: FontWeight.normal,
-      color: AppColors.text,
-      letterSpacing: 0.02);
+        // Semi-Bold Text
+        labelMedium: GoogleFonts.workSans(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+          color: colorScheme.onPrimary,
+          letterSpacing: -0.02,
+        ),
+        labelSmall: GoogleFonts.workSans(
+          fontSize: 16,
+          fontWeight: FontWeight.w300,
+          color: colorScheme.onSecondary,
+          letterSpacing: 0.5,
+        ),
 
-  static final TextStyle semibolded = GoogleFonts.workSans(
-      fontSize: 16,
-      fontWeight: FontWeight.w500,
-      color: AppColors.text,
-      letterSpacing: -0.02);
+        // Light Text
+        bodySmall: GoogleFonts.workSans(
+          fontSize: 12,
+          fontWeight: FontWeight.normal,
+          color: colorScheme.onPrimary,
+          letterSpacing: 2,
+        ),
 
-  static final TextStyle light = GoogleFonts.workSans(
-      fontSize: 12,
-      fontWeight: FontWeight.normal,
-      color: AppColors.text,
-      letterSpacing: 2);
-
-  static final TextStyle bolded = GoogleFonts.workSans(
-      fontSize: 16,
-      fontWeight: FontWeight.bold,
-      color: AppColors.text,
-      letterSpacing: -0.01);
-}
-
-class AppTheme {
-  static ThemeData lightTheme = ThemeData(
-    primaryColor: AppColors.accentcolour1,
-    scaffoldBackgroundColor: AppColors.background,
-    appBarTheme: AppBarTheme(
-      color: AppColors.bigsquaregrey,
-      titleTextStyle: AppTextStyles.semibolded,
-    ),
-    textTheme: TextTheme(
-        displayMedium: AppTextStyles.body,
-        displayLarge: AppTextStyles.semibolded,
-        titleLarge: AppTextStyles.bigTitle,
-        titleMedium: AppTextStyles.dashboardTitle,
-        labelMedium: AppTextStyles.light),
-    cardColor: AppColors.verylight,
-    dividerColor: AppColors.darkergrey,
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.accentcolour1, // Button background
-        foregroundColor: AppColors.verylight, // Button text or icon color
+        // Bolded Text
+        labelLarge: GoogleFonts.workSans(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          color: colorScheme.onPrimary,
+          letterSpacing: -0.01,
+        ),
       ),
-    ),
+    );
+  }
+
+  static ThemeData lightThemeData =
+      themeData(lightColorScheme, _lightFocusColor);
+
+  static ThemeData darkThemeData = themeData(darkColorScheme, _darkFocusColor);
+
+  static const ColorScheme lightColorScheme = ColorScheme(
+    primary: Color(0xFFF4F4F4),
+    onPrimary: Color(0xFF07182B),
+    secondary: Color(0xFFA7A3EB),
+    onSecondary: Color.fromARGB(255, 130, 127, 192),
+    error: Colors.redAccent,
+    onError: Colors.white,
+    surface: Color(0xFFFEFEFE),
+    tertiary: Color(0xFFEFB11D),
+    onSurface: Color(0xFF07182B),
+    brightness: Brightness.light,
+  );
+  static const ColorScheme darkColorScheme = ColorScheme(
+    primary: Color(0xFFEFB11D),
+    onPrimary: Colors.white,
+    secondary: Color(0xFFA7A3EB),
+    onSecondary: Colors.white,
+    error: Colors.redAccent,
+    onError: Colors.white,
+    surface: Color(0xFF241E30),
+    onSurface: Colors.white,
+    brightness: Brightness.dark,
   );
 }

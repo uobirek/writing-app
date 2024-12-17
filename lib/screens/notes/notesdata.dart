@@ -11,6 +11,22 @@ final List<Note> notes = [
   ),
   Note(
     id: '2',
+    title: 'Dottie',
+    content: 'This note focuses on developing characters.',
+    category: 'Characters',
+    image: 'assets/images/dottie.jpg',
+    createdAt: DateTime.now(),
+  ),
+  Note(
+    id: '3',
+    title: 'Georgia',
+    content: 'This note focuses on developing characters.',
+    category: 'Characters',
+    image: 'assets/images/georgia.jpg',
+    createdAt: DateTime.now(),
+  ),
+  Note(
+    id: '4',
     title: 'I.C. Loveless',
     content: 'This note focuses on developing characters.',
     category: 'Characters',

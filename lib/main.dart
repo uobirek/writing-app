@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:writing_app/screens/home/homescreen.dart';
 import 'package:writing_app/screens/notes/notesscreen.dart';
 import 'package:writing_app/screens/writing/writingscreen.dart';
-import 'package:writing_app/utils/theme2.dart';
+import 'package:writing_app/utils/theme.dart';
 import 'package:writing_app/widgets/sidebar.dart';
 
 void main() => runApp(MyApp());

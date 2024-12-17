@@ -42,10 +42,10 @@ class _AppSidebarState extends State<AppSidebar> {
     return Container(
       width: _isExpanded ? 250 : 100, // Adjust width based on state
       decoration: BoxDecoration(
-        color: AppColors.bigsquaregrey,
+        color: Theme.of(context).colorScheme.primary,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.10),
+            color: Colors.black.withValues(alpha: 0.10),
             blurRadius: 30,
             spreadRadius: 6,
             offset: Offset(0, 20),
@@ -61,7 +61,9 @@ class _AppSidebarState extends State<AppSidebar> {
             children: [
               if (_isExpanded) const Icon(Icons.circle_outlined, size: 25),
               if (_isExpanded) const SizedBox(width: 20),
-              if (_isExpanded) Text("Projekt RL", style: AppTextStyles.bolded),
+              if (_isExpanded)
+                Text("Projekt RL",
+                    style: Theme.of(context).textTheme.labelLarge),
               const SizedBox(width: 20),
               IconButton(
                 icon: Icon(
@@ -127,25 +129,35 @@ class _AppSidebarState extends State<AppSidebar> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: isActive
-                  ? AppColors.accentcolour2.withOpacity(0.3)
+                  ? Theme.of(context)
+                      .colorScheme
+                      .secondary
+                      .withValues(alpha: 0.3)
                   : isHovered
-                      ? AppColors.accentcolour2.withOpacity(0.1)
-                      : AppColors.bigsquaregrey,
+                      ? Theme.of(context)
+                          .colorScheme
+                          .secondary
+                          .withValues(alpha: 0.2)
+                      : Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withValues(alpha: 0.3),
             ),
             child: Row(
               children: [
                 const SizedBox(width: 15),
-                Icon(icon, color: AppColors.text),
+                Icon(icon,
+                    color: isActive
+                        ? Theme.of(context).colorScheme.onSecondary
+                        : Theme.of(context).colorScheme.onPrimary),
                 if (_isExpanded) const SizedBox(width: 12),
                 if (_isExpanded)
-                  Text(
-                    label,
-                    style: AppTextStyles.semibolded.copyWith(
-                      color: isActive || isHovered
-                          ? AppColors.text
-                          : AppColors.text.withOpacity(0.7),
-                    ),
-                  ),
+                  Text(label,
+                      style: !isActive
+                          ? Theme.of(context).textTheme.labelMedium
+                          : Theme.of(context).textTheme.labelMedium?.copyWith(
+                              color:
+                                  Theme.of(context).colorScheme.onSecondary)),
               ],
             ),
           ),
