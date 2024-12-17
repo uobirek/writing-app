@@ -33,4 +33,20 @@ final List<Note> notes = [
     image: 'assets/images/inclementia.jpg',
     createdAt: DateTime.now(),
   ),
+  Note(
+    id: '5',
+    title: 'Giovanni',
+    content: 'This note focuses on developing characters.',
+    category: 'Characters',
+    image: 'assets/images/giovanni.jpg',
+    createdAt: DateTime.now(),
+  ),
+  Note(
+    id: '6',
+    title: 'Zachariah Fleury',
+    content: 'This note focuses on developing characters.',
+    category: 'Characters',
+    image: 'assets/images/zach.jpg',
+    createdAt: DateTime.now(),
+  ),
 ];

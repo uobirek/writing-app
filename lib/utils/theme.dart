@@ -1,16 +1,14 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class GlobalThemeData {
-  static final Color _lightFocusColor = Colors.black.withOpacity(0.12);
-  static final Color _darkFocusColor = Colors.white.withOpacity(0.12);
+  static final Color _lightFocusColor = Colors.black.withValues(alpha: 0.12);
+  static final Color _darkFocusColor = Colors.white.withValues(alpha: 0.12);
   static ThemeData themeData(ColorScheme colorScheme, Color focusColor) {
     return ThemeData(
       colorScheme: colorScheme,
-      canvasColor: colorScheme.background,
-      scaffoldBackgroundColor: colorScheme.background,
+      canvasColor: colorScheme.surface,
+      scaffoldBackgroundColor: colorScheme.surface,
       highlightColor: Colors.transparent,
       focusColor: focusColor,
       textTheme: TextTheme(
@@ -44,6 +42,7 @@ class GlobalThemeData {
           color: colorScheme.onPrimary,
           letterSpacing: -0.02,
         ),
+
         labelSmall: GoogleFonts.workSans(
           fontSize: 16,
           fontWeight: FontWeight.w300,
@@ -61,10 +60,10 @@ class GlobalThemeData {
 
         // Bolded Text
         labelLarge: GoogleFonts.workSans(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
+          fontSize: 18,
+          fontWeight: FontWeight.w500,
           color: colorScheme.onPrimary,
-          letterSpacing: -0.01,
+          letterSpacing: 0.5,
         ),
       ),
     );

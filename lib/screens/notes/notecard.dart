@@ -10,7 +10,7 @@ class NoteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      elevation: 0,
+      elevation: 1,
       child: SizedBox(
         width: 360,
         height: 180,
@@ -70,7 +70,7 @@ class NoteInfo extends StatelessWidget {
               )),
           Text(
             note.title,
-            style: Theme.of(context).textTheme.labelMedium,
+            style: Theme.of(context).textTheme.labelLarge,
 
             softWrap: true,
             maxLines: 3, // Allow two lines

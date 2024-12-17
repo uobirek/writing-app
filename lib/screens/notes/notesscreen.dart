@@ -43,15 +43,19 @@ class _NotesScreenState extends State<NotesScreen> {
             child: Align(
               alignment: Alignment.topLeft,
               child: Container(
-                padding:
-                    const EdgeInsets.all(20), // Padding inside the grey square
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
-                  borderRadius: BorderRadius.circular(
-                      12), // Rounded corners for the square
+                  gradient: LinearGradient(
+                    colors: [
+                      Theme.of(context).colorScheme.primary.withOpacity(0.8),
+                      Theme.of(context).colorScheme.primary.withOpacity(0.6),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                child:
-                    buildNotesList(), // Display note cards inside the grey square
+                child: buildNotesList(),
               ),
             ),
           ),
@@ -62,6 +66,7 @@ class _NotesScreenState extends State<NotesScreen> {
 
   // Function to build a tab with rounded corners
   Widget _buildTab(String text) {
+    final bool isActive = currentCategory == text;
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -69,19 +74,24 @@ class _NotesScreenState extends State<NotesScreen> {
         });
       },
       child: Container(
-        height: 30,
+        height: 40,
         alignment: Alignment.center,
+        margin: const EdgeInsets.symmetric(horizontal: 8), // Add spacing
         padding: const EdgeInsets.symmetric(horizontal: 16),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
-          borderRadius: BorderRadius.circular(12), // Rounded corners for tabs
+          color: isActive
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.surface,
+          borderRadius: BorderRadius.circular(12),
         ),
         child: Text(
           text,
           style: TextStyle(
             fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Theme.of(context).colorScheme.onPrimary,
+            fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+            color: isActive
+                ? Theme.of(context).colorScheme.onPrimary
+                : Theme.of(context).colorScheme.onSurface,
           ),
         ),
       ),
@@ -130,21 +140,19 @@ class _NotesScreenState extends State<NotesScreen> {
                 });
               },
               builder: (context, candidateData, rejectedData) {
-                // Większy obszar dla DragTarget, aby łatwiej było upuścić element
-                return MouseRegion(
-                  onEnter: (_) {
-                    // Zmiana kursora na "grab" podczas przeciągania
-                    SystemMouseCursors.grab;
-                  },
-                  child: Material(
-                    elevation: candidateData.isNotEmpty
-                        ? 10
-                        : 3, // Zwiększony cień, gdy element jest w obrębie docelowym
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(10),
-                    child: NoteCard(
-                        note: note), // Notatka, która jest w miejscu docelowym
+                return Container(
+                  decoration: BoxDecoration(
+                    border: candidateData.isNotEmpty
+                        ? Border.all(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .secondary
+                                .withValues(alpha: 0.3),
+                            width: 5)
+                        : null,
+                    borderRadius: BorderRadius.circular(23),
                   ),
+                  child: NoteCard(note: note),
                 );
               },
             ),
@@ -152,11 +160,6 @@ class _NotesScreenState extends State<NotesScreen> {
         }).toList(),
       ),
     );
-  }
-
-  // Function to build the normal NoteCard
-  Widget _buildNoteCard(Note note) {
-    return NoteCard(note: note);
   }
 
   // Function to build the dragged NoteCard with shadow effect
