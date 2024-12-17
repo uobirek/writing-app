@@ -11,7 +11,7 @@ final List<Note> notes = [
   ),
   Note(
     id: '2',
-    title: 'Inclementia Craven Loveless',
+    title: 'I.C. Loveless',
     content: 'This note focuses on developing characters.',
     category: 'Characters',
     image: 'assets/images/inclementia.jpg',

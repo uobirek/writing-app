@@ -28,7 +28,7 @@ class AppTextStyles {
       fontSize: 16,
       fontWeight: FontWeight.normal,
       color: AppColors.text,
-      letterSpacing: 2);
+      letterSpacing: 0.02);
 
   static final TextStyle semibolded = GoogleFonts.workSans(
       fontSize: 16,

@@ -45,22 +45,17 @@ class _NotesScreenState extends State<NotesScreen> {
             Expanded(
               child: Align(
                 alignment: Alignment.topLeft,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Container(
-                      padding: const EdgeInsets.all(
-                          20), // Padding inside the grey square
-                      decoration: BoxDecoration(
-                        color: AppColors
-                            .bigsquaregrey, // Background color of the square
-                        borderRadius: BorderRadius.circular(
-                            12), // Rounded corners for the square
-                      ),
-                      child:
-                          buildNotesList(), // Display note cards inside the grey square
-                    ),
-                  ],
+                child: Container(
+                  padding: const EdgeInsets.all(
+                      20), // Padding inside the grey square
+                  decoration: BoxDecoration(
+                    color: AppColors
+                        .bigsquaregrey, // Background color of the square
+                    borderRadius: BorderRadius.circular(
+                        12), // Rounded corners for the square
+                  ),
+                  child:
+                      buildNotesList(), // Display note cards inside the grey square
                 ),
               ),
             ),

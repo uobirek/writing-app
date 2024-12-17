@@ -14,45 +14,56 @@ class NoteCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       elevation: 0,
       child: SizedBox(
-        width: 350,
+        width: 360,
         height: 180,
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Image Section
-              if (note.image != null)
-                ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  child: Image.asset(
-                    note.image ?? "",
-                    width: 140,
-                    height: 140,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 14),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ConstrainedBox(
-                      constraints: const BoxConstraints(
-                          maxWidth: 140), // Max width for title
-                      child: Text(
-                        note.title,
-                        style: AppTextStyles.bolded,
-                        maxLines: 2, // Allow two lines
-                        overflow: TextOverflow.ellipsis, // Prevent overflow
+            padding: const EdgeInsets.all(20.0),
+            child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 12,
+                children: [
+                  // Image Section
+                  if (note.image != null)
+                    ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      child: Image.asset(
+                        note.image ?? "",
+                        width: 140,
+                        height: 140,
+                        fit: BoxFit.cover,
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
+
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 8,
+                      children: [
+                        DecoratedBox(
+                            decoration: BoxDecoration(
+                                color: AppColors.accentcolour2
+                                    .withValues(alpha: 0.5),
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 2.0, horizontal: 8.0),
+                              child: Text(
+                                note.category,
+                                style: AppTextStyles.body,
+                              ),
+                            )),
+                        Text(
+                          note.title,
+                          style: AppTextStyles.bolded,
+                          softWrap: true,
+                          maxLines: 3, // Allow two lines
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Icon(Icons.more_horiz)
+                ])),
       ),
     );
   }
