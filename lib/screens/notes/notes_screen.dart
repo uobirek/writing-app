@@ -5,6 +5,8 @@ import 'package:writing_app/data/notes_data.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
 
 class NotesScreen extends StatefulWidget {
+  const NotesScreen({super.key});
+
   @override
   _NotesScreenState createState() => _NotesScreenState();
 }
@@ -20,7 +22,6 @@ class _NotesScreenState extends State<NotesScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
         child: Column(
           children: [
-            // Tabs outside the grey square, on top of it
             Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -41,7 +42,6 @@ class _NotesScreenState extends State<NotesScreen> {
                 ),
               ),
             ),
-            // The grey square takes up the remaining space, excluding top and bottom margins
             Expanded(
               child: Align(
                 alignment: Alignment.topLeft,
@@ -50,8 +50,14 @@ class _NotesScreenState extends State<NotesScreen> {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        Theme.of(context).colorScheme.primary.withOpacity(0.8),
-                        Theme.of(context).colorScheme.primary.withOpacity(0.6),
+                        Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withValues(alpha: 0.8),
+                        Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withValues(alpha: 0.6),
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
@@ -68,7 +74,6 @@ class _NotesScreenState extends State<NotesScreen> {
     );
   }
 
-  // Function to build a tab with rounded corners
   Widget _buildTab(String text) {
     final bool isActive = currentCategory == text;
     return GestureDetector(
@@ -80,7 +85,7 @@ class _NotesScreenState extends State<NotesScreen> {
       child: Container(
         height: 40,
         alignment: Alignment.center,
-        margin: const EdgeInsets.symmetric(horizontal: 8), // Add spacing
+        margin: const EdgeInsets.symmetric(horizontal: 8),
         padding: const EdgeInsets.symmetric(horizontal: 16),
         decoration: BoxDecoration(
           color: isActive
@@ -102,7 +107,6 @@ class _NotesScreenState extends State<NotesScreen> {
     );
   }
 
-  // Function to build the list of notes with custom drag-and-drop
   Widget buildNotesList() {
     final filteredNotes = notes.where((note) {
       return currentCategory == 'Show All' || note.category == currentCategory;

@@ -6,25 +6,22 @@ class SidebarLayout extends StatelessWidget {
   final Widget child;
 
   const SidebarLayout({
-    Key? key,
+    super.key,
     required this.activeRoute,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          Theme.of(context).scaffoldBackgroundColor, // Ensure theme consistency
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Row(
         children: [
           AppSidebar(
-            activeRoute:
-                activeRoute, // Pass activeRoute for highlighting sidebar item
+            activeRoute: activeRoute,
           ),
           Expanded(
-            child:
-                child, // Child widget is passed here, where content is displayed
+            child: child,
           ),
         ],
       ),

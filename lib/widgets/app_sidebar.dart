@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:writing_app/utils/theme.dart';
 
 class AppSidebar extends StatefulWidget {
   final String activeRoute;
 
   const AppSidebar({
-    Key? key,
+    super.key,
     required this.activeRoute,
-  }) : super(key: key);
+  });
 
   @override
   _AppSidebarState createState() => _AppSidebarState();
@@ -44,7 +43,7 @@ class _AppSidebarState extends State<AppSidebar> {
         color: Theme.of(context).colorScheme.primary,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 30,
             spreadRadius: 6,
             offset: const Offset(0, 20),
@@ -130,10 +129,19 @@ class _AppSidebarState extends State<AppSidebar> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: isActive
-                  ? Theme.of(context).colorScheme.secondary.withOpacity(0.3)
+                  ? Theme.of(context)
+                      .colorScheme
+                      .secondary
+                      .withValues(alpha: 0.3)
                   : isHovered
-                      ? Theme.of(context).colorScheme.secondary.withOpacity(0.2)
-                      : Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                      ? Theme.of(context)
+                          .colorScheme
+                          .secondary
+                          .withValues(alpha: 0.2)
+                      : Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withValues(alpha: 0.3),
             ),
             child: Row(
               children: [
