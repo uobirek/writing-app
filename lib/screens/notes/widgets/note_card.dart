@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:writing_app/screens/notes/note.dart';
+import 'package:go_router/go_router.dart';
+import 'package:writing_app/screens/notes/models/note.dart';
 
 class NoteCard extends StatelessWidget {
   final Note note;
@@ -8,33 +9,35 @@ class NoteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      elevation: 1,
-      child: SizedBox(
-        width: 360,
-        height: 180,
-        child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 12,
-                children: [
-                  // Image Section
-                  if (note.image != null)
-                    ClipRRect(
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      child: Image.asset(
-                        note.image ?? "",
-                        width: 140,
-                        height: 140,
-                        fit: BoxFit.cover,
+    return InkWell(
+      onTap: () => context.go('/note_details'),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        elevation: 1,
+        child: SizedBox(
+          width: 360,
+          height: 180,
+          child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 12,
+                  children: [
+                    if (note.image != null)
+                      ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
+                        child: Image.asset(
+                          note.image ?? "",
+                          width: 140,
+                          height: 140,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-
-                  NoteInfo(note: note),
-                  InkWell(onTap: () => {}, child: Icon(Icons.more_horiz))
-                ])),
+                    NoteInfo(note: note),
+                    InkWell(onTap: () => {}, child: Icon(Icons.more_horiz))
+                  ])),
+        ),
       ),
     );
   }
@@ -71,9 +74,8 @@ class NoteInfo extends StatelessWidget {
           Text(
             note.title,
             style: Theme.of(context).textTheme.labelLarge,
-
             softWrap: true,
-            maxLines: 3, // Allow two lines
+            maxLines: 3,
             overflow: TextOverflow.ellipsis,
           ),
         ],

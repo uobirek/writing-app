@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:writing_app/screens/notes/note.dart';
-import 'package:writing_app/screens/notes/notecard.dart';
-import 'package:writing_app/screens/notes/notesdata.dart';
+import 'package:writing_app/screens/notes/models/note.dart';
+import 'package:writing_app/screens/notes/widgets/note_card.dart';
+import 'package:writing_app/data/notes_data.dart';
+import 'package:writing_app/widgets/sidebar_layout.dart';
 
 class NotesScreen extends StatefulWidget {
   @override
@@ -13,53 +14,56 @@ class _NotesScreenState extends State<NotesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-      child: Column(
-        children: [
-          // Tabs outside the grey square, on top of it
-          Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12),
-                topRight: Radius.circular(12),
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Row(
-                children: [
-                  _buildTab('Show All'),
-                  _buildTab('Worldbuilding'),
-                  _buildTab('Characters'),
-                  _buildTab('Outline'),
-                ],
-              ),
-            ),
-          ),
-          // The grey square takes up the remaining space, excluding top and bottom margins
-          Expanded(
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Theme.of(context).colorScheme.primary.withOpacity(0.8),
-                      Theme.of(context).colorScheme.primary.withOpacity(0.6),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(12),
+    return SidebarLayout(
+      activeRoute: '/notes',
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+        child: Column(
+          children: [
+            // Tabs outside the grey square, on top of it
+            Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  topRight: Radius.circular(12),
                 ),
-                child: buildNotesList(),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Row(
+                  children: [
+                    _buildTab('Show All'),
+                    _buildTab('Worldbuilding'),
+                    _buildTab('Characters'),
+                    _buildTab('Outline'),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+            // The grey square takes up the remaining space, excluding top and bottom margins
+            Expanded(
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Theme.of(context).colorScheme.primary.withOpacity(0.8),
+                        Theme.of(context).colorScheme.primary.withOpacity(0.6),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: buildNotesList(),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

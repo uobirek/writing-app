@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:writing_app/utils/theme.dart';
 
 class AppSidebar extends StatefulWidget {
-  final String activeSection;
-  final Function(String) onSectionTap;
+  final String activeRoute;
 
   const AppSidebar({
     Key? key,
-    required this.activeSection,
-    required this.onSectionTap,
+    required this.activeRoute,
   }) : super(key: key);
 
   @override
@@ -17,7 +16,7 @@ class AppSidebar extends StatefulWidget {
 
 class _AppSidebarState extends State<AppSidebar> {
   bool _isExpanded = true;
-  String _hoveredSection = ''; // Tracks the currently hovered section
+  String _hoveredRoute = ''; // Tracks the currently hovered route
 
   void _toggleSidebar() {
     setState(() {
@@ -25,15 +24,15 @@ class _AppSidebarState extends State<AppSidebar> {
     });
   }
 
-  void _onHover(String section) {
+  void _onHover(String route) {
     setState(() {
-      _hoveredSection = section;
+      _hoveredRoute = route;
     });
   }
 
   void _onExitHover() {
     setState(() {
-      _hoveredSection = '';
+      _hoveredRoute = '';
     });
   }
 
@@ -45,10 +44,10 @@ class _AppSidebarState extends State<AppSidebar> {
         color: Theme.of(context).colorScheme.primary,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.10),
+            color: Colors.black.withOpacity(0.1),
             blurRadius: 30,
             spreadRadius: 6,
-            offset: Offset(0, 20),
+            offset: const Offset(0, 20),
           ),
         ],
       ),
@@ -80,26 +79,26 @@ class _AppSidebarState extends State<AppSidebar> {
           _buildSidebarItem(
             icon: Icons.home_outlined,
             label: 'Home',
-            isActive: widget.activeSection == 'Home',
-            onTap: () => widget.onSectionTap('Home'),
+            route: '/',
+            isActive: widget.activeRoute == '/',
           ),
           _buildSidebarItem(
             icon: Icons.notes_outlined,
             label: 'Notes',
-            isActive: widget.activeSection == 'Notes',
-            onTap: () => widget.onSectionTap('Notes'),
+            route: '/notes',
+            isActive: widget.activeRoute == '/notes',
           ),
           _buildSidebarItem(
             icon: Icons.edit_outlined,
             label: 'Writing',
-            isActive: widget.activeSection == 'Writing',
-            onTap: () => widget.onSectionTap('Writing'),
+            route: '/writing',
+            isActive: widget.activeRoute == '/writing',
           ),
           _buildSidebarItem(
             icon: Icons.search,
             label: 'Research',
-            isActive: widget.activeSection == 'Research',
-            onTap: () => widget.onSectionTap('Research'),
+            route: '/research',
+            isActive: widget.activeRoute == '/research',
           ),
         ],
       ),
@@ -109,39 +108,32 @@ class _AppSidebarState extends State<AppSidebar> {
   Widget _buildSidebarItem({
     required IconData icon,
     required String label,
+    required String route,
     required bool isActive,
-    required VoidCallback onTap,
   }) {
-    final isHovered = _hoveredSection == label;
+    final isHovered = _hoveredRoute == route;
     return MouseRegion(
       cursor: SystemMouseCursors.click,
-      onEnter: (_) => _onHover(label),
+      onEnter: (_) => _onHover(route),
       onExit: (_) => _onExitHover(),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5),
         child: GestureDetector(
-          onTap: onTap,
+          onTap: () {
+            // Navigate using GoRouter
+            context.go(route); // This replaces Navigator.pushReplacementNamed
+          },
           child: AnimatedContainer(
-            duration: const Duration(
-                milliseconds: 0), // Smooth transition for hover effects
+            duration: const Duration(milliseconds: 0),
             height: 45,
             width: _isExpanded ? 200 : 60,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: isActive
-                  ? Theme.of(context)
-                      .colorScheme
-                      .secondary
-                      .withValues(alpha: 0.3)
+                  ? Theme.of(context).colorScheme.secondary.withOpacity(0.3)
                   : isHovered
-                      ? Theme.of(context)
-                          .colorScheme
-                          .secondary
-                          .withValues(alpha: 0.2)
-                      : Theme.of(context)
-                          .colorScheme
-                          .primary
-                          .withValues(alpha: 0.3),
+                      ? Theme.of(context).colorScheme.secondary.withOpacity(0.2)
+                      : Theme.of(context).colorScheme.primary.withOpacity(0.3),
             ),
             child: Row(
               children: [

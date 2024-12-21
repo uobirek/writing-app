@@ -1,63 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:writing_app/screens/home/homescreen.dart';
-import 'package:writing_app/screens/notes/notesscreen.dart';
-import 'package:writing_app/screens/writing/writingscreen.dart';
+import 'package:writing_app/utils/router.dart';
 import 'package:writing_app/utils/theme.dart';
-import 'package:writing_app/widgets/sidebar.dart';
+import 'package:writing_app/widgets/sidebar_layout.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  String _currentSection = 'Home'; // Active section
-
-  void _navigateTo(String section) {
-    setState(() {
-      _currentSection = section;
-    });
-  }
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Widget activeScreen;
-
-    switch (_currentSection) {
-      case 'Home':
-        activeScreen = HomeScreen();
-        break;
-      case 'Notes':
-        activeScreen = NotesScreen();
-        break;
-      case 'Writing':
-        activeScreen = WritingScreen();
-        break;
-      case 'Research':
-        activeScreen = WritingScreen(); // Replace with ResearchScreen later
-        break;
-      default:
-        activeScreen = HomeScreen();
-    }
-
-    return MaterialApp(
+    return MaterialApp.router(
       themeMode: ThemeMode.light,
       theme: GlobalThemeData.lightThemeData,
       darkTheme: GlobalThemeData.darkThemeData,
       title: 'Writing App',
-      home: Scaffold(
-        body: Row(
-          children: [
-            AppSidebar(
-              activeSection: _currentSection,
-              onSectionTap: _navigateTo,
-            ),
-            Expanded(child: activeScreen),
-          ],
-        ),
-      ),
+      routerConfig: AppRouter.router, // Use the GoRouter configuration
     );
   }
 }
