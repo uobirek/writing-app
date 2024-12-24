@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:writing_app/screens/notes/models/character_note.dart';
 import 'package:writing_app/screens/notes/models/note.dart';
 
 class NoteCard extends StatelessWidget {
@@ -34,7 +35,7 @@ class NoteCard extends StatelessWidget {
                   NoteInfo(note: note),
                   InkWell(
                       onTap: () => context.go('/note/${note.id}'),
-                      child: Icon(Icons.more_horiz))
+                      child: const Icon(Icons.more_horiz))
                 ])),
       ),
     );
@@ -75,6 +76,15 @@ class NoteInfo extends StatelessWidget {
             softWrap: true,
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
+          ),
+          Text(
+            (note is CharacterNote)
+                ? (note as CharacterNote)
+                    .traits
+                    .map((trait) => '$trait')
+                    .join('/')
+                : '',
+            style: Theme.of(context).textTheme.displaySmall,
           ),
         ],
       ),

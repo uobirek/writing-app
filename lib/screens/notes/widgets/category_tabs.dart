@@ -38,7 +38,7 @@ class CategoryTabs extends StatelessWidget {
               ),
               child: Text(
                 category,
-                style: Theme.of(context).textTheme.displaySmall,
+                style: Theme.of(context).textTheme.displayMedium,
               ),
             ),
           );

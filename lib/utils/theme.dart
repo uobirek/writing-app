@@ -57,10 +57,16 @@ class GlobalThemeData {
           color: colorScheme.onPrimary,
           letterSpacing: 2,
         ),
-        displaySmall: GoogleFonts.workSans(
+        displayMedium: GoogleFonts.workSans(
           fontSize: 16,
           fontWeight: FontWeight.w600,
           color: colorScheme.onPrimary,
+          letterSpacing: 0,
+        ),
+        displaySmall: GoogleFonts.workSans(
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+          color: colorScheme.onSecondary,
           letterSpacing: 0,
         ),
 
