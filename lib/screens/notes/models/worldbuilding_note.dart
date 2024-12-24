@@ -7,20 +7,15 @@ class WorldbuildingNote extends Note {
   final List<String> pointsOfInterest; // List of important locations
 
   WorldbuildingNote({
-    required String id,
-    required String title,
-    required DateTime createdAt,
-    required String image,
+    required super.id,
+    required super.title,
+    required super.createdAt,
+    required String super.image,
     required this.placeName,
     required this.geography,
     required this.culture,
     required this.pointsOfInterest,
-  }) : super(
-            id: id,
-            title: title,
-            createdAt: createdAt,
-            image: image,
-            category: "worldbuilding");
+  }) : super(category: "Worldbuilding");
 
   @override
   Map<String, dynamic> toJson() {

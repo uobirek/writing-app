@@ -7,20 +7,15 @@ class CharacterNote extends Note {
   final List<String> traits; // List of character traits
 
   CharacterNote({
-    required String id,
-    required String title,
-    required DateTime createdAt,
-    required String image,
+    required super.id,
+    required super.title,
+    required super.createdAt,
+    required String super.image,
     required this.name,
     required this.role,
     required this.description,
     required this.traits,
-  }) : super(
-            id: id,
-            title: title,
-            createdAt: createdAt,
-            image: image,
-            category: "character");
+  }) : super(category: "Characters");
 
   @override
   Map<String, dynamic> toJson() {

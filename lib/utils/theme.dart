@@ -57,6 +57,12 @@ class GlobalThemeData {
           color: colorScheme.onPrimary,
           letterSpacing: 2,
         ),
+        displaySmall: GoogleFonts.workSans(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          color: colorScheme.onPrimary,
+          letterSpacing: 0,
+        ),
 
         // Bolded Text
         labelLarge: GoogleFonts.workSans(
@@ -82,7 +88,7 @@ class GlobalThemeData {
     error: Colors.redAccent,
     onError: Colors.white,
     surface: Color(0xFFFEFEFE),
-    tertiary: Color(0xFFEFB11D),
+    tertiary: Color(0xEAEAEAEA),
     onSurface: Color(0xFF07182B),
     brightness: Brightness.light,
   );

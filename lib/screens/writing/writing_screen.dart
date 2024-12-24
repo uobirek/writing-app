@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
 
 class WritingScreen extends StatefulWidget {
+  const WritingScreen({super.key});
+
   @override
   _WritingScreenState createState() => _WritingScreenState();
 }
