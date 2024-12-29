@@ -15,7 +15,7 @@ class DraggableNote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DragTarget<String>(
-      onWillAccept: (draggedNoteId) {
+      onWillAcceptWithDetails: (draggedNoteId) {
         return draggedNoteId != note.id;
       },
       onAcceptWithDetails: (details) {

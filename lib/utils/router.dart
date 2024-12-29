@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:writing_app/data/notes_data.dart';
 import 'package:writing_app/screens/home/home_screen.dart';
+import 'package:writing_app/screens/notes/add_new_note.dart';
+import 'package:writing_app/screens/notes/edit_note_screen.dart';
 import 'package:writing_app/screens/notes/models/note.dart';
 import 'package:writing_app/screens/notes/note_details.dart';
 import 'package:writing_app/screens/notes/notes_screen.dart';
@@ -14,8 +16,8 @@ class AppRouter {
       routes: [
         GoRoute(
           path: '/',
-          builder: (context, state) => HomeScreen(),
-          pageBuilder: (context, state) => _noAnimationPage(HomeScreen()),
+          builder: (context, state) => const HomeScreen(),
+          pageBuilder: (context, state) => _noAnimationPage(const HomeScreen()),
         ),
         GoRoute(
           path: '/notes',
@@ -37,12 +39,18 @@ class AppRouter {
               _noAnimationPage(const WritingScreen()),
         ),
         GoRoute(
-            path: '/note/:id',
-            builder: (context, state) {
-              final String noteId = state.params['id']!;
-              Note note = notes.where((note) => note.id == noteId).first;
-              return NoteDetailsScreen(note: note);
-            })
+          path: '/note/:id',
+          builder: (context, state) {
+            final noteId = state.params['id'];
+            final note =
+                notes.firstWhere((n) => n.id == noteId); // Fetch the note by ID
+            return EditNoteScreen(note: note);
+          },
+        ),
+        GoRoute(
+          path: '/add_note',
+          builder: (context, state) => const AddNoteScreen(),
+        ),
       ],
       errorBuilder: (context, state) {
         return Scaffold(

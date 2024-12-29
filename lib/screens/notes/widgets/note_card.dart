@@ -81,7 +81,7 @@ class NoteInfo extends StatelessWidget {
             (note is CharacterNote)
                 ? (note as CharacterNote)
                     .traits
-                    .map((trait) => '$trait')
+                    .map((trait) => trait)
                     .join('/')
                 : '',
             style: Theme.of(context).textTheme.displaySmall,
