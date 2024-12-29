@@ -4,7 +4,6 @@ import 'package:writing_app/data/notes_data.dart';
 import 'package:writing_app/screens/home/home_screen.dart';
 import 'package:writing_app/screens/notes/add_new_note.dart';
 import 'package:writing_app/screens/notes/edit_note_screen.dart';
-import 'package:writing_app/screens/notes/models/note.dart';
 import 'package:writing_app/screens/notes/note_details.dart';
 import 'package:writing_app/screens/notes/notes_screen.dart';
 import 'package:writing_app/screens/writing/writing_screen.dart';
@@ -40,6 +39,15 @@ class AppRouter {
         ),
         GoRoute(
           path: '/note/:id',
+          builder: (context, state) {
+            final noteId = state.params['id'];
+            final note =
+                notes.firstWhere((n) => n.id == noteId); // Fetch the note by ID
+            return NoteDetailsScreen(note: note);
+          },
+        ),
+        GoRoute(
+          path: '/note/:id/editing',
           builder: (context, state) {
             final noteId = state.params['id'];
             final note =

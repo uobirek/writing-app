@@ -34,11 +34,50 @@ class NoteCard extends StatelessWidget {
                     ),
                   NoteInfo(note: note),
                   InkWell(
-                      onTap: () => context.go('/note/${note.id}'),
+                      onTap: () => _showOptionsDialog(context, note.id),
                       child: const Icon(Icons.more_horiz))
                 ])),
       ),
     );
+  }
+
+  void _showOptionsDialog(BuildContext context, String noteId) {
+    showMenu(
+      context: context,
+      position:
+          RelativeRect.fromLTRB(100, 100, 0, 0), // Position relative to button
+      items: [
+        PopupMenuItem<int>(
+          value: 0,
+          child: Row(
+            children: [
+              Icon(Icons.edit, color: Colors.blue),
+              SizedBox(width: 8),
+              Text("Edit"),
+            ],
+          ),
+        ),
+        PopupMenuItem<int>(
+          value: 1,
+          child: Row(
+            children: [
+              Icon(Icons.remove_red_eye, color: Colors.green),
+              SizedBox(width: 8),
+              Text("Preview"),
+            ],
+          ),
+        ),
+      ],
+      elevation: 8.0,
+    ).then((value) {
+      if (value == 0) {
+        // Handle "Edit" action
+        context.go('/note/$noteId/editing');
+      } else if (value == 1) {
+        // Handle "Preview" action
+        context.go('/note/$noteId');
+      }
+    });
   }
 }
 
@@ -79,10 +118,7 @@ class NoteInfo extends StatelessWidget {
           ),
           Text(
             (note is CharacterNote)
-                ? (note as CharacterNote)
-                    .traits
-                    .map((trait) => trait)
-                    .join('/')
+                ? (note as CharacterNote).traits.map((trait) => trait).join('/')
                 : '',
             style: Theme.of(context).textTheme.displaySmall,
           ),

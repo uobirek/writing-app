@@ -18,7 +18,6 @@ class CustomTextField extends StatefulWidget {
 
 class _CustomTextFieldState extends State<CustomTextField> {
   late FocusNode _focusNode;
-  bool _isHovered = false;
 
   @override
   void initState() {
@@ -39,20 +38,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
-    bool isFocused = _focusNode.hasFocus;
-
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: MouseRegion(
         onEnter: (_) {
-          setState(() {
-            _isHovered = true;
-          });
+          setState(() {});
         },
         onExit: (_) {
-          setState(() {
-            _isHovered = false;
-          });
+          setState(() {});
         },
         child: SizedBox(
           width: 500,
