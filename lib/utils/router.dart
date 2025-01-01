@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:writing_app/data/notes_data.dart';
 import 'package:writing_app/screens/home/home_screen.dart';
 import 'package:writing_app/screens/notes/add_new_note.dart';
-import 'package:writing_app/screens/notes/edit_note_screen.dart';
+import 'package:writing_app/screens/notes/note_editing_screen.dart';
 import 'package:writing_app/screens/notes/note_details.dart';
 import 'package:writing_app/screens/notes/notes_screen.dart';
 import 'package:writing_app/screens/writing/writing_screen.dart';

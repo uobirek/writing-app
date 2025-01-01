@@ -1,10 +1,14 @@
+import 'package:writing_app/screens/notes/editing/note_editing.dart';
+import 'package:writing_app/screens/notes/editing/worldbuilding_note_editing.dart';
 import 'package:writing_app/screens/notes/models/note.dart';
+import 'package:writing_app/screens/notes/note_details/note_details.dart';
+import 'package:writing_app/screens/notes/note_details/worldbuilding_note_details.dart';
 
 class WorldbuildingNote extends Note {
   final String placeName; // Name of the place
-  final String geography; // Description of geography
-  final String culture; // Culture or societal description
-  final List<String> pointsOfInterest; // List of important locations
+  final String? geography; // Description of geography
+  final String? culture; // Culture or societal description
+  final List<String>? pointsOfInterest; // List of important locations
 
   WorldbuildingNote({
     required super.id,
@@ -43,5 +47,14 @@ class WorldbuildingNote extends Note {
       pointsOfInterest: List<String>.from(json['pointsOfInterest']),
       image: json['image'],
     );
+  }
+  @override
+  NoteDetails getNoteDetails() {
+    return WorldbuildingNoteDetails(this);
+  }
+
+  @override
+  NoteEditing getNoteEditing() {
+    return WorldbuildingNoteEditing(this);
   }
 }

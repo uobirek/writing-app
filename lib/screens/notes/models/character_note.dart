@@ -1,33 +1,36 @@
+import 'package:writing_app/screens/notes/editing/character_note_editing.dart';
+import 'package:writing_app/screens/notes/editing/note_editing.dart';
 import 'package:writing_app/screens/notes/models/note.dart';
+import 'package:writing_app/screens/notes/note_details/character_note_details.dart';
+import 'package:writing_app/screens/notes/note_details/note_details.dart';
 
 class CharacterNote extends Note {
-  final String name; // Name of the character
-  final String gender; // Gender of the character
-  final int age; // Age of the character
+  final String name;
+  final String gender;
+  final int age;
   final String role; // Role in the story (e.g., protagonist, antagonist)
 
   // Physical appearance
-  final String eyeColor;
-  final String hairColor;
-  final String skinColor;
-  final String fashionStyle;
-  final List<String> distinguishingFeatures;
+  final String? eyeColor;
+  final String? hairColor;
+  final String? skinColor;
+  final String? fashionStyle;
+  final List<String>? distinguishingFeatures;
 
   // History
-  final List<String>
-      keyFamilyMembers; // Names or descriptions of key family members
-  final List<String> notableEvents; // Important life events of the character
+  final List<String>? keyFamilyMembers;
+  final List<String>? notableEvents;
 
   // Personality
-  final List<String> traits; // Personality traits
-  final List<String> hobbiesSkills; // Hobbies and skills
-  final String? otherPersonalityDetails; // Freeform personality description
+  final List<String>? traits;
+  final List<String>? hobbiesSkills;
+  final String? otherPersonalityDetails;
 
   // Character growth
-  final List<String> goals; // Character's goals
-  final List<String> internalConflicts; // Internal struggles
-  final List<String> externalConflicts; // External struggles
-  final List<String> coreValues; // Fundamental values
+  final List<String>? goals;
+  final List<String>? internalConflicts;
+  final List<String>? externalConflicts;
+  final List<String>? coreValues;
 
   // Title is automatically derived from the name
   @override
@@ -110,5 +113,14 @@ class CharacterNote extends Note {
       coreValues: List<String>.from(json['coreValues']),
       image: json['image'],
     );
+  }
+  @override
+  NoteDetails getNoteDetails() {
+    return CharacterNoteDetails(this);
+  }
+
+  @override
+  NoteEditing getNoteEditing() {
+    return CharacterNoteEditing(this);
   }
 }

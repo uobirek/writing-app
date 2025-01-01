@@ -1,5 +1,6 @@
 import 'package:writing_app/screens/notes/models/character_note.dart';
 import 'package:writing_app/screens/notes/models/note.dart';
+import 'package:writing_app/screens/notes/models/simple_note.dart';
 import 'package:writing_app/screens/notes/models/worldbuilding_note.dart';
 
 final List<Note> notes = [
@@ -166,4 +167,10 @@ final List<Note> notes = [
     ],
     coreValues: ['Freedom', 'Loyalty', 'Justice'],
   ),
+  SimpleNote("that's the data",
+      id: "12",
+      title: "special note 1",
+      createdAt: DateTime.now(),
+      image: 'assets/images/zach.jpg',
+      category: 'special')
 ];

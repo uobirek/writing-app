@@ -10,6 +10,7 @@ class NoteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey _inkWellKey = GlobalKey();
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       elevation: 1,
@@ -34,8 +35,13 @@ class NoteCard extends StatelessWidget {
                     ),
                   NoteInfo(note: note),
                   InkWell(
-                      onTap: () => _showOptionsDialog(context, note.id),
-                      child: const Icon(Icons.more_horiz))
+                    onTap: () => _showOptionsDialog(
+                      context,
+                      note.id,
+                    ),
+                    key: _inkWellKey,
+                    child: const Icon(Icons.more_horiz),
+                  )
                 ])),
       ),
     );
@@ -44,16 +50,16 @@ class NoteCard extends StatelessWidget {
   void _showOptionsDialog(BuildContext context, String noteId) {
     showMenu(
       context: context,
-      position:
-          RelativeRect.fromLTRB(100, 100, 0, 0), // Position relative to button
+      position: const RelativeRect.fromLTRB(
+          0, 0, 0, 0), // Position relative to button
       items: [
         PopupMenuItem<int>(
           value: 0,
           child: Row(
             children: [
-              Icon(Icons.edit, color: Colors.blue),
-              SizedBox(width: 8),
-              Text("Edit"),
+              Icon(Icons.edit, color: Theme.of(context).colorScheme.secondary),
+              const SizedBox(width: 8),
+              const Text("Edit"),
             ],
           ),
         ),
@@ -61,9 +67,10 @@ class NoteCard extends StatelessWidget {
           value: 1,
           child: Row(
             children: [
-              Icon(Icons.remove_red_eye, color: Colors.green),
-              SizedBox(width: 8),
-              Text("Preview"),
+              Icon(Icons.preview,
+                  color: Theme.of(context).colorScheme.secondary),
+              const SizedBox(width: 8),
+              const Text("Preview"),
             ],
           ),
         ),
@@ -118,7 +125,11 @@ class NoteInfo extends StatelessWidget {
           ),
           Text(
             (note is CharacterNote)
-                ? (note as CharacterNote).traits.map((trait) => trait).join('/')
+                ? (note as CharacterNote)
+                        .traits
+                        ?.map((trait) => trait)
+                        .join('/') ??
+                    ''
                 : '',
             style: Theme.of(context).textTheme.displaySmall,
           ),
