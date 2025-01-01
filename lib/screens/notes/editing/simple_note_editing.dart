@@ -37,8 +37,7 @@ class SimpleNoteEditing implements NoteEditing {
       id: note.id,
       createdAt: note.createdAt,
       title: titleController.text,
-      image: '',
-      category: '',
+      image: note.image,
     );
   }
 }

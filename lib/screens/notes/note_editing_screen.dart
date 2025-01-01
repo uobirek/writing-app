@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:writing_app/data/notes_data.dart';
-import 'package:writing_app/screens/notes/editing/character_note_editing.dart';
 import 'package:writing_app/screens/notes/editing/note_editing.dart';
-import 'package:writing_app/screens/notes/editing/simple_note_editing.dart';
-import 'package:writing_app/screens/notes/models/character_note.dart';
 import 'package:writing_app/screens/notes/models/note.dart';
-import 'package:writing_app/screens/notes/models/simple_note.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
 
 class EditNoteScreen extends StatefulWidget {

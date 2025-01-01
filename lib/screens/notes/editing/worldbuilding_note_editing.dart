@@ -51,7 +51,7 @@ class WorldbuildingNoteEditing implements NoteEditing {
   WorldbuildingNote buildUpdatedNote() {
     return WorldbuildingNote(
       id: note.id,
-      title: note.title,
+      title: placeNameController.text,
       createdAt: note.createdAt,
       image: note.image ?? '',
       placeName: placeNameController.text,

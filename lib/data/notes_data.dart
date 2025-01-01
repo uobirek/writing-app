@@ -167,10 +167,11 @@ final List<Note> notes = [
     ],
     coreValues: ['Freedom', 'Loyalty', 'Justice'],
   ),
-  SimpleNote("that's the data",
-      id: "12",
-      title: "special note 1",
-      createdAt: DateTime.now(),
-      image: 'assets/images/zach.jpg',
-      category: 'special')
+  SimpleNote(
+    "that's the data",
+    id: "12",
+    title: "special note 1",
+    createdAt: DateTime.now(),
+    image: 'assets/images/zach.jpg',
+  )
 ];

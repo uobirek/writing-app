@@ -7,12 +7,13 @@ import 'package:writing_app/screens/notes/note_details/simple_note_details.dart'
 class SimpleNote extends Note {
   final String specialData;
 
-  SimpleNote(this.specialData,
-      {required super.id,
-      required super.title,
-      required super.createdAt,
-      required super.image,
-      required super.category});
+  SimpleNote(
+    this.specialData, {
+    required super.id,
+    required super.title,
+    required super.createdAt,
+    required super.image,
+  }) : super(category: "SimpleNote");
 
   @override
   Map<String, dynamic> toJson() {
