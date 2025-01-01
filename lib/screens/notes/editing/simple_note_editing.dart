@@ -3,12 +3,12 @@ import 'package:writing_app/screens/notes/editing/note_editing.dart';
 import 'package:writing_app/screens/notes/models/simple_note.dart';
 import 'package:writing_app/screens/notes/widgets/custom_text_field.dart';
 
-class SimpleNoteEditing implements NoteEditing {
+class SimpleNoteEditing extends NoteEditing {
   final SimpleNote note;
   late TextEditingController titleController;
   late TextEditingController contentController;
 
-  SimpleNoteEditing(this.note) {
+  SimpleNoteEditing(this.note) : super(note.image) {
     titleController = TextEditingController(text: note.title);
     contentController = TextEditingController(text: note.specialData);
   }
@@ -24,6 +24,7 @@ class SimpleNoteEditing implements NoteEditing {
           children: [
             CustomTextField(controller: titleController, label: 'Title'),
             CustomTextField(controller: contentController, label: 'Content'),
+            buildImageField(context), // Use default image field here
           ],
         ),
       ),
@@ -37,7 +38,7 @@ class SimpleNoteEditing implements NoteEditing {
       id: note.id,
       createdAt: note.createdAt,
       title: titleController.text,
-      image: note.image,
+      image: imageController.text, // Use the updated image value
     );
   }
 }

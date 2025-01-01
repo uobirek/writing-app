@@ -3,9 +3,8 @@ import 'package:writing_app/screens/notes/editing/note_editing.dart';
 import 'package:writing_app/screens/notes/models/character_note.dart';
 import 'package:writing_app/screens/notes/widgets/custom_text_field.dart';
 
-class CharacterNoteEditing implements NoteEditing {
+class CharacterNoteEditing extends NoteEditing {
   final CharacterNote note;
-  late TextEditingController imageController;
   late TextEditingController nameController;
   late TextEditingController roleController;
   late TextEditingController genderController;
@@ -24,8 +23,7 @@ class CharacterNoteEditing implements NoteEditing {
   late TextEditingController externalConflictsController;
   late TextEditingController coreValuesController;
 
-  CharacterNoteEditing(this.note) {
-    imageController = TextEditingController(text: note.image);
+  CharacterNoteEditing(this.note) : super(note.image) {
     nameController = TextEditingController(text: note.name);
     roleController = TextEditingController(text: note.role);
     genderController = TextEditingController(text: note.gender);
@@ -59,7 +57,6 @@ class CharacterNoteEditing implements NoteEditing {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomTextField(controller: imageController, label: 'Image Url'),
           CustomTextField(controller: nameController, label: 'Name'),
           CustomTextField(controller: roleController, label: 'Role'),
           CustomTextField(controller: genderController, label: 'Gender'),

@@ -3,14 +3,14 @@ import 'package:writing_app/screens/notes/editing/note_editing.dart';
 import 'package:writing_app/screens/notes/models/worldbuilding_note.dart';
 import 'package:writing_app/screens/notes/widgets/custom_text_field.dart';
 
-class WorldbuildingNoteEditing implements NoteEditing {
+class WorldbuildingNoteEditing extends NoteEditing {
   final WorldbuildingNote note;
   late TextEditingController placeNameController;
   late TextEditingController geographyController;
   late TextEditingController cultureController;
   late TextEditingController pointsOfInterestController;
 
-  WorldbuildingNoteEditing(this.note) {
+  WorldbuildingNoteEditing(this.note) : super(note.image) {
     placeNameController = TextEditingController(text: note.placeName);
     geographyController = TextEditingController(text: note.geography);
     cultureController = TextEditingController(text: note.culture);

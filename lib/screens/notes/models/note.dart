@@ -23,11 +23,7 @@ abstract class Note {
     throw UnimplementedError("Use specific subclass factory methods");
   }
 
-  NoteDetails getNoteDetails() {
-    throw UnimplementedError("");
-  }
+  NoteDetails getNoteDetails();
 
-  NoteEditing getNoteEditing() {
-    throw UnimplementedError("");
-  }
+  NoteEditing getNoteEditing();
 }
