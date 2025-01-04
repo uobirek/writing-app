@@ -39,7 +39,7 @@ class CharacterNote extends Note {
   CharacterNote({
     required super.id,
     required super.createdAt,
-    required String super.image,
+    String super.image = 'assets/images/placeholder.jpg',
     required this.name,
     required this.gender,
     required this.age,

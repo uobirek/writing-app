@@ -14,7 +14,7 @@ class WorldbuildingNote extends Note {
     required super.id,
     required super.title,
     required super.createdAt,
-    required String super.image,
+    String super.image = 'assets/images/placeholder.jpg',
     required this.placeName,
     required this.geography,
     required this.culture,

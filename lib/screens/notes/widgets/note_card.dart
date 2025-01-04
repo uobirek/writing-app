@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:writing_app/screens/notes/models/character_note.dart';
 import 'package:writing_app/screens/notes/models/note.dart';
+import 'package:writing_app/screens/notes/widgets/dynamic_image.dart';
 
 class NoteCard extends StatelessWidget {
   final Note note;
@@ -24,14 +27,11 @@ class NoteCard extends StatelessWidget {
                 spacing: 12,
                 children: [
                   if (note.image != null)
-                    ClipRRect(
+                    DynamicImageWidget(
+                      imagePath: note.image!,
+                      width: 140,
+                      height: 140,
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      child: Image.asset(
-                        note.image ?? "",
-                        width: 140,
-                        height: 140,
-                        fit: BoxFit.cover,
-                      ),
                     ),
                   NoteInfo(note: note),
                   InkWell(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:writing_app/screens/notes/models/note.dart';
+import 'package:writing_app/screens/notes/widgets/dynamic_image.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
 
 class NoteDetailsScreen extends StatelessWidget {
@@ -22,15 +23,12 @@ class NoteDetailsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Note Image
-                if (note.image!.isNotEmpty)
-                  ClipRRect(
+                if (note.image != null && note.image!.isNotEmpty)
+                  DynamicImageWidget(
+                    imagePath: note.image!,
+                    width: double.infinity,
+                    height: 200,
                     borderRadius: BorderRadius.circular(10),
-                    child: Image.asset(
-                      note.image ?? '',
-                      width: double.infinity,
-                      height: 200,
-                      fit: BoxFit.cover,
-                    ),
                   ),
                 const SizedBox(height: 20),
 

@@ -26,6 +26,8 @@ class WorldbuildingNoteEditing extends NoteEditing {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          buildImageField(context),
+          const SizedBox(height: 16),
           CustomTextField(
             controller: placeNameController,
             label: 'Place Name',
@@ -53,7 +55,9 @@ class WorldbuildingNoteEditing extends NoteEditing {
       id: note.id,
       title: placeNameController.text,
       createdAt: note.createdAt,
-      image: note.image ?? '',
+      image: imageController.text.isEmpty
+          ? note.image ?? 'assets/images/placeholder.png'
+          : imageController.text,
       placeName: placeNameController.text,
       geography: geographyController.text,
       culture: cultureController.text,

@@ -5,7 +5,7 @@ abstract class Note {
   final String id;
   final String title;
   final DateTime createdAt;
-  final String? image;
+  String? image;
   final String category;
 
   Note(

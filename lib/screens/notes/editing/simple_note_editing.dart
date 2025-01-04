@@ -24,6 +24,7 @@ class SimpleNoteEditing extends NoteEditing {
           children: [
             CustomTextField(controller: titleController, label: 'Title'),
             CustomTextField(controller: contentController, label: 'Content'),
+            const SizedBox(height: 16),
             buildImageField(context), // Use default image field here
           ],
         ),
@@ -38,7 +39,9 @@ class SimpleNoteEditing extends NoteEditing {
       id: note.id,
       createdAt: note.createdAt,
       title: titleController.text,
-      image: imageController.text, // Use the updated image value
+      image: imageController.text.isEmpty
+          ? note.image ?? 'assets/images/placeholder.png'
+          : imageController.text,
     );
   }
 }

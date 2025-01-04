@@ -3,14 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:writing_app/data/notes_data.dart';
 import 'package:writing_app/screens/notes/create_a_blank_note.dart';
 import 'package:writing_app/screens/notes/editing/note_editing.dart';
-import 'package:writing_app/screens/notes/models/note.dart';
-import 'package:writing_app/screens/notes/models/simple_note.dart';
-import 'package:writing_app/screens/notes/models/character_note.dart';
-import 'package:writing_app/screens/notes/models/worldbuilding_note.dart';
-import 'package:writing_app/screens/notes/note_details/note_details.dart';
-import 'package:writing_app/screens/notes/note_details/worldbuilding_note_details.dart';
-import 'package:writing_app/screens/notes/note_details/character_note_details.dart';
-import 'package:writing_app/screens/notes/note_details/simple_note_details.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
 
 class AddNoteScreen extends StatefulWidget {

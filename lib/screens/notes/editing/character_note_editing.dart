@@ -57,6 +57,8 @@ class CharacterNoteEditing extends NoteEditing {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          buildImageField(context),
+          const SizedBox(height: 16),
           CustomTextField(controller: nameController, label: 'Name'),
           CustomTextField(controller: roleController, label: 'Role'),
           CustomTextField(controller: genderController, label: 'Gender'),
@@ -102,7 +104,9 @@ class CharacterNoteEditing extends NoteEditing {
     return CharacterNote(
       id: note.id,
       createdAt: note.createdAt,
-      image: imageController.text,
+      image: imageController.text.isEmpty
+          ? note.image ?? 'assets/images/placeholder.png'
+          : imageController.text,
       name: nameController.text,
       role: roleController.text,
       gender: genderController.text,
