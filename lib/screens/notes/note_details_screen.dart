@@ -23,12 +23,12 @@ class NoteDetailsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Note Image
-                if (note.image != null && note.image!.isNotEmpty)
+                if (note.image != null)
                   DynamicImageWidget(
                     imagePath: note.image!,
-                    width: double.infinity,
-                    height: 200,
-                    borderRadius: BorderRadius.circular(10),
+                    width: 140,
+                    height: 140,
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
                   ),
                 const SizedBox(height: 20),
 

@@ -18,7 +18,7 @@ class WorldbuildingNote extends Note {
     required this.placeName,
     required this.geography,
     required this.culture,
-    required this.pointsOfInterest,
+    this.pointsOfInterest,
   }) : super(category: "Worldbuilding");
 
   @override

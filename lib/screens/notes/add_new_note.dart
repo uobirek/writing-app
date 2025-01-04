@@ -6,7 +6,7 @@ import 'package:writing_app/screens/notes/editing/note_editing.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
 
 class AddNoteScreen extends StatefulWidget {
-  const AddNoteScreen({Key? key}) : super(key: key);
+  const AddNoteScreen({super.key});
 
   @override
   _AddNoteScreenState createState() => _AddNoteScreenState();

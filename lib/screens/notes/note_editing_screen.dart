@@ -57,8 +57,8 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                 // Submit button
                 ElevatedButton(
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.resolveWith<Color?>(
-                      (Set<MaterialState> states) {
+                    backgroundColor: WidgetStateProperty.resolveWith<Color?>(
+                      (Set<WidgetState> states) {
                         return Theme.of(context).colorScheme.secondary;
                       },
                     ),

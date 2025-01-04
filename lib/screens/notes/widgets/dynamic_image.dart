@@ -10,13 +10,13 @@ class DynamicImageWidget extends StatelessWidget {
   final BorderRadius? borderRadius;
 
   const DynamicImageWidget({
-    Key? key,
+    super.key,
     required this.imagePath,
     this.width,
     this.height,
     this.fit = BoxFit.cover,
     this.borderRadius,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

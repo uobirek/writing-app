@@ -8,15 +8,13 @@ class WorldbuildingNoteEditing extends NoteEditing {
   late TextEditingController placeNameController;
   late TextEditingController geographyController;
   late TextEditingController cultureController;
-  late TextEditingController pointsOfInterestController;
+  late List<String> pointsOfInterest; // Dynamic list
 
   WorldbuildingNoteEditing(this.note) : super(note.image) {
     placeNameController = TextEditingController(text: note.placeName);
     geographyController = TextEditingController(text: note.geography);
     cultureController = TextEditingController(text: note.culture);
-    pointsOfInterestController = TextEditingController(
-      text: note.pointsOfInterest?.join(', ') ?? '',
-    );
+    pointsOfInterest = note.pointsOfInterest ?? []; // Initialize dynamically
   }
 
   @override
@@ -40,12 +38,57 @@ class WorldbuildingNoteEditing extends NoteEditing {
             controller: cultureController,
             label: 'Culture Description',
           ),
-          CustomTextField(
-            controller: pointsOfInterestController,
-            label: 'Points of Interest (comma-separated)',
-          ),
+          const SizedBox(height: 16),
+          _buildDynamicListField(
+              context, 'Points of Interest', pointsOfInterest),
         ],
       ),
+    );
+  }
+
+  Widget _buildDynamicListField(
+      BuildContext context, String label, List<String> list) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: Theme.of(context).textTheme.labelLarge),
+        const SizedBox(height: 8),
+        ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: list.length,
+          itemBuilder: (context, index) {
+            return Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    initialValue: list[index],
+                    decoration: const InputDecoration(hintText: 'Enter item'),
+                    onChanged: (value) {
+                      list[index] = value; // Update list item
+                    },
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.delete, color: Colors.red),
+                  onPressed: () {
+                    list.removeAt(index); // Remove item
+                    (context as Element).markNeedsBuild(); // Rebuild UI
+                  },
+                ),
+              ],
+            );
+          },
+        ),
+        TextButton.icon(
+          icon: const Icon(Icons.add),
+          label: const Text('Add Item'),
+          onPressed: () {
+            list.add(''); // Add an empty item
+            (context as Element).markNeedsBuild(); // Rebuild UI
+          },
+        ),
+      ],
     );
   }
 
@@ -61,7 +104,9 @@ class WorldbuildingNoteEditing extends NoteEditing {
       placeName: placeNameController.text,
       geography: geographyController.text,
       culture: cultureController.text,
-      pointsOfInterest: pointsOfInterestController.text.split(', '),
+      pointsOfInterest: pointsOfInterest
+          .where((item) => item.isNotEmpty)
+          .toList(), // Filter out empty items
     );
   }
 }

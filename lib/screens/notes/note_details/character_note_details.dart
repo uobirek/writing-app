@@ -8,107 +8,128 @@ class CharacterNoteDetails implements NoteDetails {
 
   @override
   Widget buildDetailsScreen(BuildContext context) {
+    final theme = Theme.of(context);
+
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _sectionTitle("Name"),
-            Text(note.name, style: _infoTextStyle),
-            const SizedBox(height: 10),
-            _sectionTitle("Role"),
-            Text(note.role, style: _infoTextStyle),
-            const SizedBox(height: 10),
-            _sectionTitle("Gender"),
-            Text(note.gender, style: _infoTextStyle),
-            const SizedBox(height: 10),
-            _sectionTitle("Age"),
-            Text(note.age.toString(), style: _infoTextStyle),
-            const SizedBox(height: 10),
-            _sectionTitle("Physical Appearance"),
-            _buildAppearanceDetails(),
-            const SizedBox(height: 10),
-            _sectionTitle("Personality Traits"),
-            Wrap(
-              spacing: 8,
-              children: note.traits!
-                  .map((trait) => Chip(
-                        label: Text(trait),
-                        backgroundColor: Colors.blue[50],
-                      ))
-                  .toList(),
-            ),
-            const SizedBox(height: 10),
-            _sectionTitle("Key Family Members"),
-            Text(note.keyFamilyMembers!.isNotEmpty
-                ? note.keyFamilyMembers!.join(", ")
-                : "No family members listed."),
-            const SizedBox(height: 10),
-            _sectionTitle("Notable Events"),
-            Text(note.notableEvents!.isNotEmpty
-                ? note.notableEvents!.join("\n")
-                : "No notable events."),
-            const SizedBox(height: 10),
-            _sectionTitle("Character Growth"),
-            _buildCharacterGrowthDetails(),
+            _buildSection(context, "Name", note.name),
+            _buildSection(context, "Role", note.role),
+            _buildSection(context, "Gender", note.gender),
+            _buildSection(context, "Age", note.age.toString()),
+            _buildAppearanceSection(),
+            _buildTraitsSection(context),
+            _buildSection(context, "Key Family Members",
+                _listToString(note.keyFamilyMembers)),
+            _buildSection(
+                context, "Notable Events", _listToString(note.notableEvents)),
+            _buildCharacterGrowthSection(context),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildAppearanceDetails() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text("Eye Color: ${note.eyeColor}"),
-        Text("Hair Color: ${note.hairColor}"),
-        Text("Skin Color: ${note.skinColor}"),
-        Text("Fashion Style: ${note.fashionStyle}"),
-        if (note.distinguishingFeatures!.isNotEmpty)
-          Text(
-              "Distinguishing Features: ${note.distinguishingFeatures?.join(', ')}"),
+  Widget _buildAppearanceSection() {
+    return _buildSectionWithChildren(
+      "Physical Appearance",
+      [
+        _infoRow("Eye Color", note.eyeColor ?? "Not specified"),
+        _infoRow("Hair Color", note.hairColor ?? "Not specified"),
+        _infoRow("Skin Color", note.skinColor ?? "Not specified"),
+        _infoRow("Fashion Style", note.fashionStyle ?? "Not specified"),
+        if (note.distinguishingFeatures != null &&
+            note.distinguishingFeatures!.isNotEmpty)
+          _infoRow("Distinguishing Features",
+              note.distinguishingFeatures!.join(", "))
+        else
+          _infoRow("Distinguishing Features", "Not specified"),
       ],
     );
   }
 
-  Widget _buildCharacterGrowthDetails() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _sectionTitle("Goals"),
-        Text(note.goals!.isNotEmpty
-            ? note.goals!.join("\n")
-            : "No goals specified."),
-        const SizedBox(height: 10),
-        _sectionTitle("Internal Conflicts"),
-        Text(note.internalConflicts!.isNotEmpty
-            ? note.internalConflicts!.join("\n")
-            : "No internal conflicts specified."),
-        const SizedBox(height: 10),
-        _sectionTitle("External Conflicts"),
-        Text(note.externalConflicts!.isNotEmpty
-            ? note.externalConflicts!.join("\n")
-            : "No external conflicts specified."),
-        const SizedBox(height: 10),
-        _sectionTitle("Core Values"),
-        Text(note.coreValues!.isNotEmpty
-            ? note.coreValues!.join(", ")
-            : "No core values specified."),
+  Widget _buildTraitsSection(BuildContext context) {
+    return _buildSectionWithChildren(
+      "Personality Traits",
+      [
+        if (note.traits != null && note.traits!.isNotEmpty)
+          Wrap(
+            spacing: 8,
+            children: note.traits!
+                .map((trait) => Chip(
+                      label: Text(trait),
+                      backgroundColor:
+                          Theme.of(context).colorScheme.secondary.withAlpha(50),
+                    ))
+                .toList(),
+          )
+        else
+          Text("Not specified", style: Theme.of(context).textTheme.bodyMedium),
       ],
     );
   }
 
-  Widget _sectionTitle(String title) {
-    return Text(
-      title,
-      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+  Widget _buildCharacterGrowthSection(BuildContext context) {
+    return _buildSectionWithChildren(
+      "Character Growth",
+      [
+        _buildSection(context, "Goals", _listToString(note.goals)),
+        _buildSection(context, "Internal Conflicts",
+            _listToString(note.internalConflicts)),
+        _buildSection(context, "External Conflicts",
+            _listToString(note.externalConflicts)),
+        _buildSection(context, "Core Values", _listToString(note.coreValues)),
+      ],
     );
   }
 
-  final TextStyle _infoTextStyle = const TextStyle(
-    fontSize: 16,
-    color: Colors.black87,
-  );
+  Widget _buildSection(BuildContext context, String title, String content) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: Theme.of(context).textTheme.labelLarge),
+          const SizedBox(height: 4),
+          Text(content, style: Theme.of(context).textTheme.bodyMedium),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSectionWithChildren(String title, List<Widget> children) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title,
+              style:
+                  const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 8),
+          ...children,
+        ],
+      ),
+    );
+  }
+
+  Widget _infoRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
+          Text(value),
+        ],
+      ),
+    );
+  }
+
+  String _listToString(List<String>? list) {
+    return (list == null || list.isEmpty) ? "Not specified" : list.join(", ");
+  }
 }

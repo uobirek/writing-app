@@ -5,11 +5,13 @@ import 'package:writing_app/screens/notes/widgets/note_card.dart';
 class DraggableNote extends StatelessWidget {
   final Note note;
   final Function(String draggedNoteId, String targetNoteId) onNoteDropped;
+  final VoidCallback onDelete; // New callback for delete
 
   const DraggableNote({
     super.key,
     required this.note,
     required this.onNoteDropped,
+    required this.onDelete, // Accept delete callback
   });
 
   @override
@@ -28,11 +30,17 @@ class DraggableNote extends StatelessWidget {
             color: Colors.transparent,
             elevation: 10,
             borderRadius: BorderRadius.circular(10),
-            child: NoteCard(note: note),
+            child: NoteCard(
+              note: note,
+              onDelete: onDelete, // Pass delete callback to NoteCard
+            ),
           ),
           childWhenDragging: Opacity(
             opacity: 0.5,
-            child: NoteCard(note: note),
+            child: NoteCard(
+              note: note,
+              onDelete: onDelete, // Pass delete callback to NoteCard
+            ),
           ),
           child: Container(
             decoration: BoxDecoration(
@@ -47,7 +55,10 @@ class DraggableNote extends StatelessWidget {
                   : null,
               borderRadius: BorderRadius.circular(23),
             ),
-            child: NoteCard(note: note),
+            child: NoteCard(
+              note: note,
+              onDelete: onDelete, // Pass delete callback to NoteCard
+            ),
           ),
         );
       },
