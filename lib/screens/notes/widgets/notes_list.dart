@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:writing_app/data/notes_data.dart';
 import 'package:writing_app/screens/notes/models/note.dart';
+import 'package:writing_app/screens/notes/repositories/note_repository.dart';
 import 'package:writing_app/screens/notes/widgets/draggable_note.dart';
 
 class NotesList extends StatefulWidget {
@@ -17,6 +18,9 @@ class NotesList extends StatefulWidget {
 
 class _NotesListState extends State<NotesList> {
   List<Note> filteredNotes = [];
+  final NoteRepository _noteRepository = NoteRepository();
+  List<Note> _notes = [];
+  bool _isLoading = true;
 
   @override
   void didUpdateWidget(covariant NotesList oldWidget) {
@@ -27,12 +31,27 @@ class _NotesListState extends State<NotesList> {
   @override
   void initState() {
     super.initState();
+    _fetchNotes();
     _filterNotes();
+  }
+
+  Future<void> _fetchNotes() async {
+    setState(() => _isLoading = true);
+    try {
+      final notes = await _noteRepository.fetchAllNotes();
+      setState(() {
+        _notes = notes;
+        _isLoading = false;
+      });
+    } catch (e) {
+      print('Error: $e');
+      setState(() => _isLoading = false);
+    }
   }
 
   void _filterNotes() {
     setState(() {
-      filteredNotes = notes.where((note) {
+      filteredNotes = _notes.where((note) {
         return widget.currentCategory == 'Show All' ||
             note.category == widget.currentCategory;
       }).toList();

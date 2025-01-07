@@ -59,12 +59,11 @@ class CharacterNote extends Note {
     required this.externalConflicts,
     required this.coreValues,
   }) : super(category: "Characters", title: name);
-
   @override
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'title': title, // Automatically set to name
+      'title': title,
       'createdAt': createdAt.toIso8601String(),
       'name': name,
       'gender': gender,
@@ -74,16 +73,16 @@ class CharacterNote extends Note {
       'hairColor': hairColor,
       'skinColor': skinColor,
       'fashionStyle': fashionStyle,
-      'distinguishingFeatures': distinguishingFeatures,
-      'keyFamilyMembers': keyFamilyMembers,
-      'notableEvents': notableEvents,
-      'traits': traits,
-      'hobbiesSkills': hobbiesSkills,
+      'distinguishingFeatures': distinguishingFeatures ?? [],
+      'keyFamilyMembers': keyFamilyMembers ?? [],
+      'notableEvents': notableEvents ?? [],
+      'traits': traits ?? [],
+      'hobbiesSkills': hobbiesSkills ?? [],
       'otherPersonalityDetails': otherPersonalityDetails,
-      'goals': goals,
-      'internalConflicts': internalConflicts,
-      'externalConflicts': externalConflicts,
-      'coreValues': coreValues,
+      'goals': goals ?? [],
+      'internalConflicts': internalConflicts ?? [],
+      'externalConflicts': externalConflicts ?? [],
+      'coreValues': coreValues ?? [],
       'image': image,
       'type': 'CharacterNote',
     };
@@ -91,29 +90,45 @@ class CharacterNote extends Note {
 
   factory CharacterNote.fromJson(Map<String, dynamic> json) {
     return CharacterNote(
-      id: json['id'],
-      createdAt: DateTime.parse(json['createdAt']),
-      name: json['name'],
-      gender: json['gender'],
-      age: json['age'],
-      role: json['role'],
-      eyeColor: json['eyeColor'],
+      id: json['id'] ?? '', // Provide a default empty string if `id` is null
+      createdAt:
+          DateTime.parse(json['createdAt'] ?? DateTime.now().toIso8601String()),
+      name: json['name'] ?? '',
+      gender: json['gender'] ?? '',
+      age: json['age'] ?? 0, // Default to 0 if `age` is null
+      role: json['role'] ?? '',
+      eyeColor: json['eyeColor'], // Optional field can remain nullable
       hairColor: json['hairColor'],
       skinColor: json['skinColor'],
       fashionStyle: json['fashionStyle'],
-      distinguishingFeatures: List<String>.from(json['distinguishingFeatures']),
-      keyFamilyMembers: List<String>.from(json['keyFamilyMembers']),
-      notableEvents: List<String>.from(json['notableEvents']),
-      traits: List<String>.from(json['traits']),
-      hobbiesSkills: List<String>.from(json['hobbiesSkills']),
+      distinguishingFeatures: json['distinguishingFeatures'] != null
+          ? List<String>.from(json['distinguishingFeatures'])
+          : [],
+      keyFamilyMembers: json['keyFamilyMembers'] != null
+          ? List<String>.from(json['keyFamilyMembers'])
+          : [],
+      notableEvents: json['notableEvents'] != null
+          ? List<String>.from(json['notableEvents'])
+          : [],
+      traits: json['traits'] != null ? List<String>.from(json['traits']) : [],
+      hobbiesSkills: json['hobbiesSkills'] != null
+          ? List<String>.from(json['hobbiesSkills'])
+          : [],
       otherPersonalityDetails: json['otherPersonalityDetails'],
-      goals: List<String>.from(json['goals']),
-      internalConflicts: List<String>.from(json['internalConflicts']),
-      externalConflicts: List<String>.from(json['externalConflicts']),
-      coreValues: List<String>.from(json['coreValues']),
-      image: json['image'],
+      goals: json['goals'] != null ? List<String>.from(json['goals']) : [],
+      internalConflicts: json['internalConflicts'] != null
+          ? List<String>.from(json['internalConflicts'])
+          : [],
+      externalConflicts: json['externalConflicts'] != null
+          ? List<String>.from(json['externalConflicts'])
+          : [],
+      coreValues: json['coreValues'] != null
+          ? List<String>.from(json['coreValues'])
+          : [],
+      image: json['image'] ?? 'assets/images/placeholder.jpg',
     );
   }
+
   @override
   NoteDetails getNoteDetails() {
     return CharacterNoteDetails(this);
