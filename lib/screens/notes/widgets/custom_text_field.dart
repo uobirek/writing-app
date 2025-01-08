@@ -24,7 +24,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
     super.initState();
     _focusNode = FocusNode();
 
-    // Listen to focus changes
     _focusNode.addListener(() {
       setState(() {});
     });

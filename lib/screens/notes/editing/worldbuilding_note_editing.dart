@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:writing_app/screens/notes/editing/note_editing.dart';
 import 'package:writing_app/screens/notes/models/worldbuilding_note.dart';
 import 'package:writing_app/screens/notes/widgets/custom_text_field.dart';
+import 'package:writing_app/screens/notes/widgets/dynamic_list_field.dart';
 
 class WorldbuildingNoteEditing extends NoteEditing {
   final WorldbuildingNote note;
@@ -39,56 +40,12 @@ class WorldbuildingNoteEditing extends NoteEditing {
             label: 'Culture Description',
           ),
           const SizedBox(height: 16),
-          _buildDynamicListField(
-              context, 'Points of Interest', pointsOfInterest),
+          DynamicListField(
+              context: context,
+              label: 'Points of Interest',
+              list: pointsOfInterest),
         ],
       ),
-    );
-  }
-
-  Widget _buildDynamicListField(
-      BuildContext context, String label, List<String> list) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(label, style: Theme.of(context).textTheme.labelLarge),
-        const SizedBox(height: 8),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: list.length,
-          itemBuilder: (context, index) {
-            return Row(
-              children: [
-                Expanded(
-                  child: TextFormField(
-                    initialValue: list[index],
-                    decoration: const InputDecoration(hintText: 'Enter item'),
-                    onChanged: (value) {
-                      list[index] = value; // Update list item
-                    },
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.delete, color: Colors.red),
-                  onPressed: () {
-                    list.removeAt(index); // Remove item
-                    (context as Element).markNeedsBuild(); // Rebuild UI
-                  },
-                ),
-              ],
-            );
-          },
-        ),
-        TextButton.icon(
-          icon: const Icon(Icons.add),
-          label: const Text('Add Item'),
-          onPressed: () {
-            list.add(''); // Add an empty item
-            (context as Element).markNeedsBuild(); // Rebuild UI
-          },
-        ),
-      ],
     );
   }
 
@@ -98,9 +55,8 @@ class WorldbuildingNoteEditing extends NoteEditing {
       id: note.id,
       title: placeNameController.text,
       createdAt: note.createdAt,
-      image: imageController.text.isEmpty
-          ? note.image ?? 'assets/images/placeholder.png'
-          : imageController.text,
+      image: imagePath ?? 'assets/images/placeholder.png',
+
       placeName: placeNameController.text,
       geography: geographyController.text,
       culture: cultureController.text,

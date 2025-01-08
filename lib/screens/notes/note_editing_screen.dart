@@ -57,6 +57,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.primary,
+                    borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.1),
@@ -64,33 +65,42 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                         spreadRadius: 6,
                       )
                     ],
-                    borderRadius: BorderRadius.circular(12),
                   ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 16),
+                  child: Padding(
+                    padding: EdgeInsets.all(14),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 16),
 
-                        // Render dynamic form fields
-                        noteEditing.buildDetailsForm(_formKey, context),
+                          // Render dynamic form fields
+                          noteEditing.buildDetailsForm(_formKey, context),
 
-                        const SizedBox(height: 16),
+                          const SizedBox(height: 16),
 
-                        // Submit button
-                        ElevatedButton(
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              final updatedNote =
-                                  noteEditing.buildUpdatedNote();
+                          // Submit button
+                          Center(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      Theme.of(context).colorScheme.secondary),
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  final updatedNote =
+                                      noteEditing.buildUpdatedNote();
 
-                              // Update the note using Bloc
-                              context.read<NoteCubit>().updateNote(updatedNote);
-                            }
-                          },
-                          child: const Text("Save Changes"),
-                        ),
-                      ],
+                                  // Update the note using Bloc
+                                  context
+                                      .read<NoteCubit>()
+                                      .updateNote(updatedNote);
+                                }
+                              },
+                              child: const Text("Save Changes"),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

@@ -6,11 +6,11 @@ import 'package:writing_app/screens/notes/models/note.dart';
 import 'package:writing_app/screens/notes/save_image.dart';
 
 abstract class NoteEditing {
-  final TextEditingController imageController = TextEditingController();
+  String? imagePath;
   File? selectedImage; // Stores the selected image file
 
   NoteEditing(String? initialImage) {
-    imageController.text = initialImage ?? '';
+    imagePath = initialImage;
   }
 
   Widget buildDetailsForm(GlobalKey<FormState> formKey, BuildContext context);
@@ -26,8 +26,7 @@ abstract class NoteEditing {
     if (image != null) {
       final savedPath = await saveImageToLocalDirectory(File(image.path));
       selectedImage = File(savedPath); // Update the selected image
-      imageController.text =
-          savedPath; // Update the controller with the new path
+      imagePath = savedPath; // Update the controller with the new path
 
       // Trigger UI update
       (context as Element).markNeedsBuild();
@@ -61,14 +60,8 @@ abstract class NoteEditing {
           child: const Text('Pick Image'),
         ),
         const SizedBox(height: 8),
-        TextFormField(
-          controller: imageController,
-          decoration: const InputDecoration(
-            labelText: 'Image Path',
-            border: OutlineInputBorder(),
-          ),
-          readOnly: true, // Make the field read-only to prevent user editing
-        ),
+        Text(imagePath ?? 'no image',
+            style: Theme.of(context).textTheme.bodySmall)
       ],
     );
   }

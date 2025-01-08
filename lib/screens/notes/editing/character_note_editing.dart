@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:writing_app/screens/notes/editing/note_editing.dart';
 import 'package:writing_app/screens/notes/models/character_note.dart';
 import 'package:writing_app/screens/notes/widgets/custom_text_field.dart';
+import 'package:writing_app/screens/notes/widgets/dynamic_list_field.dart';
 
 class CharacterNoteEditing extends NoteEditing {
   final CharacterNote note;
+
   late TextEditingController nameController;
   late TextEditingController roleController;
   late TextEditingController genderController;
@@ -13,15 +15,17 @@ class CharacterNoteEditing extends NoteEditing {
   late TextEditingController hairColorController;
   late TextEditingController skinColorController;
   late TextEditingController fashionStyleController;
-  late TextEditingController distinguishingFeaturesController;
-  late TextEditingController traitsController;
-  late TextEditingController hobbiesSkillsController;
-  late TextEditingController keyFamilyMembersController;
-  late TextEditingController notableEventsController;
-  late TextEditingController goalsController;
-  late TextEditingController internalConflictsController;
-  late TextEditingController externalConflictsController;
-  late TextEditingController coreValuesController;
+
+  // List fields
+  late List<String> distinguishingFeatures;
+  late List<String> traits;
+  late List<String> hobbiesSkills;
+  late List<String> keyFamilyMembers;
+  late List<String> notableEvents;
+  late List<String> goals;
+  late List<String> internalConflicts;
+  late List<String> externalConflicts;
+  late List<String> coreValues;
 
   CharacterNoteEditing(this.note) : super(note.image) {
     nameController = TextEditingController(text: note.name);
@@ -32,22 +36,17 @@ class CharacterNoteEditing extends NoteEditing {
     hairColorController = TextEditingController(text: note.hairColor);
     skinColorController = TextEditingController(text: note.skinColor);
     fashionStyleController = TextEditingController(text: note.fashionStyle);
-    distinguishingFeaturesController =
-        TextEditingController(text: note.distinguishingFeatures?.join(', '));
-    traitsController = TextEditingController(text: note.traits?.join(', '));
-    hobbiesSkillsController =
-        TextEditingController(text: note.hobbiesSkills?.join(', '));
-    keyFamilyMembersController =
-        TextEditingController(text: note.keyFamilyMembers?.join(', '));
-    notableEventsController =
-        TextEditingController(text: note.notableEvents?.join(', '));
-    goalsController = TextEditingController(text: note.goals?.join(', '));
-    internalConflictsController =
-        TextEditingController(text: note.internalConflicts?.join(', '));
-    externalConflictsController =
-        TextEditingController(text: note.externalConflicts?.join(', '));
-    coreValuesController =
-        TextEditingController(text: note.coreValues?.join(', '));
+
+    // Initialize list-based fields
+    distinguishingFeatures = note.distinguishingFeatures ?? [];
+    traits = note.traits ?? [];
+    hobbiesSkills = note.hobbiesSkills ?? [];
+    keyFamilyMembers = note.keyFamilyMembers ?? [];
+    notableEvents = note.notableEvents ?? [];
+    goals = note.goals ?? [];
+    internalConflicts = note.internalConflicts ?? [];
+    externalConflicts = note.externalConflicts ?? [];
+    coreValues = note.coreValues ?? [];
   }
 
   @override
@@ -59,6 +58,8 @@ class CharacterNoteEditing extends NoteEditing {
         children: [
           buildImageField(context),
           const SizedBox(height: 16),
+
+          // Regular text inputs for non-list fields
           CustomTextField(controller: nameController, label: 'Name'),
           CustomTextField(controller: roleController, label: 'Role'),
           CustomTextField(controller: genderController, label: 'Gender'),
@@ -69,31 +70,35 @@ class CharacterNoteEditing extends NoteEditing {
           CustomTextField(controller: skinColorController, label: 'Skin Color'),
           CustomTextField(
               controller: fashionStyleController, label: 'Fashion Style'),
-          CustomTextField(
-              controller: distinguishingFeaturesController,
-              label: 'Distinguishing Features (comma-separated)'),
-          CustomTextField(
-              controller: traitsController, label: 'Traits (comma-separated)'),
-          CustomTextField(
-              controller: hobbiesSkillsController,
-              label: 'Hobbies and Skills (comma-separated)'),
-          CustomTextField(
-              controller: keyFamilyMembersController,
-              label: 'Key Family Members (comma-separated)'),
-          CustomTextField(
-              controller: notableEventsController,
-              label: 'Notable Events (comma-separated)'),
-          CustomTextField(
-              controller: goalsController, label: 'Goals (comma-separated)'),
-          CustomTextField(
-              controller: internalConflictsController,
-              label: 'Internal Conflicts (comma-separated)'),
-          CustomTextField(
-              controller: externalConflictsController,
-              label: 'External Conflicts (comma-separated)'),
-          CustomTextField(
-              controller: coreValuesController,
-              label: 'Core Values (comma-separated)'),
+
+          // DynamicListField for list-based fields
+          const SizedBox(height: 16),
+          DynamicListField(
+              context: context,
+              label: 'Distinguishing Features',
+              list: distinguishingFeatures),
+          DynamicListField(context: context, label: 'Traits', list: traits),
+          DynamicListField(
+              context: context,
+              label: 'Hobbies and Skills',
+              list: hobbiesSkills),
+          DynamicListField(
+              context: context,
+              label: 'Key Family Membersed)',
+              list: keyFamilyMembers),
+          DynamicListField(
+              context: context, label: 'Notable Events', list: notableEvents),
+          DynamicListField(context: context, label: 'Goals', list: goals),
+          DynamicListField(
+              context: context,
+              label: 'Internal Conflicts',
+              list: internalConflicts),
+          DynamicListField(
+              context: context,
+              label: 'External Conflicts',
+              list: externalConflicts),
+          DynamicListField(
+              context: context, label: 'Core Values', list: coreValues),
         ],
       ),
     );
@@ -104,9 +109,7 @@ class CharacterNoteEditing extends NoteEditing {
     return CharacterNote(
       id: note.id,
       createdAt: note.createdAt,
-      image: imageController.text.isEmpty
-          ? note.image ?? 'assets/images/placeholder.png'
-          : imageController.text,
+      image: imagePath ?? 'assets/images/placeholder.png',
       name: nameController.text,
       role: roleController.text,
       gender: genderController.text,
@@ -115,15 +118,15 @@ class CharacterNoteEditing extends NoteEditing {
       hairColor: hairColorController.text,
       skinColor: skinColorController.text,
       fashionStyle: fashionStyleController.text,
-      distinguishingFeatures: distinguishingFeaturesController.text.split(', '),
-      traits: traitsController.text.split(', '),
-      hobbiesSkills: hobbiesSkillsController.text.split(', '),
-      keyFamilyMembers: keyFamilyMembersController.text.split(', '),
-      notableEvents: notableEventsController.text.split(', '),
-      goals: goalsController.text.split(', '),
-      internalConflicts: internalConflictsController.text.split(', '),
-      externalConflicts: externalConflictsController.text.split(', '),
-      coreValues: coreValuesController.text.split(', '),
+      distinguishingFeatures: distinguishingFeatures,
+      traits: traits,
+      hobbiesSkills: hobbiesSkills,
+      keyFamilyMembers: keyFamilyMembers,
+      notableEvents: notableEvents,
+      goals: goals,
+      internalConflicts: internalConflicts,
+      externalConflicts: externalConflicts,
+      coreValues: coreValues,
     );
   }
 }

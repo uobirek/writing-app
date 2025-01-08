@@ -39,9 +39,7 @@ class SimpleNoteEditing extends NoteEditing {
       id: note.id,
       createdAt: note.createdAt,
       title: titleController.text,
-      image: imageController.text.isEmpty
-          ? note.image ?? 'assets/images/placeholder.png'
-          : imageController.text,
+      image: imagePath ?? 'assets/images/placeholder.png',
     );
   }
 }
