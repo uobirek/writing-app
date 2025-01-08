@@ -1,6 +1,7 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:writing_app/screens/notes/bloc/note_cubit.dart';
 import 'package:writing_app/screens/notes/models/character_note.dart';
 import 'package:writing_app/screens/notes/models/note.dart';
 import 'package:writing_app/screens/notes/widgets/dynamic_image.dart';
@@ -119,7 +120,9 @@ class NoteCard extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                onDelete(); // Trigger the delete callback
+                context
+                    .read<NoteCubit>()
+                    .deleteNote(note.id); // Trigger the delete action
                 Navigator.of(context).pop(); // Close the dialog
               },
               child: const Text(

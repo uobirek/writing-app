@@ -1,9 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:writing_app/data/notes_data.dart';
 import 'package:writing_app/firebase_options.dart';
+import 'package:writing_app/screens/notes/bloc/note_cubit.dart';
 import 'package:writing_app/screens/notes/models/character_note.dart';
 import 'package:writing_app/screens/notes/models/note.dart';
 import 'package:writing_app/screens/notes/models/worldbuilding_note.dart';
+import 'package:writing_app/screens/notes/repositories/note_repository.dart';
+import 'package:writing_app/screens/notes/services/firebase_service.dart';
 import 'package:writing_app/utils/router.dart';
 import 'package:writing_app/utils/theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -46,12 +51,31 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      themeMode: ThemeMode.light,
-      theme: GlobalThemeData.lightThemeData,
-      darkTheme: GlobalThemeData.darkThemeData,
-      title: 'Writing App',
-      routerConfig: AppRouter.router, // Use the GoRouter configuration
+    return BlocProvider(
+      create: (context) => NoteCubit(NoteRepository()),
+      child: MaterialApp.router(
+        themeMode: ThemeMode.light,
+        theme: GlobalThemeData.lightThemeData,
+        darkTheme: GlobalThemeData.darkThemeData,
+        title: 'Writing App',
+        routerConfig: AppRouter.router, // Use the GoRouter configuration
+      ),
     );
   }
+}
+
+Future<void> migrateAllNotesToFirestore() async {
+  final FirebaseService firebaseService = FirebaseService();
+
+  for (final note in notes) {
+    try {
+      // Save the note to Firestore
+      await firebaseService.saveNote(note);
+      print("Successfully migrated note with ID: ${note.id}");
+    } catch (e) {
+      print("Failed to migrate note with ID: ${note.id}. Error: $e");
+    }
+  }
+
+  print("Migration completed!");
 }
