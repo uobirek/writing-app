@@ -4,11 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:writing_app/data/notes_data.dart';
 import 'package:writing_app/firebase_options.dart';
 import 'package:writing_app/screens/notes/bloc/note_cubit.dart';
-import 'package:writing_app/screens/notes/models/character_note.dart';
 import 'package:writing_app/screens/notes/models/note.dart';
-import 'package:writing_app/screens/notes/models/worldbuilding_note.dart';
 import 'package:writing_app/screens/notes/repositories/note_repository.dart';
 import 'package:writing_app/screens/notes/services/firebase_service.dart';
+import 'package:writing_app/screens/writing/models/chapter.dart';
 import 'package:writing_app/utils/router.dart';
 import 'package:writing_app/utils/theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -30,6 +29,21 @@ Future<void> addNote(Note note) async {
     print('Note added successfully!');
   } catch (e) {
     print('Error adding note: $e');
+  }
+}
+
+Future<void> addChapter(Chapter chapter) async {
+  final firestore = FirebaseFirestore.instance;
+
+  try {
+    // Add the chapter to the 'chapters' collection using the chapter's ID
+    await firestore
+        .collection('chapters')
+        .doc(chapter.id)
+        .set(chapter.toJson());
+    print('Chapter added successfully!');
+  } catch (e) {
+    print('Error adding chapter: $e');
   }
 }
 
@@ -64,18 +78,18 @@ class MyApp extends StatelessWidget {
   }
 }
 
-Future<void> migrateAllNotesToFirestore() async {
-  final FirebaseService firebaseService = FirebaseService();
+// Future<void> migrateAllNotesToFirestore() async {
+//   final FirebaseService firebaseService = FirebaseService();
 
-  for (final note in notes) {
-    try {
-      // Save the note to Firestore
-      await firebaseService.saveNote(note);
-      print("Successfully migrated note with ID: ${note.id}");
-    } catch (e) {
-      print("Failed to migrate note with ID: ${note.id}. Error: $e");
-    }
-  }
+//   for (final note in notes) {
+//     try {
+//       // Save the note to Firestore
+//       await firebaseService.saveNote(note);
+//       print("Successfully migrated note with ID: ${note.id}");
+//     } catch (e) {
+//       print("Failed to migrate note with ID: ${note.id}. Error: $e");
+//     }
+//   }
 
-  print("Migration completed!");
-}
+//   print("Migration completed!");
+// }

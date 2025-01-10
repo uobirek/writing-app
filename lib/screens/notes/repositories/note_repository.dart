@@ -45,10 +45,36 @@ class NoteRepository {
     }
   }
 
+  Future<int> getNextPosition() async {
+    try {
+      // Query Firestore to get the note with the highest position
+      final querySnapshot = await _firestore
+          .collection('notes')
+          .orderBy('position', descending: true)
+          .limit(1)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        // Extract the highest position from the document
+        return querySnapshot.docs.first['position'] + 1;
+      } else {
+        // If no notes exist, start from position 0
+        return 0;
+      }
+    } catch (e) {
+      print("Error getting next position: $e");
+      rethrow;
+    }
+  }
+
   /// Add a new note to Firestore
   Future<void> addNote(Note note) async {
     try {
-      await _firestore.collection('notes').doc(note.id).set(note.toJson());
+      print("adding new notes");
+      print(note.id);
+      print(note.category);
+
+      await _firestore.collection('notes').add(note.toJson());
     } catch (e) {
       print('Error adding note: $e');
       rethrow;

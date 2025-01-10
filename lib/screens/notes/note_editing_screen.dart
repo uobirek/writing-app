@@ -67,7 +67,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                     ],
                   ),
                   child: Padding(
-                    padding: EdgeInsets.all(14),
+                    padding: const EdgeInsets.all(14),
                     child: SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

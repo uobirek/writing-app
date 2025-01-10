@@ -7,9 +7,11 @@ abstract class Note {
   final DateTime createdAt;
   String? image;
   final String category;
+  final int position;
 
   Note(
-      {required this.id,
+      {required this.position,
+      required this.id,
       required this.title,
       required this.createdAt,
       this.image,

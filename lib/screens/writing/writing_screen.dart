@@ -1,131 +1,75 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:writing_app/screens/writing/chapter_cubit.dart';
+import 'package:writing_app/screens/writing/chapter_repository.dart';
+import 'package:writing_app/screens/writing/chapter_state.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
 
-class WritingScreen extends StatefulWidget {
-  const WritingScreen({super.key});
-
-  @override
-  _WritingScreenState createState() => _WritingScreenState();
-}
-
-class _WritingScreenState extends State<WritingScreen> {
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _contentController = TextEditingController();
-
-  @override
-  void dispose() {
-    _titleController.dispose();
-    _contentController.dispose();
-    super.dispose();
-  }
-
-  void _clearFields() {
-    setState(() {
-      _titleController.clear();
-      _contentController.clear();
-    });
-  }
-
-  void _saveWriting() {
-    final String title = _titleController.text.trim();
-    final String content = _contentController.text.trim();
-
-    if (title.isEmpty || content.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Title and content cannot be empty.'),
-          backgroundColor: Colors.redAccent,
-        ),
-      );
-      return;
-    }
-
-    // Simulate saving (e.g., saving to a database or file system)
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Saved: $title'),
-        backgroundColor: Colors.green,
-      ),
-    );
-
-    // Optional: Clear fields after saving
-    _clearFields();
-  }
-
+class WritingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SidebarLayout(
-      activeRoute: '/writing',
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Writing Screen'),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.save),
-              onPressed: _saveWriting,
-            ),
-            IconButton(
-              icon: const Icon(Icons.delete),
-              onPressed: _clearFields,
-            ),
-          ],
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Title Input Field
-              TextField(
-                controller: _titleController,
-                decoration: InputDecoration(
-                  labelText: 'Title',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 16),
-
-              // Writing Area
-              Expanded(
-                child: TextField(
-                  controller: _contentController,
-                  maxLines: null, // Allow multi-line input
-                  expands: true, // Expand to fill available space
-                  textAlignVertical: TextAlignVertical.top,
-                  decoration: InputDecoration(
-                    hintText: 'Start writing your ideas here...',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-              ),
-
-              // Buttons Row (Save and Clear)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton.icon(
-                    onPressed: _clearFields,
-                    icon: const Icon(Icons.delete),
-                    label: const Text('Clear'),
-                  ),
-                  const SizedBox(width: 16),
-                  ElevatedButton.icon(
-                    onPressed: _saveWriting,
-                    icon: const Icon(Icons.save),
-                    label: const Text('Save'),
-                  ),
+    return BlocProvider(
+        create: (context) => ChapterCubit(ChapterRepository())..fetchChapters(),
+        child: SidebarLayout(
+          activeRoute: '/writing',
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.1),
+                      blurRadius: 30,
+                      spreadRadius: 6,
+                      offset: const Offset(0, 10)),
                 ],
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [
+                    Theme.of(context).colorScheme.secondaryContainer,
+                    Colors.white
+                  ],
+                ),
               ),
-            ],
+              child: Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Chapters",
+                        style: Theme.of(context).textTheme.titleLarge),
+                    BlocBuilder<ChapterCubit, ChapterState>(
+                      builder: (context, state) {
+                        if (state is ChapterLoading) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        } else if (state is ChapterError) {
+                          return Center(child: Text(state.message));
+                        } else if (state is ChapterLoaded) {
+                          final chapters = state.chapters;
+
+                          return SingleChildScrollView(
+                            child: Wrap(
+                              spacing: 10,
+                              runSpacing: 10,
+                              children: chapters.map((chapter) {
+                                return Text(chapter.content);
+                              }).toList(),
+                            ),
+                          );
+                        } else {
+                          return const Center(
+                              child: Text('No notes available.'));
+                        }
+                      },
+                    )
+                  ],
+                ),
+              ),
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

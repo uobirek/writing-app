@@ -62,13 +62,13 @@ class _NotesScreenState extends State<NotesScreen> {
                     child: BlocBuilder<NoteCubit, NoteState>(
                       builder: (context, state) {
                         if (state is NoteLoading) {
-                          return Center(child: CircularProgressIndicator());
+                          return const Center(child: CircularProgressIndicator());
                         } else if (state is NoteLoaded) {
-                          return NotesList();
+                          return const NotesList();
                         } else if (state is NoteError) {
                           return Center(child: Text(state.message));
                         }
-                        return Center(child: Text('No notes available.'));
+                        return const Center(child: Text('No notes available.'));
                       },
                     ),
                   ),

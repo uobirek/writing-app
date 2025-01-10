@@ -58,6 +58,7 @@ class CharacterNote extends Note {
     required this.internalConflicts,
     required this.externalConflicts,
     required this.coreValues,
+    required super.position,
   }) : super(category: "Characters", title: name);
   @override
   Map<String, dynamic> toJson() {
@@ -65,6 +66,7 @@ class CharacterNote extends Note {
       'id': id,
       'title': title,
       'createdAt': createdAt.toIso8601String(),
+      'position': position,
       'name': name,
       'gender': gender,
       'age': age,
@@ -85,6 +87,7 @@ class CharacterNote extends Note {
       'coreValues': coreValues ?? [],
       'image': image,
       'type': 'CharacterNote',
+      'category': category
     };
   }
 
@@ -126,6 +129,7 @@ class CharacterNote extends Note {
           ? List<String>.from(json['coreValues'])
           : [],
       image: json['image'] ?? 'assets/images/placeholder.jpg',
+      position: json['position'],
     );
   }
 

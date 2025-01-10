@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:writing_app/screens/notes/bloc/note_cubit.dart';
-import 'package:writing_app/screens/notes/bloc/note_state.dart';
 import 'package:writing_app/screens/home/home_screen.dart';
 import 'package:writing_app/screens/notes/add_new_note.dart';
 import 'package:writing_app/screens/notes/note_details_screen.dart';
@@ -28,9 +27,8 @@ class AppRouter {
         ),
         GoRoute(
           path: '/writing',
-          builder: (context, state) => const WritingScreen(),
-          pageBuilder: (context, state) =>
-              _noAnimationPage(const WritingScreen()),
+          builder: (context, state) => WritingScreen(),
+          pageBuilder: (context, state) => _noAnimationPage(WritingScreen()),
         ),
         GoRoute(
           path: '/note/:id',

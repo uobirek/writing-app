@@ -15,8 +15,9 @@ class NoteCubit extends Cubit<NoteState> {
     emit(NoteLoading());
     try {
       allNotes = await noteRepository.fetchAllNotes();
-      emit(NoteLoaded(
-          allNotes)); // Emit the loaded state with notes in the correct order
+      emit(NoteLoaded(allNotes));
+      print("we got new notes");
+      print(allNotes); // Emit the loaded state with notes in the correct order
     } catch (e) {
       emit(NoteError("Failed to load notes: ${e.toString()}"));
     }
@@ -48,6 +49,7 @@ class NoteCubit extends Cubit<NoteState> {
     try {
       await noteRepository.addNote(newNote);
       allNotes.add(newNote); // Update cached list
+      allNotes = await noteRepository.fetchAllNotes();
       emit(NoteLoaded(List.from(allNotes))); // Emit updated list
     } catch (e) {
       emit(NoteError("Failed to add note: ${e.toString()}"));
@@ -119,7 +121,7 @@ class NoteCubit extends Cubit<NoteState> {
   /// Get a note by ID (synchronous from cached data)
   Note? getNoteById(String id) {
     try {
-      print("id is" + id);
+      print("id is$id");
       return allNotes.firstWhere((note) => note.id == id);
     } catch (_) {
       print("no note");

@@ -19,6 +19,7 @@ class WorldbuildingNote extends Note {
     required this.geography,
     required this.culture,
     this.pointsOfInterest,
+    required super.position,
   }) : super(category: "Worldbuilding");
 
   @override
@@ -33,6 +34,8 @@ class WorldbuildingNote extends Note {
       'pointsOfInterest': pointsOfInterest,
       'image': image,
       'type': 'WorldbuildingNote',
+      'position': position,
+      'category': category
     };
   }
 
@@ -46,6 +49,7 @@ class WorldbuildingNote extends Note {
       culture: json['culture'],
       pointsOfInterest: List<String>.from(json['pointsOfInterest']),
       image: json['image'],
+      position: json['position'],
     );
   }
   @override

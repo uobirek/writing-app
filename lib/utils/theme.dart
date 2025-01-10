@@ -90,6 +90,7 @@ class GlobalThemeData {
     primary: Color(0xFFF4F4F4),
     onPrimary: Color(0xFF07182B),
     secondary: Color(0xFFA7A3EB),
+    secondaryContainer: Color.fromARGB(255, 233, 232, 250),
     onSecondary: Color.fromARGB(255, 130, 127, 192),
     error: Colors.redAccent,
     onError: Colors.white,

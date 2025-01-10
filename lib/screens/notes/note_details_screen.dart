@@ -47,7 +47,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
             try {
               return _buildNoteDetails(context, currentNote);
             } catch (e) {
-              return Center(
+              return const Center(
                 child: Text('Note not found'),
               );
             }

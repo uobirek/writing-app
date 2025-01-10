@@ -54,6 +54,7 @@ class WorldbuildingNoteEditing extends NoteEditing {
     return WorldbuildingNote(
       id: note.id,
       title: placeNameController.text,
+      position: note.position,
       createdAt: note.createdAt,
       image: imagePath ?? 'assets/images/placeholder.png',
 

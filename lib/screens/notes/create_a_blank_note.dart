@@ -3,16 +3,30 @@ import 'package:writing_app/screens/notes/models/note.dart';
 import 'package:writing_app/screens/notes/models/simple_note.dart';
 import 'package:writing_app/screens/notes/models/worldbuilding_note.dart';
 
-Note createBlankNote(String type) {
+Future<Note> createBlankNote(String type, List<Note> cachedNotes) async {
   final now = DateTime.now();
   const defaultImage = 'assets/images/placeholder.png';
+
+  // Determine the next position based on the cached notes
+  final nextPosition = cachedNotes.isEmpty
+      ? 0
+      : cachedNotes
+              .map((note) => note.position)
+              .reduce((a, b) => a > b ? a : b) +
+          1;
+
   switch (type) {
     case 'SimpleNote':
-      return SimpleNote('',
-          id: 'new', createdAt: now, title: '', image: defaultImage);
+      return SimpleNote(
+        '',
+        id: '', // Generate or pass a valid unique ID
+        createdAt: now,
+        title: '',
+        image: defaultImage,
+      );
     case 'CharacterNote':
       return CharacterNote(
-        id: 'new',
+        id: '',
         createdAt: now,
         image: defaultImage,
         name: '',
@@ -32,10 +46,11 @@ Note createBlankNote(String type) {
         internalConflicts: [],
         externalConflicts: [],
         coreValues: [],
+        position: nextPosition,
       );
     case 'WorldbuildingNote':
       return WorldbuildingNote(
-        id: 'new',
+        id: '',
         createdAt: now,
         image: defaultImage,
         title: '',
@@ -43,6 +58,7 @@ Note createBlankNote(String type) {
         geography: '',
         culture: '',
         pointsOfInterest: [],
+        position: nextPosition,
       );
     default:
       throw Exception('Unsupported note type');

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:writing_app/screens/notes/widgets/input_decoration.dart';
 
 class DynamicListField extends StatelessWidget {
   const DynamicListField({
@@ -29,9 +30,10 @@ class DynamicListField extends StatelessWidget {
                 Expanded(
                   child: TextFormField(
                     initialValue: list[index],
-                    decoration: const InputDecoration(hintText: 'Enter item'),
+                    decoration:
+                        formInputDecoration(context: context, label: label),
                     onChanged: (value) {
-                      list[index] = value; // Update list item
+                      list[index] = value;
                     },
                   ),
                 ),
@@ -39,8 +41,8 @@ class DynamicListField extends StatelessWidget {
                   icon: Icon(Icons.delete,
                       color: Theme.of(context).colorScheme.secondary),
                   onPressed: () {
-                    list.removeAt(index); // Remove item
-                    (context as Element).markNeedsBuild(); // Rebuild UI
+                    list.removeAt(index);
+                    (context as Element).markNeedsBuild();
                   },
                 ),
               ],

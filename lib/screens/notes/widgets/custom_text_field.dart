@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:writing_app/screens/notes/widgets/input_decoration.dart';
 
 class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
@@ -52,34 +53,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
             cursorColor: Theme.of(context).colorScheme.secondary,
             controller: widget.controller,
             focusNode: _focusNode,
-            decoration: InputDecoration(
-              labelStyle: Theme.of(context).textTheme.bodyLarge,
-              labelText: widget.label,
-              filled: true,
-              focusColor: Theme.of(context)
-                  .colorScheme
-                  .secondary
-                  .withValues(alpha: 0.3),
-              hoverColor: Theme.of(context)
-                  .colorScheme
-                  .secondary
-                  .withValues(alpha: 0.3),
-              fillColor: Theme.of(context).colorScheme.surface,
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.tertiary,
-                  width: 2,
-                ),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.primary,
-                  width: 2,
-                ),
-              ),
-            ),
+            decoration:
+                formInputDecoration(context: context, label: widget.label),
             keyboardType:
                 widget.isNumber ? TextInputType.number : TextInputType.text,
           ),

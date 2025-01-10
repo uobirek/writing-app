@@ -13,7 +13,7 @@ class SimpleNote extends Note {
     required super.title,
     required super.createdAt,
     required super.image,
-  }) : super(category: "SimpleNote");
+  }) : super(category: "SimpleNote", position: 13);
 
   @override
   Map<String, dynamic> toJson() {
