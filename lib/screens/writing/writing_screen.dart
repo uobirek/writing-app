@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:writing_app/screens/writing/chapter_card.dart';
 import 'package:writing_app/screens/writing/chapter_cubit.dart';
 import 'package:writing_app/screens/writing/chapter_repository.dart';
 import 'package:writing_app/screens/writing/chapter_state.dart';
+import 'package:writing_app/screens/writing/models/chapter.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
 
 class WritingScreen extends StatelessWidget {
@@ -40,6 +42,9 @@ class WritingScreen extends StatelessWidget {
                   children: [
                     Text("Chapters",
                         style: Theme.of(context).textTheme.titleLarge),
+                    const SizedBox(
+                      height: 30,
+                    ),
                     BlocBuilder<ChapterCubit, ChapterState>(
                       builder: (context, state) {
                         if (state is ChapterLoading) {
@@ -51,11 +56,10 @@ class WritingScreen extends StatelessWidget {
                           final chapters = state.chapters;
 
                           return SingleChildScrollView(
-                            child: Wrap(
+                            child: Column(
                               spacing: 10,
-                              runSpacing: 10,
                               children: chapters.map((chapter) {
-                                return Text(chapter.content);
+                                return ChapterCard(chapter: chapter);
                               }).toList(),
                             ),
                           );

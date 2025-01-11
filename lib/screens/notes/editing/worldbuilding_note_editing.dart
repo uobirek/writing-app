@@ -11,7 +11,7 @@ class WorldbuildingNoteEditing extends NoteEditing {
   late TextEditingController cultureController;
   late List<String> pointsOfInterest; // Dynamic list
 
-  WorldbuildingNoteEditing(this.note) : super(note.image) {
+  WorldbuildingNoteEditing(this.note) : super(note.imageUrl) {
     placeNameController = TextEditingController(text: note.placeName);
     geographyController = TextEditingController(text: note.geography);
     cultureController = TextEditingController(text: note.culture);
@@ -56,7 +56,7 @@ class WorldbuildingNoteEditing extends NoteEditing {
       title: placeNameController.text,
       position: note.position,
       createdAt: note.createdAt,
-      image: imagePath ?? 'assets/images/placeholder.png',
+      imageUrl: imagePath ?? 'assets/images/placeholder.png',
 
       placeName: placeNameController.text,
       geography: geographyController.text,

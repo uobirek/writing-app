@@ -22,13 +22,13 @@ Future<Note> createBlankNote(String type, List<Note> cachedNotes) async {
         id: '', // Generate or pass a valid unique ID
         createdAt: now,
         title: '',
-        image: defaultImage,
+        imageUrl: defaultImage,
       );
     case 'CharacterNote':
       return CharacterNote(
         id: '',
         createdAt: now,
-        image: defaultImage,
+        imageUrl: defaultImage,
         name: '',
         role: '',
         gender: '',
@@ -52,7 +52,7 @@ Future<Note> createBlankNote(String type, List<Note> cachedNotes) async {
       return WorldbuildingNote(
         id: '',
         createdAt: now,
-        image: defaultImage,
+        imageUrl: defaultImage,
         title: '',
         placeName: '',
         geography: '',

@@ -8,7 +8,7 @@ class SimpleNoteEditing extends NoteEditing {
   late TextEditingController titleController;
   late TextEditingController contentController;
 
-  SimpleNoteEditing(this.note) : super(note.image) {
+  SimpleNoteEditing(this.note) : super(note.imageUrl) {
     titleController = TextEditingController(text: note.title);
     contentController = TextEditingController(text: note.specialData);
   }
@@ -39,7 +39,7 @@ class SimpleNoteEditing extends NoteEditing {
       id: note.id,
       createdAt: note.createdAt,
       title: titleController.text,
-      image: imagePath ?? 'assets/images/placeholder.png',
+      imageUrl: imagePath ?? 'assets/images/placeholder.png',
     );
   }
 }

@@ -5,7 +5,7 @@ abstract class Note {
   final String id;
   final String title;
   final DateTime createdAt;
-  String? image;
+  String? imageUrl;
   final String category;
   final int position;
 
@@ -14,7 +14,7 @@ abstract class Note {
       required this.id,
       required this.title,
       required this.createdAt,
-      this.image,
+      this.imageUrl,
       required this.category});
 
   // Abstract method to convert a Note to a JSON map

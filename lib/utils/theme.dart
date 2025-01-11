@@ -72,10 +72,10 @@ class GlobalThemeData {
 
         // Bolded Text
         labelLarge: GoogleFonts.workSans(
-          fontSize: 18,
-          fontWeight: FontWeight.w500,
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
           color: colorScheme.onPrimary,
-          letterSpacing: 0.5,
+          letterSpacing: -0.01,
         ),
       ),
     );

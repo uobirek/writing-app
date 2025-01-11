@@ -27,7 +27,7 @@ class CharacterNoteEditing extends NoteEditing {
   late List<String> externalConflicts;
   late List<String> coreValues;
 
-  CharacterNoteEditing(this.note) : super(note.image) {
+  CharacterNoteEditing(this.note) : super(note.imageUrl) {
     nameController = TextEditingController(text: note.name);
     roleController = TextEditingController(text: note.role);
     genderController = TextEditingController(text: note.gender);
@@ -109,7 +109,7 @@ class CharacterNoteEditing extends NoteEditing {
     return CharacterNote(
         id: note.id,
         createdAt: note.createdAt,
-        image: imagePath ?? 'assets/images/placeholder.png',
+        imageUrl: imagePath ?? 'assets/images/placeholder.png',
         name: nameController.text,
         role: roleController.text,
         gender: genderController.text,

@@ -14,7 +14,7 @@ class WorldbuildingNote extends Note {
     required super.id,
     required super.title,
     required super.createdAt,
-    String super.image = 'assets/images/placeholder.jpg',
+    String super.imageUrl = 'assets/images/placeholder.jpg',
     required this.placeName,
     required this.geography,
     required this.culture,
@@ -32,7 +32,7 @@ class WorldbuildingNote extends Note {
       'geography': geography,
       'culture': culture,
       'pointsOfInterest': pointsOfInterest,
-      'image': image,
+      'image': imageUrl,
       'type': 'WorldbuildingNote',
       'position': position,
       'category': category
@@ -48,7 +48,8 @@ class WorldbuildingNote extends Note {
       geography: json['geography'],
       culture: json['culture'],
       pointsOfInterest: List<String>.from(json['pointsOfInterest']),
-      image: json['image'],
+      imageUrl:
+          json['imageUrl'] ?? json['image'] ?? 'assets/images/placeholder.jpg',
       position: json['position'],
     );
   }

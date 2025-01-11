@@ -31,9 +31,9 @@ class NoteCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 12,
             children: [
-              if (note.image != null)
+              if (note.imageUrl != null)
                 DynamicImageWidget(
-                  imagePath: note.image!,
+                  imagePath: note.imageUrl!,
                   width: 140,
                   height: 140,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -122,7 +122,7 @@ class NoteCard extends StatelessWidget {
               onPressed: () {
                 context
                     .read<NoteCubit>()
-                    .deleteNote(note.id); // Trigger the delete action
+                    .deleteNote(note.id, "1"); // Trigger the delete action
                 Navigator.of(context).pop(); // Close the dialog
               },
               child: const Text(

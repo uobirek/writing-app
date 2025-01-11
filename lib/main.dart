@@ -1,12 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:writing_app/data/notes_data.dart';
 import 'package:writing_app/firebase_options.dart';
 import 'package:writing_app/screens/notes/bloc/note_cubit.dart';
 import 'package:writing_app/screens/notes/models/note.dart';
 import 'package:writing_app/screens/notes/repositories/note_repository.dart';
-import 'package:writing_app/screens/notes/services/firebase_service.dart';
 import 'package:writing_app/screens/writing/models/chapter.dart';
 import 'package:writing_app/utils/router.dart';
 import 'package:writing_app/utils/theme.dart';

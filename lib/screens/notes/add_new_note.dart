@@ -53,10 +53,15 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
 
   void _saveNote() {
     if (_formKey.currentState!.validate()) {
+      // Update the note with image path
       final newNote = noteEditing.buildUpdatedNote();
 
       // Use the NoteCubit to add the note
-      context.read<NoteCubit>().addNote(newNote);
+      context.read<NoteCubit>().addNote(
+            newNote,
+            noteEditing.selectedImage, // Pass the selected image file
+            "1", // Replace with actual user ID
+          );
     }
   }
 
@@ -88,8 +93,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
             ],
           ),
           body: _isLoading
-              ? const Center(
-                  child: CircularProgressIndicator()) // Show loading spinner
+              ? const Center(child: CircularProgressIndicator())
               : Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
@@ -111,6 +115,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                         decoration: const InputDecoration(
                             labelText: 'Select Note Type'),
                       ),
+                      const SizedBox(height: 16),
                       const SizedBox(height: 16),
                       Expanded(
                         child: SingleChildScrollView(

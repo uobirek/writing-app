@@ -90,10 +90,13 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                                   final updatedNote =
                                       noteEditing.buildUpdatedNote();
 
-                                  // Update the note using Bloc
-                                  context
-                                      .read<NoteCubit>()
-                                      .updateNote(updatedNote);
+                                  // Use the NoteCubit to add the note
+                                  context.read<NoteCubit>().updateNote(
+                                        updatedNote,
+                                        noteEditing
+                                            .selectedImage, // Pass the selected image file
+                                        "1", // Replace with actual user ID
+                                      );
                                 }
                               },
                               child: const Text("Save Changes"),

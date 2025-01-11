@@ -39,7 +39,7 @@ class CharacterNote extends Note {
   CharacterNote({
     required super.id,
     required super.createdAt,
-    String super.image = 'assets/images/placeholder.jpg',
+    String super.imageUrl = 'assets/images/placeholder.jpg',
     required this.name,
     required this.gender,
     required this.age,
@@ -85,7 +85,7 @@ class CharacterNote extends Note {
       'internalConflicts': internalConflicts ?? [],
       'externalConflicts': externalConflicts ?? [],
       'coreValues': coreValues ?? [],
-      'image': image,
+      'image': imageUrl,
       'type': 'CharacterNote',
       'category': category
     };
@@ -128,7 +128,8 @@ class CharacterNote extends Note {
       coreValues: json['coreValues'] != null
           ? List<String>.from(json['coreValues'])
           : [],
-      image: json['image'] ?? 'assets/images/placeholder.jpg',
+      imageUrl:
+          json['imageUrl'] ?? json['image'] ?? 'assets/images/placeholder.jpg',
       position: json['position'],
     );
   }

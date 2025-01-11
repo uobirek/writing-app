@@ -74,9 +74,9 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Note Image
-            if (note.image != null)
+            if (note.imageUrl != null)
               DynamicImageWidget(
-                imagePath: note.image!,
+                imagePath: note.imageUrl!,
                 width: 140,
                 height: 140,
                 borderRadius: const BorderRadius.all(Radius.circular(10)),

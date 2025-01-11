@@ -12,7 +12,7 @@ class SimpleNote extends Note {
     required super.id,
     required super.title,
     required super.createdAt,
-    required super.image,
+    required super.imageUrl,
   }) : super(category: "SimpleNote", position: 13);
 
   @override

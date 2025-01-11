@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:writing_app/screens/notes/bloc/note_state.dart';
 import 'package:writing_app/screens/notes/models/note.dart';
@@ -43,12 +45,11 @@ class NoteCubit extends Cubit<NoteState> {
     }
   }
 
-  /// Add a new note
-  Future<void> addNote(Note newNote) async {
+  Future<void> addNote(Note newNote, File? imageFile, String userId) async {
     emit(NoteUpdating());
     try {
-      await noteRepository.addNote(newNote);
-      allNotes.add(newNote); // Update cached list
+      await noteRepository.addNote(newNote, imageFile, userId);
+      allNotes.add(newNote);
       allNotes = await noteRepository.fetchAllNotes();
       emit(NoteLoaded(List.from(allNotes))); // Emit updated list
     } catch (e) {
@@ -56,29 +57,24 @@ class NoteCubit extends Cubit<NoteState> {
     }
   }
 
-  Future<void> deleteNote(String noteId) async {
+  Future<void> deleteNote(String noteId, String userId) async {
     try {
-      // Call repository to delete the note from Firestore
-      await noteRepository.deleteNoteById(noteId);
-
-      // Remove the note from local list
+      await noteRepository.deleteNoteById(noteId, userId);
       allNotes.removeWhere((note) => note.id == noteId);
-
-      // Emit updated state after deletion
       emit(NoteLoaded(allNotes));
     } catch (e) {
       emit(NoteError("Failed to delete note: ${e.toString()}"));
     }
   }
 
-  /// Update an existing note
-  Future<void> updateNote(Note updatedNote) async {
+  Future<void> updateNote(
+      Note updatedNote, File? imageFile, String userId) async {
     emit(NoteUpdating());
     try {
-      await noteRepository.updateNote(updatedNote);
+      await noteRepository.updateNote(updatedNote, imageFile, userId);
       final index = allNotes.indexWhere((note) => note.id == updatedNote.id);
       if (index != -1) {
-        allNotes[index] = updatedNote; // Update cached list
+        allNotes[index] = updatedNote;
         emit(NoteLoaded(List.from(allNotes))); // Emit updated list
       }
     } catch (e) {
