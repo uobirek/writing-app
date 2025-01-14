@@ -8,6 +8,8 @@ import 'package:writing_app/screens/writing/models/chapter.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
 
 class WritingScreen extends StatelessWidget {
+  const WritingScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

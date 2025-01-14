@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:writing_app/screens/writing/models/chapter.dart';
 
 class ChapterCard extends StatelessWidget {
@@ -26,10 +27,10 @@ class ChapterCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(chapter.title,
+                      Text(chapter.title ?? '',
                           style: Theme.of(context).textTheme.labelLarge),
                       Text(
-                        chapter.content,
+                        chapter.content ?? '',
                         style: Theme.of(context).textTheme.bodyMedium,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -37,7 +38,7 @@ class ChapterCard extends StatelessWidget {
                   ),
                 ),
                 InkWell(
-                    onTap: () => {},
+                    onTap: () => {context.go('/chapter/${chapter.id}')},
                     child: Icon(
                       Icons.create_outlined,
                       color: Theme.of(context).colorScheme.secondary,

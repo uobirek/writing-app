@@ -7,6 +7,8 @@ import 'package:writing_app/screens/notes/add_new_note.dart';
 import 'package:writing_app/screens/notes/note_details_screen.dart';
 import 'package:writing_app/screens/notes/note_editing_screen.dart';
 import 'package:writing_app/screens/notes/notes_screen.dart';
+import 'package:writing_app/screens/writing/chapter_cubit.dart';
+import 'package:writing_app/screens/writing/chapter_editing_screen.dart';
 import 'package:writing_app/screens/writing/writing_screen.dart';
 
 class AppRouter {
@@ -57,6 +59,14 @@ class AppRouter {
           path: '/add_note',
           builder: (context, state) => const AddNoteScreen(),
         ),
+        GoRoute(
+            path: '/chapter/:id',
+            builder: (context, state) {
+              final chapterId = state.params['id']!;
+              return BlocProvider.value(
+                  value: context.read<ChapterCubit>(),
+                  child: EditChapterScreen(chapterId: chapterId));
+            })
       ],
       errorBuilder: (context, state) => Scaffold(
         body: Center(

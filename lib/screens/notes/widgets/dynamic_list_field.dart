@@ -27,14 +27,18 @@ class DynamicListField extends StatelessWidget {
           itemBuilder: (context, index) {
             return Row(
               children: [
-                Expanded(
-                  child: TextFormField(
-                    initialValue: list[index],
-                    decoration:
-                        formInputDecoration(context: context, label: label),
-                    onChanged: (value) {
-                      list[index] = value;
-                    },
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: SizedBox(
+                    width: 400,
+                    child: TextFormField(
+                      initialValue: list[index],
+                      decoration:
+                          formInputDecoration(context: context, label: ''),
+                      onChanged: (value) {
+                        list[index] = value;
+                      },
+                    ),
                   ),
                 ),
                 IconButton(

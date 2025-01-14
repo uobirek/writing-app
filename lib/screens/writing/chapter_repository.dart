@@ -14,7 +14,7 @@ class ChapterRepository {
           .orderBy('position') // Fetch chapters in order
           .get();
       return querySnapshot.docs
-          .map((doc) => Chapter.fromJson(doc.data() as Map<String, dynamic>))
+          .map((doc) => Chapter.fromJson(doc.data()))
           .toList();
     } catch (e) {
       throw Exception('Failed to fetch chapters: $e');

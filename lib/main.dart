@@ -5,6 +5,8 @@ import 'package:writing_app/firebase_options.dart';
 import 'package:writing_app/screens/notes/bloc/note_cubit.dart';
 import 'package:writing_app/screens/notes/models/note.dart';
 import 'package:writing_app/screens/notes/repositories/note_repository.dart';
+import 'package:writing_app/screens/writing/chapter_cubit.dart';
+import 'package:writing_app/screens/writing/chapter_repository.dart';
 import 'package:writing_app/screens/writing/models/chapter.dart';
 import 'package:writing_app/utils/router.dart';
 import 'package:writing_app/utils/theme.dart';
@@ -63,8 +65,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => NoteCubit(NoteRepository()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<NoteCubit>(
+          create: (context) => NoteCubit(NoteRepository()),
+        ),
+        BlocProvider<ChapterCubit>(
+          create: (context) => ChapterCubit(ChapterRepository()),
+        ),
+      ],
       child: MaterialApp.router(
         themeMode: ThemeMode.light,
         theme: GlobalThemeData.lightThemeData,

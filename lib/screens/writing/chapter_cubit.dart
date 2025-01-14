@@ -31,6 +31,20 @@ class ChapterCubit extends Cubit<ChapterState> {
     }
   }
 
+  Future<void> updateChapter(Chapter chapter) async {
+    emit(ChapterUpdating());
+    try {
+      await chapterRepository.updateChapter(chapter);
+      int index = allChapters.indexWhere((c) => c.id == chapter.id);
+      if (index != -1) {
+        allChapters[index] = chapter;
+      }
+      emit(ChapterLoaded(List.from(allChapters)));
+    } catch (e) {
+      emit(ChapterError('Failed to update chapter: $e'));
+    }
+  }
+
   Future<void> deleteChapter(String chapterId) async {
     try {
       await chapterRepository.deleteChapter(chapterId);

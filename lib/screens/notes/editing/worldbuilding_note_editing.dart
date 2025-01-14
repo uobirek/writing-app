@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:writing_app/screens/notes/editing/note_editing.dart';
 import 'package:writing_app/screens/notes/models/worldbuilding_note.dart';
-import 'package:writing_app/screens/notes/widgets/custom_text_field.dart';
+import 'package:writing_app/widgets/custom_text_field.dart';
 import 'package:writing_app/screens/notes/widgets/dynamic_list_field.dart';
+import 'package:writing_app/widgets/large_text_field.dart';
 
 class WorldbuildingNoteEditing extends NoteEditing {
   final WorldbuildingNote note;
@@ -31,11 +32,11 @@ class WorldbuildingNoteEditing extends NoteEditing {
             controller: placeNameController,
             label: 'Place Name',
           ),
-          CustomTextField(
+          LargeTextField(
             controller: geographyController,
             label: 'Geography Description',
           ),
-          CustomTextField(
+          LargeTextField(
             controller: cultureController,
             label: 'Culture Description',
           ),

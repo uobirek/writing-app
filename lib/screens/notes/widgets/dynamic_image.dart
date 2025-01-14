@@ -83,7 +83,7 @@ class DynamicImageWidget extends StatelessWidget {
   String _getOptimizedCloudinaryUrl(String url) {
     // Example Cloudinary transformation: Resize to width & height
     // Add transformations like 'w_200,h_200,c_fill' in the URL
-    final transformation =
+    const transformation =
         'c_fill'; // Use BoxFit.cover equivalent transformation
     final widthParam = width != null ? 'w_${width!.toInt()}' : '';
     final heightParam = height != null ? 'h_${height!.toInt()}' : '';

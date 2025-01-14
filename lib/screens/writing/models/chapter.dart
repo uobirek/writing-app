@@ -1,51 +1,43 @@
 class Chapter {
-  final String id; // Unique ID for Firestore and app
-  final String title; // Chapter title
-  final String content; // Main text/content of the chapter
-  final int position; // Position/order in the story
+  final String id;
+  final String? title;
+  final int? position;
+  final String? content; // Plain text content
+  final List<dynamic>? jsonContent; // Delta JSON for rich text
 
   Chapter({
     required this.id,
-    required this.title,
-    required this.content,
-    required this.position,
+    this.title,
+    this.position,
+    this.content,
+    this.jsonContent,
   });
 
-  // Convert Chapter to JSON for Firestore
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'title': title,
-      'content': content,
-      'position': position,
-    };
-  }
-
-  // Create a Chapter object from Firestore JSON
-  factory Chapter.fromJson(Map<String, dynamic> json) {
+  // Constructor for an empty chapter
+  factory Chapter.empty() {
     return Chapter(
-      id: json['id'] as String,
-      title: json['title'] as String,
-      content: json['content'] as String,
-      position: json['position'] as int,
+      id: '',
+      title: '',
+      position: 0,
+      content: '',
+      jsonContent: [],
     );
   }
 
-  // Allow copying with modifications (useful for updates)
-  Chapter copyWith({
-    String? id,
-    String? title,
-    String? content,
-    int? position,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  }) {
-    return Chapter(
-      id: id ?? this.id,
-      title: title ?? this.title,
-      content: content ?? this.content,
-      position: position ?? this.position,
-    );
-  }
+  // From and to JSON methods
+  factory Chapter.fromJson(Map<String, dynamic> json) => Chapter(
+        id: json['id'],
+        title: json['title'],
+        position: json['position'],
+        content: json['content'],
+        jsonContent: json['jsonContent'],
+      );
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'title': title,
+        'position': position,
+        'content': content,
+        'jsonContent': jsonContent,
+      };
 }

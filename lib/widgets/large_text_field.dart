@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:writing_app/screens/notes/widgets/input_decoration.dart';
 
-class CustomTextField extends StatefulWidget {
+class LargeTextField extends StatefulWidget {
   final TextEditingController controller;
   final String label;
-  final bool isNumber;
 
-  const CustomTextField({
+  const LargeTextField({
     super.key,
     required this.controller,
     required this.label,
-    this.isNumber = false,
   });
 
   @override
-  _CustomTextFieldState createState() => _CustomTextFieldState();
+  _LargeTextFieldState createState() => _LargeTextFieldState();
 }
 
-class _CustomTextFieldState extends State<CustomTextField> {
+class _LargeTextFieldState extends State<LargeTextField> {
   late FocusNode _focusNode;
 
   @override
@@ -47,16 +45,21 @@ class _CustomTextFieldState extends State<CustomTextField> {
         onExit: (_) {
           setState(() {});
         },
-        child: SizedBox(
-          width: 500,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxHeight: double.infinity, // Allow infinite vertical growth
+          ),
           child: TextFormField(
             cursorColor: Theme.of(context).colorScheme.secondary,
             controller: widget.controller,
             focusNode: _focusNode,
-            decoration:
-                formInputDecoration(context: context, label: widget.label),
-            keyboardType:
-                widget.isNumber ? TextInputType.number : TextInputType.text,
+            decoration: formInputDecoration(
+              context: context,
+              label: widget.label,
+            ),
+            keyboardType: TextInputType.multiline,
+            maxLines: null, // Dynamically grow with content
+            minLines: 1, // Start with a single line
           ),
         ),
       ),

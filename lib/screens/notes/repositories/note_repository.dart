@@ -2,13 +2,6 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import '../models/note.dart';
-import '../models/character_note.dart';
-import '../models/worldbuilding_note.dart';
-
-import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/note.dart';
 import '../models/character_note.dart';
 import '../models/worldbuilding_note.dart';
