@@ -22,7 +22,12 @@ class ChapterCard extends StatelessWidget {
             child: Row(
               spacing: 22,
               children: [
-                const Icon(Icons.drag_indicator),
+                Text(
+                  chapter.position.toString(),
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                ),
                 Flexible(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

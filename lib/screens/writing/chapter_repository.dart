@@ -21,12 +21,13 @@ class ChapterRepository {
     }
   }
 
-  Future<void> addChapter(Chapter chapter) async {
+  Future<Chapter> addChapter(Chapter chapter) async {
     try {
       final docRef =
           await _firestore.collection('chapters').add(chapter.toJson());
-      await docRef
-          .update({'id': docRef.id}); // Update Firestore with generated ID
+      await docRef.update({'id': docRef.id});
+
+      return chapter.copyWith(id: docRef.id);
     } catch (e) {
       throw Exception('Failed to add chapter: $e');
     }

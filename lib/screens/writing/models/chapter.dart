@@ -1,19 +1,18 @@
 class Chapter {
-  final String id;
+  final String? id;
   final String? title;
   final int? position;
-  final String? content; // Plain text content
-  final List<dynamic>? jsonContent; // Delta JSON for rich text
+  final String? content;
+  final List<dynamic>? jsonContent;
 
   Chapter({
-    required this.id,
+    this.id,
     this.title,
     this.position,
     this.content,
     this.jsonContent,
   });
 
-  // Constructor for an empty chapter
   factory Chapter.empty() {
     return Chapter(
       id: '',
@@ -24,7 +23,6 @@ class Chapter {
     );
   }
 
-  // From and to JSON methods
   factory Chapter.fromJson(Map<String, dynamic> json) => Chapter(
         id: json['id'],
         title: json['title'],
@@ -40,4 +38,20 @@ class Chapter {
         'content': content,
         'jsonContent': jsonContent,
       };
+
+  Chapter copyWith({
+    String? id,
+    String? title,
+    int? position,
+    String? content,
+    List<dynamic>? jsonContent,
+  }) {
+    return Chapter(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      position: position ?? this.position,
+      content: content ?? this.content,
+      jsonContent: jsonContent ?? this.jsonContent,
+    );
+  }
 }

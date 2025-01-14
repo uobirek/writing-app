@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:writing_app/authentication/login_screen.dart';
 import 'package:writing_app/screens/notes/bloc/note_cubit.dart';
 import 'package:writing_app/screens/home/home_screen.dart';
 import 'package:writing_app/screens/notes/add_new_note.dart';
@@ -65,8 +66,21 @@ class AppRouter {
               final chapterId = state.params['id']!;
               return BlocProvider.value(
                   value: context.read<ChapterCubit>(),
-                  child: EditChapterScreen(chapterId: chapterId));
-            })
+                  child: EditChapterScreen(
+                    chapterId: chapterId,
+                    isNewChapter: false,
+                  ));
+            }),
+        GoRoute(
+            path: '/new-chapter',
+            builder: (context, state) {
+              return EditChapterScreen(chapterId: "", isNewChapter: true);
+            }),
+        GoRoute(
+            path: '/login',
+            builder: (context, state) {
+              return LoginScreen();
+            }),
       ],
       errorBuilder: (context, state) => Scaffold(
         body: Center(

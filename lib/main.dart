@@ -1,16 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:writing_app/firebase_options.dart';
 import 'package:writing_app/screens/notes/bloc/note_cubit.dart';
-import 'package:writing_app/screens/notes/models/note.dart';
 import 'package:writing_app/screens/notes/repositories/note_repository.dart';
 import 'package:writing_app/screens/writing/chapter_cubit.dart';
 import 'package:writing_app/screens/writing/chapter_repository.dart';
-import 'package:writing_app/screens/writing/models/chapter.dart';
 import 'package:writing_app/utils/router.dart';
 import 'package:writing_app/utils/theme.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,45 +18,6 @@ void main() async {
   );
 
   runApp(const MyApp());
-}
-
-Future<void> addNote(Note note) async {
-  final firestore = FirebaseFirestore.instance;
-
-  try {
-    await firestore.collection('notes').doc(note.id).set(note.toJson());
-    print('Note added successfully!');
-  } catch (e) {
-    print('Error adding note: $e');
-  }
-}
-
-Future<void> addChapter(Chapter chapter) async {
-  final firestore = FirebaseFirestore.instance;
-
-  try {
-    // Add the chapter to the 'chapters' collection using the chapter's ID
-    await firestore
-        .collection('chapters')
-        .doc(chapter.id)
-        .set(chapter.toJson());
-    print('Chapter added successfully!');
-  } catch (e) {
-    print('Error adding chapter: $e');
-  }
-}
-
-Future<void> createNoteCollection(
-    String noteId, Map<String, dynamic> noteData) async {
-  final firestore = FirebaseFirestore.instance;
-
-  try {
-    // Adds a new document to the 'notes' collection with the specified noteId
-    await firestore.collection('notes').doc(noteId).set(noteData);
-    print('Collection and document created successfully!');
-  } catch (e) {
-    print('Error creating collection/document: $e');
-  }
 }
 
 class MyApp extends StatelessWidget {
@@ -79,24 +39,37 @@ class MyApp extends StatelessWidget {
         theme: GlobalThemeData.lightThemeData,
         darkTheme: GlobalThemeData.darkThemeData,
         title: 'Writing App',
-        routerConfig: AppRouter.router, // Use the GoRouter configuration
+        routerConfig: AppRouter.router, // Use GoRouter for navigation
       ),
     );
   }
 }
 
-// Future<void> migrateAllNotesToFirestore() async {
-//   final FirebaseService firebaseService = FirebaseService();
+// Modified AuthWrapper to work with GoRouter
+class AuthWrapper extends StatelessWidget {
+  const AuthWrapper({super.key});
 
-//   for (final note in notes) {
-//     try {
-//       // Save the note to Firestore
-//       await firebaseService.saveNote(note);
-//       print("Successfully migrated note with ID: ${note.id}");
-//     } catch (e) {
-//       print("Failed to migrate note with ID: ${note.id}. Error: $e");
-//     }
-//   }
-
-//   print("Migration completed!");
-// }
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (snapshot.hasData) {
+          // Navigate to home screen if the user is logged in
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            context.go('/'); // Go to home route
+          });
+        } else {
+          // Navigate to login screen if the user is not logged in
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            context.go('/login'); // Go to login route
+          });
+        }
+        return const SizedBox.shrink(); // Placeholder while navigating
+      },
+    );
+  }
+}

@@ -23,8 +23,8 @@ class ChapterCubit extends Cubit<ChapterState> {
   Future<void> addChapter(Chapter newChapter) async {
     emit(ChapterUpdating());
     try {
-      await chapterRepository.addChapter(newChapter);
-      allChapters.add(newChapter);
+      final chapterWithId = await chapterRepository.addChapter(newChapter);
+      allChapters.add(chapterWithId);
       emit(ChapterLoaded(List.from(allChapters)));
     } catch (e) {
       emit(ChapterError('Failed to add chapter: $e'));

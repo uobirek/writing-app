@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:writing_app/screens/writing/chapter_card.dart';
 import 'package:writing_app/screens/writing/chapter_cubit.dart';
 import 'package:writing_app/screens/writing/chapter_repository.dart';
@@ -67,10 +68,13 @@ class WritingScreen extends StatelessWidget {
                           );
                         } else {
                           return const Center(
-                              child: Text('No notes available.'));
+                              child: Text('No chapter available.'));
                         }
                       },
-                    )
+                    ),
+                    InkWell(
+                        onTap: () => {context.go('/new-chapter')},
+                        child: Icon(Icons.add))
                   ],
                 ),
               ),

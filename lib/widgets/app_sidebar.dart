@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AppSidebar extends StatefulWidget {
   final String activeRoute;
@@ -35,6 +36,20 @@ class _AppSidebarState extends State<AppSidebar> {
     });
   }
 
+  Future<void> _logout() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      context.go('/login'); // Navigate to the login screen after logging out
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Logout failed: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,7 +58,7 @@ class _AppSidebarState extends State<AppSidebar> {
         color: Theme.of(context).colorScheme.primary,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
+            color: Colors.black.withAlpha(25),
             blurRadius: 30,
             spreadRadius: 6,
             offset: const Offset(0, 20),
@@ -99,6 +114,8 @@ class _AppSidebarState extends State<AppSidebar> {
             route: '/research',
             isActive: widget.activeRoute == '/research',
           ),
+          const Spacer(), // Push logout button to the bottom
+          _buildLogoutItem(),
         ],
       ),
     );
@@ -119,29 +136,19 @@ class _AppSidebarState extends State<AppSidebar> {
         padding: const EdgeInsets.symmetric(vertical: 5),
         child: GestureDetector(
           onTap: () {
-            // Navigate using GoRouter
-            context.go(route); // This replaces Navigator.pushReplacementNamed
+            context.go(route); // Navigate using GoRouter
           },
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 0),
+            duration: const Duration(milliseconds: 200),
             height: 45,
             width: _isExpanded ? 200 : 60,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: isActive
-                  ? Theme.of(context)
-                      .colorScheme
-                      .secondary
-                      .withValues(alpha: 0.3)
+                  ? Theme.of(context).colorScheme.secondary.withAlpha(50)
                   : isHovered
-                      ? Theme.of(context)
-                          .colorScheme
-                          .secondary
-                          .withValues(alpha: 0.2)
-                      : Theme.of(context)
-                          .colorScheme
-                          .primary
-                          .withValues(alpha: 0.3),
+                      ? Theme.of(context).colorScheme.secondary.withAlpha(30)
+                      : Theme.of(context).colorScheme.primary.withAlpha(50),
             ),
             child: Row(
               children: [
@@ -160,6 +167,40 @@ class _AppSidebarState extends State<AppSidebar> {
                                   Theme.of(context).colorScheme.onSecondary)),
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLogoutItem() {
+    final isHovered = _hoveredRoute == 'logout';
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) => _onHover('logout'),
+      onExit: (_) => _onExitHover(),
+      child: GestureDetector(
+        onTap: _logout, // Call the logout method
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          height: 45,
+          width: _isExpanded ? 200 : 60,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: isHovered
+                ? Theme.of(context).colorScheme.error.withAlpha(30)
+                : Theme.of(context).colorScheme.error.withAlpha(50),
+          ),
+          child: Row(
+            children: [
+              const SizedBox(width: 15),
+              Icon(Icons.logout, color: Theme.of(context).colorScheme.onError),
+              if (_isExpanded) const SizedBox(width: 12),
+              if (_isExpanded)
+                Text('Logout',
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.onError)),
+            ],
           ),
         ),
       ),
