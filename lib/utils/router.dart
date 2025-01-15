@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:writing_app/authentication/login_screen.dart';
+import 'package:writing_app/models/project_list_screen.dart';
 import 'package:writing_app/screens/notes/bloc/note_cubit.dart';
 import 'package:writing_app/screens/home/home_screen.dart';
 import 'package:writing_app/screens/notes/add_new_note.dart';
@@ -15,7 +16,7 @@ import 'package:writing_app/screens/writing/writing_screen.dart';
 class AppRouter {
   static GoRouter get router {
     return GoRouter(
-      initialLocation: '/', // Set the initial route
+      initialLocation: '/login', // Set the initial route
       routes: [
         GoRoute(
           path: '/',
@@ -80,6 +81,11 @@ class AppRouter {
             path: '/login',
             builder: (context, state) {
               return LoginScreen();
+            }),
+        GoRoute(
+            path: '/projects',
+            builder: (context, state) {
+              return ProjectListScreen();
             }),
       ],
       errorBuilder: (context, state) => Scaffold(

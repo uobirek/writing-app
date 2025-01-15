@@ -95,7 +95,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                                         updatedNote,
                                         noteEditing
                                             .selectedImage, // Pass the selected image file
-                                        "1", // Replace with actual user ID
+                                        // Replace with actual user ID
                                       );
                                 }
                               },

@@ -67,7 +67,7 @@ class GlobalThemeData {
           fontSize: 12,
           fontWeight: FontWeight.w600,
           color: colorScheme.onSecondary,
-          letterSpacing: 0,
+          letterSpacing: 0.1,
         ),
 
         // Bolded Text
@@ -92,6 +92,7 @@ class GlobalThemeData {
     secondary: Color(0xFFA7A3EB),
     secondaryContainer: Color.fromARGB(255, 233, 232, 250),
     onSecondary: Color.fromARGB(255, 130, 127, 192),
+    onTertiary: Color.fromARGB(255, 175, 138, 5),
     error: Colors.redAccent,
     onError: Colors.white,
     surface: Color(0xFFFEFEFE),

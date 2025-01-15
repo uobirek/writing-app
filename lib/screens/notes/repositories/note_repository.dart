@@ -51,14 +51,14 @@ class NoteRepository {
       String? imageUrl;
 
       if (imageFile != null) {
-        // Upload image to Cloudinary
         imageUrl = await uploadImageToCloudinary(imageFile);
       }
 
-      // Add note to Firestore
-      await _firestore.collection('notes').add({
+      // Add note to Firestore under the user's collection
+      await _firestore.collection('users').doc(userId).collection('notes').add({
         ...note.toJson(),
-        'imageUrl': imageUrl, // Add image URL if available
+        'imageUrl': imageUrl,
+        'userId': userId, // Ensure the note is tied to the user
       });
     } catch (e) {
       print('Error adding note: $e');
@@ -95,17 +95,21 @@ class NoteRepository {
   /// Delete note and its associated image
   Future<void> deleteNoteById(String noteId, String userId) async {
     try {
-      final noteRef = _firestore.collection('notes').doc(noteId);
+      final noteRef = _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('notes')
+          .doc(noteId);
+
       final noteData = await noteRef.get();
 
       if (noteData.exists) {
         final imageUrl = noteData.data()?['imageUrl'];
-
         if (imageUrl != null) {
-          await deleteImageFromCloudinary(imageUrl); // Delete associated image
+          await deleteImageFromCloudinary(imageUrl); // Delete the image
         }
 
-        await noteRef.delete(); // Delete the note itself
+        await noteRef.delete(); // Delete the note
       }
     } catch (e) {
       print('Error deleting note: $e');
@@ -114,12 +118,13 @@ class NoteRepository {
   }
 
   /// Fetch all notes from Firestore
-  Future<List<Note>> fetchAllNotes() async {
+  Future<List<Note>> fetchAllNotes(String userId) async {
     try {
       final snapshot = await _firestore
+          .collection('users')
+          .doc(userId)
           .collection('notes')
-          .orderBy(
-              'position') // Order by the 'position' field to get notes in the correct order
+          .orderBy('position') // Order notes by 'position'
           .get();
 
       return snapshot.docs.map((doc) {
@@ -132,13 +137,18 @@ class NoteRepository {
     }
   }
 
-  Future<List<Note>> fetchNotesByCategory(String category) async {
+  Future<List<Note>> fetchNotesByCategory(
+      String userId, String category) async {
+    print(category);
     try {
       final snapshot = await _firestore
+          .collection('users')
+          .doc(userId)
           .collection('notes')
           .where('category', isEqualTo: category)
-          .orderBy('position') // Ensure they are ordered by 'position' field
+          .orderBy('position')
           .get();
+
       return snapshot.docs.map((doc) {
         final data = doc.data();
         return _mapJsonToNote(data, doc.id);

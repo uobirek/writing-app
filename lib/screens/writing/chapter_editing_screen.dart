@@ -109,47 +109,62 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
           return SidebarLayout(
             activeRoute: '/chapters',
             child: Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Theme.of(context).canvasColor,
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.1),
+                          blurRadius: 30,
+                          spreadRadius: 6,
+                          offset: const Offset(0, 10)),
+                    ]),
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        child: MinimalTextField(
-                          controller: _titleController,
-                          hintText: 'Title',
-                        ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: MinimalTextField(
+                              controller: _titleController,
+                              hintText: 'Title',
+                            ),
+                          ),
+                          const SizedBox(height: 15),
+                          CustomTextField(
+                            controller: _positionController,
+                            label: "Number",
+                            isNumber: true,
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 15),
-                      CustomTextField(
-                        controller: _positionController,
-                        label: "Number",
-                        isNumber: true,
+                      QuillSimpleToolbar(
+                        controller: _controller,
+                        configurations:
+                            QuillSimpleToolbarConfigurations(customButtons: [
+                          QuillToolbarCustomButtonOptions(
+                            icon: const Icon(Icons.save),
+                            onPressed: () {
+                              _saveChapter(context);
+                            },
+                          ),
+                        ]),
+                      ),
+                      const SizedBox(height: 10),
+                      Expanded(
+                        child: QuillEditor.basic(
+                          controller: _controller,
+                          configurations: const QuillEditorConfigurations(),
+                        ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 15),
-                  QuillSimpleToolbar(
-                    controller: _controller,
-                    configurations:
-                        QuillSimpleToolbarConfigurations(customButtons: [
-                      QuillToolbarCustomButtonOptions(
-                        icon: const Icon(Icons.save),
-                        onPressed: () {
-                          _saveChapter(context);
-                        },
-                      ),
-                    ]),
-                  ),
-                  const SizedBox(height: 10),
-                  Expanded(
-                    child: QuillEditor.basic(
-                      controller: _controller,
-                      configurations: const QuillEditorConfigurations(),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           );

@@ -60,7 +60,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
       context.read<NoteCubit>().addNote(
             newNote,
             noteEditing.selectedImage, // Pass the selected image file
-            "1", // Replace with actual user ID
+            // Replace with actual user ID
           );
     }
   }

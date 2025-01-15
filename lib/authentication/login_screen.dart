@@ -8,8 +8,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final _emailController =
+      TextEditingController(text: 'urszula.obirek@gmail.com');
+  final _passwordController = TextEditingController(text: 'haslo123');
   final _auth = FirebaseAuth.instance;
 
   void _login() async {
@@ -20,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       // Navigate to the main screen after login
-      context.go('/writing'); // Or your desired main route
+      context.go('/projects'); // Go to home route
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Login failed: $e')),
@@ -36,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       // Navigate to the main screen after registration
-      context.go('/writing');
+      context.go('/projects'); // Go to home route
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Registration failed: $e')),

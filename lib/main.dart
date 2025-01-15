@@ -1,8 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:writing_app/authentication/login_screen.dart';
 import 'package:writing_app/firebase_options.dart';
+import 'package:writing_app/models/project.dart';
+import 'package:writing_app/models/project_cubit.dart';
+import 'package:writing_app/models/project_list_screen.dart';
+import 'package:writing_app/models/project_repository.dart';
 import 'package:writing_app/screens/notes/bloc/note_cubit.dart';
 import 'package:writing_app/screens/notes/repositories/note_repository.dart';
 import 'package:writing_app/screens/writing/chapter_cubit.dart';
@@ -33,19 +39,25 @@ class MyApp extends StatelessWidget {
         BlocProvider<ChapterCubit>(
           create: (context) => ChapterCubit(ChapterRepository()),
         ),
+        BlocProvider<ProjectCubit>(
+          create: (context) {
+            print(
+                'Initializing ProjectCubit'); // Debug print to confirm initialization
+            return ProjectCubit(ProjectRepository());
+          },
+        ),
       ],
       child: MaterialApp.router(
         themeMode: ThemeMode.light,
         theme: GlobalThemeData.lightThemeData,
         darkTheme: GlobalThemeData.darkThemeData,
         title: 'Writing App',
-        routerConfig: AppRouter.router, // Use GoRouter for navigation
+        routerConfig: AppRouter.router, // GoRouter is fully initialized here
       ),
     );
   }
 }
 
-// Modified AuthWrapper to work with GoRouter
 class AuthWrapper extends StatelessWidget {
   const AuthWrapper({super.key});
 
@@ -57,13 +69,18 @@ class AuthWrapper extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         }
+
         if (snapshot.hasData) {
-          // Navigate to home screen if the user is logged in
+          // User is signed in, trigger fetchProjects
+          final userId = snapshot.data?.uid ?? '';
+          if (userId.isNotEmpty) {
+            context.read<ProjectCubit>().fetchProjects(userId);
+          }
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            context.go('/'); // Go to home route
+            context.go('/projects'); // Go to home route
           });
         } else {
-          // Navigate to login screen if the user is not logged in
+          // User is not signed in
           WidgetsBinding.instance.addPostFrameCallback((_) {
             context.go('/login'); // Go to login route
           });

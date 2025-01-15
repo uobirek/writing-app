@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:writing_app/models/project.dart';
+import 'package:writing_app/models/project_repository.dart';
 import 'package:writing_app/screens/notes/bloc/note_cubit.dart';
 import 'package:writing_app/screens/notes/models/character_note.dart';
 import 'package:writing_app/screens/notes/models/note.dart';
@@ -93,6 +95,7 @@ class NoteCard extends StatelessWidget {
     ).then((value) {
       if (value == 0) {
         // Handle "Edit" action
+
         context.go('/note/${note.id}/editing');
       } else if (value == 1) {
         // Handle "Preview" action
@@ -122,7 +125,7 @@ class NoteCard extends StatelessWidget {
               onPressed: () {
                 context
                     .read<NoteCubit>()
-                    .deleteNote(note.id, "1"); // Trigger the delete action
+                    .deleteNote(note.id); // Trigger the delete action
                 Navigator.of(context).pop(); // Close the dialog
               },
               child: const Text(
@@ -154,16 +157,24 @@ class NoteInfo extends StatelessWidget {
         children: [
           DecoratedBox(
               decoration: BoxDecoration(
-                  color: Theme.of(context)
-                      .colorScheme
-                      .secondary
-                      .withValues(alpha: 0.4),
+                  color: note.category == "Worldbuilding"
+                      ? Theme.of(context)
+                          .colorScheme
+                          .secondary
+                          .withValues(alpha: 0.4)
+                      : Theme.of(context)
+                          .colorScheme
+                          .onTertiary
+                          .withValues(alpha: 0.4),
                   borderRadius: BorderRadius.circular(10)),
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 2.0, horizontal: 8.0),
                 child: Text(note.category,
-                    style: Theme.of(context).textTheme.labelSmall),
+                    style: note.category == "Worldbuilding"
+                        ? Theme.of(context).textTheme.labelSmall
+                        : Theme.of(context).textTheme.labelSmall?.copyWith(
+                            color: Theme.of(context).colorScheme.onTertiary)),
               )),
           Text(
             note.title,
@@ -177,7 +188,7 @@ class NoteInfo extends StatelessWidget {
                 ? (note as CharacterNote)
                         .traits
                         ?.map((trait) => trait)
-                        .join('/') ??
+                        .join(' | ') ??
                     ''
                 : '',
             style: Theme.of(context).textTheme.displaySmall,

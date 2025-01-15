@@ -35,7 +35,7 @@ class NotesList extends StatelessWidget {
                   },
                   onDelete: () {
                     // Handle delete action here
-                    context.read<NoteCubit>().deleteNote(note.id, "1");
+                    context.read<NoteCubit>().deleteNote(note.id);
                   },
                 );
               }).toList(),

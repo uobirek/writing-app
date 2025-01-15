@@ -7,9 +7,11 @@ class ChapterRepository {
   ChapterRepository({FirebaseFirestore? firestore})
       : _firestore = firestore ?? FirebaseFirestore.instance;
 
-  Future<List<Chapter>> fetchAllChapters() async {
+  Future<List<Chapter>> fetchAllChapters(String userId) async {
     try {
       final querySnapshot = await _firestore
+          .collection('users')
+          .doc(userId)
           .collection('chapters')
           .orderBy('position') // Fetch chapters in order
           .get();
@@ -21,10 +23,13 @@ class ChapterRepository {
     }
   }
 
-  Future<Chapter> addChapter(Chapter chapter) async {
+  Future<Chapter> addChapter(Chapter chapter, String userId) async {
     try {
-      final docRef =
-          await _firestore.collection('chapters').add(chapter.toJson());
+      final docRef = await _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('chapters')
+          .add(chapter.toJson());
       await docRef.update({'id': docRef.id});
 
       return chapter.copyWith(id: docRef.id);
@@ -33,17 +38,24 @@ class ChapterRepository {
     }
   }
 
-  Future<void> deleteChapter(String id) async {
+  Future<void> deleteChapter(String chapterId, String userId) async {
     try {
-      await _firestore.collection('chapters').doc(id).delete();
+      await _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('chapters')
+          .doc(chapterId)
+          .delete();
     } catch (e) {
       throw Exception('Failed to delete chapter: $e');
     }
   }
 
-  Future<void> updateChapter(Chapter chapter) async {
+  Future<void> updateChapter(Chapter chapter, String userId) async {
     try {
       await _firestore
+          .collection('users')
+          .doc(userId)
           .collection('chapters')
           .doc(chapter.id)
           .set(chapter.toJson());
