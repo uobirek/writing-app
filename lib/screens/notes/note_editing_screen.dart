@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:writing_app/models/project_cubit.dart';
 import 'package:writing_app/screens/notes/bloc/note_cubit.dart';
 import 'package:writing_app/screens/notes/bloc/note_state.dart';
 import 'package:writing_app/screens/notes/editing/note_editing.dart';
@@ -26,7 +27,7 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
     super.initState();
     // Fetch the note using the Bloc
     final noteCubit = context.read<NoteCubit>();
-    final note = noteCubit.getNoteById(widget.noteId); // Fetch the note by ID
+    final note = noteCubit.getNoteById(widget.noteId);
     if (note != null) {
       currentNote = note;
       noteEditing = note.getNoteEditing();
@@ -89,14 +90,17 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                                 if (_formKey.currentState!.validate()) {
                                   final updatedNote =
                                       noteEditing.buildUpdatedNote();
-
+                                  final projectCubit =
+                                      context.read<ProjectCubit>();
+                                  final projectId =
+                                      projectCubit.allProjects.isNotEmpty
+                                          ? projectCubit.allProjects.first.id
+                                          : '';
                                   // Use the NoteCubit to add the note
                                   context.read<NoteCubit>().updateNote(
-                                        updatedNote,
-                                        noteEditing
-                                            .selectedImage, // Pass the selected image file
-                                        // Replace with actual user ID
-                                      );
+                                      updatedNote,
+                                      noteEditing.selectedImage,
+                                      projectId);
                                 }
                               },
                               child: const Text("Save Changes"),

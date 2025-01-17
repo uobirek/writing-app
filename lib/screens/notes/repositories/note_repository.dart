@@ -46,7 +46,8 @@ class NoteRepository {
   Future<void> deleteImageFromCloudinary(String imageUrl) async {}
 
   /// Add a new note with optional image
-  Future<void> addNote(Note note, File? imageFile, String userId) async {
+  Future<void> addNote(
+      Note note, File? imageFile, String userId, String projectId) async {
     try {
       String? imageUrl;
 
@@ -55,7 +56,13 @@ class NoteRepository {
       }
 
       // Add note to Firestore under the user's collection
-      await _firestore.collection('users').doc(userId).collection('notes').add({
+      await _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('projects')
+          .doc(projectId)
+          .collection('notes')
+          .add({
         ...note.toJson(),
         'imageUrl': imageUrl,
         'userId': userId, // Ensure the note is tied to the user
@@ -67,7 +74,8 @@ class NoteRepository {
   }
 
   /// Update an existing note with optional image
-  Future<void> updateNote(Note note, File? imageFile, String userId) async {
+  Future<void> updateNote(
+      Note note, File? imageFile, String userId, String projectId) async {
     try {
       String? imageUrl = note.imageUrl;
 
@@ -82,7 +90,14 @@ class NoteRepository {
       }
 
       // Update note in Firestore
-      await _firestore.collection('notes').doc(note.id).update({
+      await _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('projects')
+          .doc(projectId)
+          .collection('notes')
+          .doc(note.id)
+          .update({
         ...note.toJson(),
         'imageUrl': imageUrl, // Update image URL if a new image is uploaded
       });
@@ -93,11 +108,14 @@ class NoteRepository {
   }
 
   /// Delete note and its associated image
-  Future<void> deleteNoteById(String noteId, String userId) async {
+  Future<void> deleteNoteById(
+      String noteId, String userId, String projectId) async {
     try {
       final noteRef = _firestore
           .collection('users')
           .doc(userId)
+          .collection('projects')
+          .doc(projectId)
           .collection('notes')
           .doc(noteId);
 
@@ -118,11 +136,13 @@ class NoteRepository {
   }
 
   /// Fetch all notes from Firestore
-  Future<List<Note>> fetchAllNotes(String userId) async {
+  Future<List<Note>> fetchAllNotes(String userId, String projectId) async {
     try {
       final snapshot = await _firestore
           .collection('users')
           .doc(userId)
+          .collection('projects')
+          .doc(projectId)
           .collection('notes')
           .orderBy('position') // Order notes by 'position'
           .get();
@@ -138,12 +158,14 @@ class NoteRepository {
   }
 
   Future<List<Note>> fetchNotesByCategory(
-      String userId, String category) async {
+      String userId, String category, String projectId) async {
     print(category);
     try {
       final snapshot = await _firestore
           .collection('users')
           .doc(userId)
+          .collection('projects')
+          .doc(projectId)
           .collection('notes')
           .where('category', isEqualTo: category)
           .orderBy('position')
@@ -159,10 +181,14 @@ class NoteRepository {
     }
   }
 
-  Future<int> getNextPosition() async {
+  Future<int> getNextPosition(String userId, String projectId) async {
     try {
       // Query Firestore to get the note with the highest position
       final querySnapshot = await _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('projects')
+          .doc(projectId)
           .collection('notes')
           .orderBy('position', descending: true)
           .limit(1)
@@ -181,12 +207,19 @@ class NoteRepository {
     }
   }
 
-  Future<void> updateNoteOrder(List<Note> reorderedNotes) async {
+  Future<void> updateNoteOrder(
+      List<Note> reorderedNotes, String userId, String projectId) async {
     final batch = _firestore.batch();
 
     for (int i = 0; i < reorderedNotes.length; i++) {
       final note = reorderedNotes[i];
-      final noteRef = _firestore.collection('notes').doc(note.id);
+      final noteRef = _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('projects')
+          .doc(projectId)
+          .collection('notes')
+          .doc(note.id);
 
       batch.update(noteRef, {
         'position': i
@@ -212,6 +245,27 @@ class NoteRepository {
       return WorldbuildingNote.fromJson(data);
     } else {
       throw Exception('Unknown note type: $type');
+    }
+  }
+
+  Future<Note?> getNoteById(
+      String noteId, String userId, String projectId) async {
+    try {
+      final doc = await _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('projects')
+          .doc(projectId)
+          .collection('notes')
+          .doc(noteId)
+          .get();
+      if (doc.exists) {
+        return Note.fromJson(doc.data()!);
+      }
+      return null;
+    } catch (e) {
+      print('Error fetching note by ID: $e');
+      return null;
     }
   }
 }

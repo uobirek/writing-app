@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:writing_app/models/project_cubit.dart';
 import 'package:writing_app/screens/notes/bloc/note_cubit.dart';
 import 'package:writing_app/screens/notes/bloc/note_state.dart';
 import 'package:writing_app/screens/notes/widgets/draggable_note.dart';
@@ -29,13 +30,20 @@ class NotesList extends StatelessWidget {
                     print("reordering");
                     print(draggedNoteId);
                     print(targetNoteId);
+                    final projectCubit = context.read<ProjectCubit>();
+                    final projectId = projectCubit.allProjects.isNotEmpty
+                        ? projectCubit.allProjects.first.id
+                        : '';
                     context
                         .read<NoteCubit>()
-                        .reorderNotes(draggedNoteId, targetNoteId);
+                        .reorderNotes(draggedNoteId, targetNoteId, projectId);
                   },
                   onDelete: () {
-                    // Handle delete action here
-                    context.read<NoteCubit>().deleteNote(note.id);
+                    final projectCubit = context.read<ProjectCubit>();
+                    final projectId = projectCubit.allProjects.isNotEmpty
+                        ? projectCubit.allProjects.first.id
+                        : '';
+                    context.read<NoteCubit>().deleteNote(note.id, projectId);
                   },
                 );
               }).toList(),

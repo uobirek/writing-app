@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:writing_app/models/project.dart';
+import 'package:writing_app/models/project_cubit.dart';
 import 'package:writing_app/models/project_repository.dart';
 import 'package:writing_app/screens/notes/bloc/note_cubit.dart';
 import 'package:writing_app/screens/notes/models/character_note.dart';
@@ -123,9 +124,12 @@ class NoteCard extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                context
-                    .read<NoteCubit>()
-                    .deleteNote(note.id); // Trigger the delete action
+                final projectCubit = context.read<ProjectCubit>();
+                final projectId = projectCubit.allProjects.isNotEmpty
+                    ? projectCubit.allProjects.first.id
+                    : '';
+                context.read<NoteCubit>().deleteNote(
+                    note.id, projectId); // Trigger the delete action
                 Navigator.of(context).pop(); // Close the dialog
               },
               child: const Text(

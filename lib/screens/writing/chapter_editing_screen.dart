@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_quill/quill_delta.dart';
+import 'package:writing_app/models/project_cubit.dart';
 import 'package:writing_app/screens/writing/chapter_cubit.dart';
 import 'package:writing_app/screens/writing/chapter_state.dart';
 import 'package:writing_app/screens/writing/models/chapter.dart';
@@ -35,7 +36,11 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
     if (!widget.isNewChapter) {
       // If editing, fetch the chapter data
       final chapterCubit = context.read<ChapterCubit>();
-      chapterCubit.fetchChapters();
+      final projectCubit = context.read<ProjectCubit>();
+      final projectId = projectCubit.allProjects.isNotEmpty
+          ? projectCubit.allProjects.first.id
+          : '';
+      chapterCubit.fetchChapters(projectId);
     } else {
       // If creating a new chapter, initialize with empty/default values
       _initializeControllers(Chapter.empty());
@@ -71,10 +76,14 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
       content: content,
       jsonContent: jsonContent,
     );
+    final projectCubit = context.read<ProjectCubit>();
+    final projectId = projectCubit.allProjects.isNotEmpty
+        ? projectCubit.allProjects.first.id
+        : '';
 
     final saveFuture = widget.isNewChapter
-        ? cubit.addChapter(chapter)
-        : cubit.updateChapter(chapter);
+        ? cubit.addChapter(chapter, projectId)
+        : cubit.updateChapter(chapter, projectId);
 
     saveFuture.then((_) {
       ScaffoldMessenger.of(context).showSnackBar(

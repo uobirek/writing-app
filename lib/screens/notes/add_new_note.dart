@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:writing_app/models/project_cubit.dart';
 import 'package:writing_app/screens/notes/bloc/note_cubit.dart';
 import 'package:writing_app/screens/notes/bloc/note_state.dart';
 import 'package:writing_app/screens/notes/create_a_blank_note.dart';
@@ -55,13 +56,14 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
     if (_formKey.currentState!.validate()) {
       // Update the note with image path
       final newNote = noteEditing.buildUpdatedNote();
-
+      final projectCubit = context.read<ProjectCubit>();
+      final projectId = projectCubit.allProjects.isNotEmpty
+          ? projectCubit.allProjects.first.id
+          : '';
       // Use the NoteCubit to add the note
-      context.read<NoteCubit>().addNote(
-            newNote,
-            noteEditing.selectedImage, // Pass the selected image file
-            // Replace with actual user ID
-          );
+      context
+          .read<NoteCubit>()
+          .addNote(newNote, noteEditing.selectedImage, projectId);
     }
   }
 

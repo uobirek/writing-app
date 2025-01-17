@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:writing_app/models/project_cubit.dart';
 import 'package:writing_app/screens/writing/chapter_card.dart';
 import 'package:writing_app/screens/writing/chapter_cubit.dart';
 import 'package:writing_app/screens/writing/chapter_repository.dart';
@@ -13,8 +14,13 @@ class WritingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final projectCubit = context.read<ProjectCubit>();
+    final projectId = projectCubit.allProjects.isNotEmpty
+        ? projectCubit.allProjects.first.id
+        : '';
     return BlocProvider(
-        create: (context) => ChapterCubit(ChapterRepository())..fetchChapters(),
+        create: (context) =>
+            ChapterCubit(ChapterRepository())..fetchChapters(projectId),
         child: SidebarLayout(
           activeRoute: '/writing',
           child: Padding(

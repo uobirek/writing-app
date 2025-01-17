@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:writing_app/models/project_cubit.dart';
 import 'package:writing_app/screens/notes/bloc/note_cubit.dart';
 import 'package:writing_app/screens/notes/bloc/note_state.dart';
 import 'package:writing_app/screens/notes/models/note.dart';
@@ -23,6 +24,11 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
     super.initState();
     // Fetch the note using the Bloc
     final noteCubit = context.read<NoteCubit>();
+    final projectCubit = context.read<ProjectCubit>();
+    final projectId = projectCubit.allProjects.isNotEmpty
+        ? projectCubit.allProjects.first.id
+        : '';
+    noteCubit.fetchNotes(projectId);
     final note = noteCubit.getNoteById(widget.noteId); // Fetch the note by ID
     if (note != null) {
       currentNote = note;
@@ -31,8 +37,12 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final projectCubit = context.read<ProjectCubit>();
+    final projectId = projectCubit.allProjects.isNotEmpty
+        ? projectCubit.allProjects.first.id
+        : '';
     // Ensure the Cubit fetches notes when the screen is built
-    context.read<NoteCubit>().fetchNotes();
+    context.read<NoteCubit>().fetchNotes(projectId);
 
     return SidebarLayout(
       activeRoute: "/notes",

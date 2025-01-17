@@ -7,11 +7,14 @@ class ChapterRepository {
   ChapterRepository({FirebaseFirestore? firestore})
       : _firestore = firestore ?? FirebaseFirestore.instance;
 
-  Future<List<Chapter>> fetchAllChapters(String userId) async {
+  Future<List<Chapter>> fetchAllChapters(
+      String userId, String projectId) async {
     try {
       final querySnapshot = await _firestore
           .collection('users')
           .doc(userId)
+          .collection('projects')
+          .doc(projectId)
           .collection('chapters')
           .orderBy('position') // Fetch chapters in order
           .get();
@@ -23,11 +26,14 @@ class ChapterRepository {
     }
   }
 
-  Future<Chapter> addChapter(Chapter chapter, String userId) async {
+  Future<Chapter> addChapter(
+      Chapter chapter, String userId, String projectId) async {
     try {
       final docRef = await _firestore
           .collection('users')
           .doc(userId)
+          .collection('projects')
+          .doc(projectId)
           .collection('chapters')
           .add(chapter.toJson());
       await docRef.update({'id': docRef.id});
@@ -38,11 +44,14 @@ class ChapterRepository {
     }
   }
 
-  Future<void> deleteChapter(String chapterId, String userId) async {
+  Future<void> deleteChapter(
+      String chapterId, String userId, String projectId) async {
     try {
       await _firestore
           .collection('users')
           .doc(userId)
+          .collection('projects')
+          .doc(projectId)
           .collection('chapters')
           .doc(chapterId)
           .delete();
@@ -51,11 +60,14 @@ class ChapterRepository {
     }
   }
 
-  Future<void> updateChapter(Chapter chapter, String userId) async {
+  Future<void> updateChapter(
+      Chapter chapter, String userId, String projectId) async {
     try {
       await _firestore
           .collection('users')
           .doc(userId)
+          .collection('projects')
+          .doc(projectId)
           .collection('chapters')
           .doc(chapter.id)
           .set(chapter.toJson());

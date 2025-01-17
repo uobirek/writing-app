@@ -12,13 +12,14 @@ class NoteCubit extends Cubit<NoteState> {
 
   NoteCubit(this.noteRepository) : super(NoteInitial());
 
-  /// Fetch all notes from the repository
   /// Fetch all notes from Firestore
-  Future<void> fetchNotes() async {
+  Future<void> fetchNotes(String projectId) async {
     emit(NoteLoading());
     try {
       final userId = FirebaseAuth.instance.currentUser?.uid ?? '';
-      allNotes = await noteRepository.fetchAllNotes(userId);
+      allNotes = await noteRepository.fetchAllNotes(userId, projectId);
+      print(allNotes);
+      print("NOTES GOT FETCHED");
       emit(NoteLoaded(allNotes));
     } catch (e) {
       emit(NoteError("Failed to load notes: ${e.toString()}"));
@@ -26,47 +27,43 @@ class NoteCubit extends Cubit<NoteState> {
   }
 
   /// Filter notes by category
-  Future<void> filterNotes(String category) async {
+  Future<void> filterNotes(String category, projectId) async {
     emit(NoteLoading());
     final userId = FirebaseAuth.instance.currentUser?.uid ?? '';
 
     try {
       if (category == 'Show All') {
-        // Fetch all notes
-
-        allNotes = await noteRepository.fetchAllNotes(userId);
-        emit(NoteLoaded(allNotes)); // Emit the loaded state with all notes
+        allNotes = await noteRepository.fetchAllNotes(userId, projectId);
+        emit(NoteLoaded(allNotes));
       } else {
-        // Fetch notes by category
-        final filteredNotes =
-            await noteRepository.fetchNotesByCategory(userId, category);
-        emit(NoteLoaded(
-            filteredNotes)); // Emit the loaded state with filtered notes
+        final filteredNotes = await noteRepository.fetchNotesByCategory(
+            userId, category, projectId);
+        emit(NoteLoaded(filteredNotes));
       }
     } catch (e) {
       emit(NoteError("Failed to filter notes: ${e.toString()}"));
     }
   }
 
-  Future<void> addNote(Note newNote, File? imageFile) async {
+  Future<void> addNote(Note newNote, File? imageFile, String projectId) async {
     emit(NoteUpdating());
     final userId = FirebaseAuth.instance.currentUser?.uid ?? '';
 
     try {
-      await noteRepository.addNote(newNote, imageFile, userId);
+      await noteRepository.addNote(newNote, imageFile, userId, projectId);
       allNotes.add(newNote);
-      allNotes = await noteRepository.fetchAllNotes(userId);
+      allNotes = await noteRepository.fetchAllNotes(userId, projectId);
       emit(NoteLoaded(List.from(allNotes))); // Emit updated list
     } catch (e) {
       emit(NoteError("Failed to add note: ${e.toString()}"));
     }
   }
 
-  Future<void> deleteNote(String noteId) async {
+  Future<void> deleteNote(String noteId, String projectId) async {
     final userId = FirebaseAuth.instance.currentUser?.uid ?? '';
 
     try {
-      await noteRepository.deleteNoteById(noteId, userId);
+      await noteRepository.deleteNoteById(noteId, userId, projectId);
       allNotes.removeWhere((note) => note.id == noteId);
       emit(NoteLoaded(allNotes));
     } catch (e) {
@@ -74,12 +71,14 @@ class NoteCubit extends Cubit<NoteState> {
     }
   }
 
-  Future<void> updateNote(Note updatedNote, File? imageFile) async {
+  Future<void> updateNote(
+      Note updatedNote, File? imageFile, String projectId) async {
     final userId = FirebaseAuth.instance.currentUser?.uid ?? '';
 
     emit(NoteUpdating());
     try {
-      await noteRepository.updateNote(updatedNote, imageFile, userId);
+      await noteRepository.updateNote(
+          updatedNote, imageFile, userId, projectId);
       final index = allNotes.indexWhere((note) => note.id == updatedNote.id);
       if (index != -1) {
         allNotes[index] = updatedNote;
@@ -90,8 +89,11 @@ class NoteCubit extends Cubit<NoteState> {
     }
   }
 
-  Future<void> reorderNotes(String draggedNoteId, String targetNoteId) async {
+  Future<void> reorderNotes(
+      String draggedNoteId, String targetNoteId, String projectId) async {
     try {
+      final userId = FirebaseAuth.instance.currentUser?.uid ?? '';
+
       if (state is NoteLoaded) {
         // Safely cast the state to NoteLoaded to access the notes list
         final currentNotes = List<Note>.from((state as NoteLoaded).notes);
@@ -110,7 +112,7 @@ class NoteCubit extends Cubit<NoteState> {
         currentNotes.insert(targetNoteIndex, draggedNote);
 
         // Update the positions of the notes in Firestore
-        await noteRepository.updateNoteOrder(currentNotes);
+        await noteRepository.updateNoteOrder(currentNotes, userId, projectId);
 
         // Emit the updated list of notes
         emit(NoteLoaded(
@@ -124,12 +126,30 @@ class NoteCubit extends Cubit<NoteState> {
 
   /// Get a note by ID (synchronous from cached data)
   Note? getNoteById(String id) {
+    print("WE'RE GETTING A NOTE BY ID");
+    print(allNotes);
+
     try {
       print("id is$id");
+      print(allNotes);
       return allNotes.firstWhere((note) => note.id == id);
     } catch (_) {
       print("no note");
 
+      return null;
+    }
+  }
+
+  Future<Note?> fetchNoteById(
+      String noteId, String userId, String projectId) async {
+    try {
+      emit(NoteLoading());
+      final note = await noteRepository.getNoteById(
+          noteId, userId, projectId); // Fetch from repository
+      if (!(note == null)) emit(NoteLoaded([note])); // Update state
+      return note;
+    } catch (e) {
+      emit(NoteError('Failed to fetch note: $e'));
       return null;
     }
   }
