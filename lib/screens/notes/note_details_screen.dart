@@ -55,6 +55,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
           } else if (state is NoteLoaded) {
             // Fetch the note by ID from the loaded notes
             try {
+              print("trying to build note details for ${currentNote}");
               return _buildNoteDetails(context, currentNote);
             } catch (e) {
               return const Center(

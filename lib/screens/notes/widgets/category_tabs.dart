@@ -49,23 +49,6 @@ class CategoryTabs extends StatelessWidget {
               );
             }).toList(),
           ),
-          InkWell(
-            onTap: () => {context.go('/add_note')},
-            child: Container(
-              height: 50,
-              width: 150,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(12)),
-              ),
-              child: Text(
-                'Add Note',
-                style: Theme.of(context).textTheme.labelLarge,
-              ),
-            ),
-          ),
         ],
       ),
     );

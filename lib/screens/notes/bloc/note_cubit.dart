@@ -18,7 +18,7 @@ class NoteCubit extends Cubit<NoteState> {
     try {
       final userId = FirebaseAuth.instance.currentUser?.uid ?? '';
       allNotes = await noteRepository.fetchAllNotes(userId, projectId);
-      print(allNotes);
+      print("All notes ${allNotes}");
       print("NOTES GOT FETCHED");
       emit(NoteLoaded(allNotes));
     } catch (e) {
@@ -127,7 +127,7 @@ class NoteCubit extends Cubit<NoteState> {
   /// Get a note by ID (synchronous from cached data)
   Note? getNoteById(String id) {
     print("WE'RE GETTING A NOTE BY ID");
-    print(allNotes);
+    print("All notes ${allNotes}");
 
     try {
       print("id is$id");

@@ -12,6 +12,11 @@ class GlobalThemeData {
       highlightColor: Colors.transparent,
       focusColor: focusColor,
       textTheme: TextTheme(
+        titleLarge: GoogleFonts.workSans(
+          fontSize: 72,
+          fontWeight: FontWeight.w800,
+          color: colorScheme.onPrimary,
+        ),
         // Dashboard Title
         titleMedium: GoogleFonts.workSans(
           fontSize: 32,

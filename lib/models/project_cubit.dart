@@ -1,34 +1,72 @@
+import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:writing_app/models/project.dart';
 import 'package:writing_app/models/project_states.dart';
-
 import 'project_repository.dart';
 
 class ProjectCubit extends Cubit<ProjectState> {
   final ProjectRepository projectRepository;
+  List<Project> allProjects = [];
+  Project? _selectedProject;
+
+  Project? get selectedProject => _selectedProject;
 
   ProjectCubit(this.projectRepository) : super(ProjectInitial());
 
-  List<Project> allProjects = [];
+  // Fetch all projects
   Future<void> fetchProjects(String userId) async {
     emit(ProjectLoading());
     try {
-      print('Fetching projects for userId: $userId'); // Debug print
       allProjects = await projectRepository.fetchAllProjects(userId);
-      print(allProjects);
       emit(ProjectLoaded(allProjects));
     } catch (e) {
-      print("ERROR");
-      print('Error fetching projects: $e'); // Debug error message
       emit(ProjectError('Failed to load projects: $e'));
     }
   }
 
-  Future<void> addProject(Project newProject, String userId) async {
+  // Select a specific project and emit the selected state
+  void selectProject(String projectId) {
+    _selectedProject = allProjects.firstWhere(
+      (project) => project.id == projectId,
+    );
+
+    if (_selectedProject != null) {
+      emit(ProjectSelected(projectId));
+    } else {
+      emit(ProjectError('Project not found'));
+    }
+  }
+
+  // Fetch a project by its ID
+  Future<void> fetchProjectById(String userId) async {
+    if (_selectedProject != null) {
+      try {
+        emit(ProjectLoading());
+
+        final project = await projectRepository.getProjectById(
+          _selectedProject!.id,
+          userId,
+        );
+
+        if (project != null) {
+          _selectedProject = project;
+          emit(ProjectLoaded([project]));
+        } else {
+          emit(ProjectError('Project not found'));
+        }
+      } catch (e) {
+        emit(ProjectError('Error fetching project: $e'));
+      }
+    }
+  }
+
+  // Add a new project
+  Future<void> addProject(
+      Project newProject, String userId, File? imageFile) async {
     emit(ProjectUpdating());
     try {
       final projectWithId =
-          await projectRepository.addProject(newProject, userId);
+          await projectRepository.addProject(newProject, userId, imageFile);
       allProjects.add(projectWithId);
       emit(ProjectLoaded(List.from(allProjects)));
     } catch (e) {
@@ -36,13 +74,18 @@ class ProjectCubit extends Cubit<ProjectState> {
     }
   }
 
-  Future<void> updateProject(Project project, String userId) async {
+  // Update an existing project
+  Future<void> updateProject(
+      Project project, String userId, File? imageFile) async {
     emit(ProjectUpdating());
     try {
-      await projectRepository.updateProject(project, userId);
+      await projectRepository.updateProject(project, userId, imageFile);
       int index = allProjects.indexWhere((p) => p.id == project.id);
       if (index != -1) {
-        allProjects[index] = project;
+        allProjects[index] = project.copyWith(
+            imageUrl: imageFile != null
+                ? await projectRepository.uploadImageToCloudinary(imageFile)
+                : project.imageUrl);
       }
       emit(ProjectLoaded(List.from(allProjects)));
     } catch (e) {
@@ -50,10 +93,16 @@ class ProjectCubit extends Cubit<ProjectState> {
     }
   }
 
+  // Delete a project
   Future<void> deleteProject(String projectId, String userId) async {
     try {
       await projectRepository.deleteProject(projectId, userId);
       allProjects.removeWhere((project) => project.id == projectId);
+
+      if (_selectedProject?.id == projectId) {
+        _selectedProject = null;
+      }
+
       emit(ProjectLoaded(List.from(allProjects)));
     } catch (e) {
       emit(ProjectError('Failed to delete project: $e'));

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:writing_app/models/project_cubit.dart';
 import 'package:writing_app/screens/notes/bloc/note_cubit.dart';
 import 'package:writing_app/screens/notes/bloc/note_state.dart';
@@ -58,7 +59,7 @@ class NotesList extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Open a dialog to create a new project
+          context.go('/add_note');
         },
         child: const Icon(Icons.add),
       ),

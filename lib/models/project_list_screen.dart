@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:go_router/go_router.dart';
+import 'package:writing_app/models/parallax_flow_delegate.dart';
+import 'package:writing_app/models/project.dart';
 import 'package:writing_app/models/project_cubit.dart';
+import 'package:writing_app/models/project_list_item.dart';
 import 'package:writing_app/models/project_states.dart';
+import 'package:writing_app/screens/notes/widgets/dynamic_image.dart';
 
 class ProjectListScreen extends StatefulWidget {
   const ProjectListScreen({super.key});
@@ -27,73 +31,56 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "My Projects",
-          style: theme.textTheme.titleMedium,
-        ),
-      ),
       body: BlocBuilder<ProjectCubit, ProjectState>(
         builder: (context, state) {
           if (state is ProjectLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is ProjectLoaded) {
             final projects = state.projects;
-            return Center(
-              child: CarouselSlider.builder(
-                itemCount: projects.length,
-                itemBuilder: (context, index, realIndex) {
-                  final project = projects[index];
-                  return GestureDetector(
-                    onTap: () => context
-                        .go('/'), // Replace with project-specific navigation
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      elevation: 4,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Expanded(
-                            child: ClipRRect(
-                              borderRadius: const BorderRadius.vertical(
-                                  top: Radius.circular(16)),
-                              child: Image.asset(
-                                'assets/images/placeholder.jpg', // Replace with project.photo if available
-                                fit: BoxFit.cover,
+            return Padding(
+              padding: const EdgeInsets.all(50),
+              child: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Choose a project",
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.secondary),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text("Which one are we working on today?",
+                        style: Theme.of(context).textTheme.labelMedium),
+                    const SizedBox(height: 20), // Spacing
+                    Expanded(
+                      // Makes only the project list scrollable
+                      child: SizedBox(
+                        width: 600,
+                        child: ListView.builder(
+                          itemCount: projects.length,
+                          itemBuilder: (context, index) {
+                            final project = projects[index];
+                            return GestureDetector(
+                              onTap: () {
+                                context
+                                    .read<ProjectCubit>()
+                                    .selectProject(project.id);
+                                context.go('/');
+                              }, // Pass the project id
+                              child: ProjectListItem(
+                                imageUrl: project.imageUrl ?? '',
+                                title: project.title,
+                                description: project.description,
                               ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  project.title,
-                                  style: theme.textTheme.labelLarge,
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  project.description,
-                                  style: theme.textTheme.bodyMedium,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                            );
+                          },
+                        ),
                       ),
                     ),
-                  );
-                },
-                options: CarouselOptions(
-                  height: 400,
-                  enlargeCenterPage: true,
-                  enableInfiniteScroll: true,
-                  autoPlay: true,
+                  ],
                 ),
               ),
             );
