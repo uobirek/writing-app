@@ -9,12 +9,11 @@ InputDecoration formInputDecoration({
     labelText: label,
     filled: true,
     focusColor: Theme.of(context).colorScheme.secondary.withAlpha(30),
-    hoverColor: Theme.of(context).colorScheme.secondary.withAlpha(30),
     fillColor: Theme.of(context).colorScheme.surface,
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(8),
       borderSide: BorderSide(
-        color: Theme.of(context).colorScheme.tertiary,
+        color: Theme.of(context).colorScheme.primaryContainer,
         width: 2,
       ),
     ),

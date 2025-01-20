@@ -50,7 +50,13 @@ class WritingScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("Chapters",
-                        style: Theme.of(context).textTheme.titleLarge),
+                        style: Theme.of(context).textTheme.titleMedium),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    ElevatedButton(
+                        onPressed: () => {context.go('/new-chapter')},
+                        child: Text("Add chapter")),
                     const SizedBox(
                       height: 30,
                     ),
@@ -78,9 +84,6 @@ class WritingScreen extends StatelessWidget {
                         }
                       },
                     ),
-                    InkWell(
-                        onTap: () => {context.go('/new-chapter')},
-                        child: Icon(Icons.add))
                   ],
                 ),
               ),

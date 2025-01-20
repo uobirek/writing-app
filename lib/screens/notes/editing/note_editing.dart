@@ -61,7 +61,7 @@ abstract class NoteEditing {
         ),
         const SizedBox(height: 8),
         Text(imagePath ?? 'no image',
-            style: Theme.of(context).textTheme.bodySmall)
+            style: Theme.of(context).textTheme.labelSmall)
       ],
     );
   }

@@ -12,16 +12,8 @@ class GlobalThemeData {
       highlightColor: Colors.transparent,
       focusColor: focusColor,
       textTheme: TextTheme(
-        // Big Title
-        displayLarge: GoogleFonts.workSans(
-          fontSize: 64,
-          fontWeight: FontWeight.bold,
-          color: colorScheme.onPrimary,
-          letterSpacing: -1,
-        ),
-
         // Dashboard Title
-        titleLarge: GoogleFonts.workSans(
+        titleMedium: GoogleFonts.workSans(
           fontSize: 32,
           fontWeight: FontWeight.w600,
           color: colorScheme.onPrimary,
@@ -50,26 +42,6 @@ class GlobalThemeData {
           letterSpacing: 0.5,
         ),
 
-        // Light Text
-        bodySmall: GoogleFonts.workSans(
-          fontSize: 12,
-          fontWeight: FontWeight.normal,
-          color: colorScheme.onPrimary,
-          letterSpacing: 2,
-        ),
-        displayMedium: GoogleFonts.workSans(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-          color: colorScheme.onPrimary,
-          letterSpacing: 0,
-        ),
-        displaySmall: GoogleFonts.workSans(
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
-          color: colorScheme.onSecondary,
-          letterSpacing: 0.1,
-        ),
-
         // Bolded Text
         labelLarge: GoogleFonts.workSans(
           fontSize: 16,
@@ -77,6 +49,15 @@ class GlobalThemeData {
           color: colorScheme.onPrimary,
           letterSpacing: -0.01,
         ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: colorScheme.secondary,
+        ),
+      ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: colorScheme.secondary,
+        foregroundColor: colorScheme.surface,
       ),
     );
   }
@@ -92,11 +73,11 @@ class GlobalThemeData {
     secondary: Color(0xFFA7A3EB),
     secondaryContainer: Color.fromARGB(255, 233, 232, 250),
     onSecondary: Color.fromARGB(255, 130, 127, 192),
-    onTertiary: Color.fromARGB(255, 175, 138, 5),
+    tertiary: Color.fromARGB(255, 175, 138, 5),
     error: Colors.redAccent,
     onError: Colors.white,
     surface: Color(0xFFFEFEFE),
-    tertiary: Color(0xEAEAEAEA),
+    primaryContainer: Color(0xEAEAEAEA),
     onSurface: Color(0xFF07182B),
     brightness: Brightness.light,
   );

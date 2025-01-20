@@ -24,7 +24,7 @@ class ChapterCard extends StatelessWidget {
               children: [
                 Text(
                   chapter.position.toString(),
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: Theme.of(context).colorScheme.secondary,
                       ),
                 ),

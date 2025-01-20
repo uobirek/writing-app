@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:writing_app/models/project.dart';
 import 'package:writing_app/models/project_cubit.dart';
-import 'package:writing_app/models/project_repository.dart';
 import 'package:writing_app/screens/notes/bloc/note_cubit.dart';
 import 'package:writing_app/screens/notes/models/character_note.dart';
 import 'package:writing_app/screens/notes/models/note.dart';
@@ -168,7 +166,7 @@ class NoteInfo extends StatelessWidget {
                           .withValues(alpha: 0.4)
                       : Theme.of(context)
                           .colorScheme
-                          .onTertiary
+                          .tertiary
                           .withValues(alpha: 0.4),
                   borderRadius: BorderRadius.circular(10)),
               child: Padding(
@@ -178,7 +176,7 @@ class NoteInfo extends StatelessWidget {
                     style: note.category == "Worldbuilding"
                         ? Theme.of(context).textTheme.labelSmall
                         : Theme.of(context).textTheme.labelSmall?.copyWith(
-                            color: Theme.of(context).colorScheme.onTertiary)),
+                            color: Theme.of(context).colorScheme.tertiary)),
               )),
           Text(
             note.title,
@@ -195,7 +193,7 @@ class NoteInfo extends StatelessWidget {
                         .join(' | ') ??
                     ''
                 : '',
-            style: Theme.of(context).textTheme.displaySmall,
+            style: Theme.of(context).textTheme.labelSmall,
           ),
         ],
       ),

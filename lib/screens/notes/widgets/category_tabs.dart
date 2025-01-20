@@ -17,7 +17,7 @@ class CategoryTabs extends StatelessWidget {
 
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.tertiary,
+        color: Theme.of(context).colorScheme.primaryContainer,
         borderRadius: const BorderRadius.all(Radius.circular(12)),
       ),
       child: Row(
@@ -27,7 +27,7 @@ class CategoryTabs extends StatelessWidget {
           Row(
             children: categories.map((category) {
               final isActive = currentCategory == category;
-              return GestureDetector(
+              return InkWell(
                 onTap: () => onCategorySelected(category),
                 child: Container(
                   height: 50,
@@ -37,13 +37,13 @@ class CategoryTabs extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: isActive
                         ? Theme.of(context).colorScheme.surface
-                        : Theme.of(context).colorScheme.tertiary,
+                        : Theme.of(context).colorScheme.primaryContainer,
                     borderRadius:
                         const BorderRadius.vertical(top: Radius.circular(12)),
                   ),
                   child: Text(
                     category,
-                    style: Theme.of(context).textTheme.displayMedium,
+                    style: Theme.of(context).textTheme.labelLarge,
                   ),
                 ),
               );
@@ -62,7 +62,7 @@ class CategoryTabs extends StatelessWidget {
               ),
               child: Text(
                 'Add Note',
-                style: Theme.of(context).textTheme.displayMedium,
+                style: Theme.of(context).textTheme.labelLarge,
               ),
             ),
           ),

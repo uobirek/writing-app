@@ -31,13 +31,14 @@ class AppRouter {
         ),
         GoRoute(
           path: '/writing',
-          builder: (context, state) => WritingScreen(),
-          pageBuilder: (context, state) => _noAnimationPage(WritingScreen()),
+          builder: (context, state) => const WritingScreen(),
+          pageBuilder: (context, state) =>
+              _noAnimationPage(const WritingScreen()),
         ),
         GoRoute(
           path: '/note/:id',
           builder: (context, state) {
-            final noteId = state.params['id']!;
+            final noteId = state.pathParameters['id']!;
 
             // Wrap the screen with a BlocProvider or BlocBuilder to fetch the note
             return BlocProvider.value(
@@ -49,7 +50,7 @@ class AppRouter {
         GoRoute(
           path: '/note/:id/editing',
           builder: (context, state) {
-            final noteId = state.params['id']!;
+            final noteId = state.pathParameters['id']!;
 
             return BlocProvider.value(
               value: context.read<NoteCubit>(),
@@ -64,7 +65,7 @@ class AppRouter {
         GoRoute(
             path: '/chapter/:id',
             builder: (context, state) {
-              final chapterId = state.params['id']!;
+              final chapterId = state.pathParameters['id']!;
               return BlocProvider.value(
                   value: context.read<ChapterCubit>(),
                   child: EditChapterScreen(
@@ -75,7 +76,7 @@ class AppRouter {
         GoRoute(
             path: '/new-chapter',
             builder: (context, state) {
-              return EditChapterScreen(chapterId: "", isNewChapter: true);
+              return const EditChapterScreen(chapterId: "", isNewChapter: true);
             }),
         GoRoute(
             path: '/login',
@@ -90,7 +91,7 @@ class AppRouter {
       ],
       errorBuilder: (context, state) => Scaffold(
         body: Center(
-          child: Text('No route defined for ${state.location}'),
+          child: Text('No route defined for ${state.uri.toString()}'),
         ),
       ),
     );
