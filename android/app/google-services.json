@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "794226507135",
+    "project_id": "writingapp-fantasies",
+    "storage_bucket": "writingapp-fantasies.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:794226507135:android:0917371190448eb24b2e4a",
+        "android_client_info": {
+          "package_name": "com.example.writing_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "794226507135-jvc60j1k4tgf1fh6cgfvh1srri8c6lul.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBddfIePH0YuwihFffYOpgzGRPLtEnoFPs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "794226507135-jvc60j1k4tgf1fh6cgfvh1srri8c6lul.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
