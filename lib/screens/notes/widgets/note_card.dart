@@ -40,11 +40,7 @@ class NoteCard extends StatelessWidget {
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                 ),
               NoteInfo(note: note),
-              InkWell(
-                onTap: () => _showOptionsDialog(context),
-                key: inkWellKey,
-                child: const Icon(Icons.more_horiz),
-              )
+              _noteMenu(context)
             ],
           ),
         ),
@@ -52,11 +48,9 @@ class NoteCard extends StatelessWidget {
     );
   }
 
-  void _showOptionsDialog(BuildContext context) {
-    showMenu(
-      context: context,
-      position: const RelativeRect.fromLTRB(0, 0, 0, 0),
-      items: [
+  Widget _noteMenu(BuildContext context) {
+    return PopupMenuButton<int>(
+      itemBuilder: (context) => [
         PopupMenuItem<int>(
           value: 0,
           child: Row(
@@ -91,19 +85,23 @@ class NoteCard extends StatelessWidget {
         ),
       ],
       elevation: 8.0,
-    ).then((value) {
-      if (value == 0) {
-        // Handle "Edit" action
+      initialValue: 0,
+      onSelected: ((value) {
+        if (value == 0) {
+          // Handle "Edit" action
 
-        context.go('/note/${note.id}/editing');
-      } else if (value == 1) {
-        // Handle "Preview" action
-        context.go('/note/${note.id}');
-      } else if (value == 2) {
-        // Handle "Delete" action
-        _showDeleteConfirmationDialog(context);
-      }
-    });
+          context.go('/note/${note.id}/editing');
+        } else if (value == 1) {
+          // Handle "Preview" action
+          context.go('/note/${note.id}');
+        } else if (value == 2) {
+          // Handle "Delete" action
+          _showDeleteConfirmationDialog(context);
+        }
+      }),
+      offset: Offset(0, -90),
+      child: const Icon(Icons.more_horiz),
+    );
   }
 
   void _showDeleteConfirmationDialog(BuildContext context) {
@@ -123,11 +121,9 @@ class NoteCard extends StatelessWidget {
             TextButton(
               onPressed: () {
                 final projectCubit = context.read<ProjectCubit>();
-                final projectId = projectCubit.allProjects.isNotEmpty
-                    ? projectCubit.allProjects.first.id
-                    : '';
+                final project = projectCubit.selectedProject;
                 context.read<NoteCubit>().deleteNote(
-                    note.id, projectId); // Trigger the delete action
+                    note.id, project!.id); // Trigger the delete action
                 Navigator.of(context).pop(); // Close the dialog
               },
               child: const Text(

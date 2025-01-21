@@ -37,10 +37,8 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
       // If editing, fetch the chapter data
       final chapterCubit = context.read<ChapterCubit>();
       final projectCubit = context.read<ProjectCubit>();
-      final projectId = projectCubit.allProjects.isNotEmpty
-          ? projectCubit.allProjects.first.id
-          : '';
-      chapterCubit.fetchChapters(projectId);
+      final project = projectCubit.selectedProject;
+      chapterCubit.fetchChapters(project!.id);
     } else {
       // If creating a new chapter, initialize with empty/default values
       _initializeControllers(Chapter.empty());
@@ -77,13 +75,11 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
       jsonContent: jsonContent,
     );
     final projectCubit = context.read<ProjectCubit>();
-    final projectId = projectCubit.allProjects.isNotEmpty
-        ? projectCubit.allProjects.first.id
-        : '';
+    final project = projectCubit.selectedProject;
 
     final saveFuture = widget.isNewChapter
-        ? cubit.addChapter(chapter, projectId)
-        : cubit.updateChapter(chapter, projectId);
+        ? cubit.addChapter(chapter, project!.id)
+        : cubit.updateChapter(chapter, project!.id);
 
     saveFuture.then((_) {
       ScaffoldMessenger.of(context).showSnackBar(

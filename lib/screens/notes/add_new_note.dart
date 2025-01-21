@@ -57,13 +57,12 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
       // Update the note with image path
       final newNote = noteEditing.buildUpdatedNote();
       final projectCubit = context.read<ProjectCubit>();
-      final projectId = projectCubit.allProjects.isNotEmpty
-          ? projectCubit.allProjects.first.id
-          : '';
+      final project = projectCubit.selectedProject;
+
       // Use the NoteCubit to add the note
       context
           .read<NoteCubit>()
-          .addNote(newNote, noteEditing.selectedImage, projectId);
+          .addNote(newNote, noteEditing.selectedImage, project!.id);
     }
   }
 

@@ -8,7 +8,9 @@ import 'package:writing_app/models/project.dart';
 import 'package:writing_app/models/project_cubit.dart';
 import 'package:writing_app/models/project_list_item.dart';
 import 'package:writing_app/models/project_states.dart';
+import 'package:writing_app/screens/notes/bloc/note_cubit.dart';
 import 'package:writing_app/screens/notes/widgets/dynamic_image.dart';
+import 'package:writing_app/screens/writing/chapter_cubit.dart';
 
 class ProjectListScreen extends StatefulWidget {
   const ProjectListScreen({super.key});
@@ -65,10 +67,7 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
                             final project = projects[index];
                             return GestureDetector(
                               onTap: () {
-                                context
-                                    .read<ProjectCubit>()
-                                    .selectProject(project.id);
-                                context.go('/');
+                                _selectProject(context, project);
                               }, // Pass the project id
                               child: ProjectListItem(
                                 imageUrl: project.imageUrl ?? '',
@@ -101,5 +100,12 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  void _selectProject(BuildContext context, Project project) {
+    context.read<ProjectCubit>().selectProject(project.id);
+    context.read<NoteCubit>().fetchNotes(project.id);
+    context.read<ChapterCubit>().fetchChapters(project.id);
+    context.go('/');
   }
 }

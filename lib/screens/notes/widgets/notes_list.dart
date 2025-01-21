@@ -34,19 +34,16 @@ class NotesList extends StatelessWidget {
                       print(draggedNoteId);
                       print(targetNoteId);
                       final projectCubit = context.read<ProjectCubit>();
-                      final projectId = projectCubit.allProjects.isNotEmpty
-                          ? projectCubit.allProjects.first.id
-                          : '';
-                      context
-                          .read<NoteCubit>()
-                          .reorderNotes(draggedNoteId, targetNoteId, projectId);
+                      final project = projectCubit.selectedProject;
+                      context.read<NoteCubit>().reorderNotes(
+                          draggedNoteId, targetNoteId, project!.id);
                     },
                     onDelete: () {
                       final projectCubit = context.read<ProjectCubit>();
-                      final projectId = projectCubit.allProjects.isNotEmpty
-                          ? projectCubit.allProjects.first.id
-                          : '';
-                      context.read<NoteCubit>().deleteNote(note.id, projectId);
+                      final project = projectCubit.selectedProject;
+                      context
+                          .read<NoteCubit>()
+                          .deleteNote(note.id, project!.id);
                     },
                   );
                 }).toList(),

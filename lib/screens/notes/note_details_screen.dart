@@ -25,10 +25,8 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
     // Fetch the note using the Bloc
     final noteCubit = context.read<NoteCubit>();
     final projectCubit = context.read<ProjectCubit>();
-    final projectId = projectCubit.allProjects.isNotEmpty
-        ? projectCubit.allProjects.first.id
-        : '';
-    noteCubit.fetchNotes(projectId);
+    final project = projectCubit.selectedProject;
+    noteCubit.fetchNotes(project!.id);
     final note = noteCubit.getNoteById(widget.noteId); // Fetch the note by ID
     if (note != null) {
       currentNote = note;
@@ -38,11 +36,9 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final projectCubit = context.read<ProjectCubit>();
-    final projectId = projectCubit.allProjects.isNotEmpty
-        ? projectCubit.allProjects.first.id
-        : '';
+    final project = projectCubit.selectedProject;
     // Ensure the Cubit fetches notes when the screen is built
-    context.read<NoteCubit>().fetchNotes(projectId);
+    context.read<NoteCubit>().fetchNotes(project!.id);
 
     return SidebarLayout(
       activeRoute: "/notes",

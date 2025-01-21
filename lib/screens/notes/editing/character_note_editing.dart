@@ -70,85 +70,166 @@ class CharacterNoteEditing extends NoteEditing {
             buildImageField(context),
             const SizedBox(height: 16),
 
-            // General Information
-            _buildSectionHeader('General Information'),
-            MinimalTextField(controller: nameController, hintText: 'Name...'),
-            CustomTextField(controller: roleController, label: 'Role'),
-            CustomTextField(controller: genderController, label: 'Gender'),
-            CustomTextField(
-                controller: ageController, label: 'Age', isNumber: true),
-
+            // General Information Section
+            _buildSection(
+              context,
+              'General Information',
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  MinimalTextField(
+                    controller: nameController,
+                    hintText: 'Name...',
+                    textStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.secondary),
+                  ),
+                  CustomTextField(controller: roleController, label: 'Role'),
+                  CustomTextField(
+                      controller: genderController, label: 'Gender'),
+                  CustomTextField(
+                      controller: ageController, label: 'Age', isNumber: true),
+                ],
+              ),
+            ),
             const SizedBox(height: 16),
 
-            // Physical Appearance
-            _buildSectionHeader('Physical Appearance'),
-            CustomTextField(controller: eyeColorController, label: 'Eye Color'),
-            CustomTextField(
-                controller: hairColorController, label: 'Hair Color'),
-            CustomTextField(
-                controller: skinColorController, label: 'Skin Color'),
-            CustomTextField(
-                controller: fashionStyleController, label: 'Fashion Style'),
-            DynamicListField(
-                context: context,
-                label: 'Distinguishing Features',
-                list: distinguishingFeatures),
-
+            // Physical Appearance Section
+            _buildSection(
+              context,
+              'Physical Appearance',
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomTextField(
+                      controller: eyeColorController, label: 'Eye Color'),
+                  CustomTextField(
+                      controller: hairColorController, label: 'Hair Color'),
+                  CustomTextField(
+                      controller: skinColorController, label: 'Skin Color'),
+                  CustomTextField(
+                      controller: fashionStyleController,
+                      label: 'Fashion Style'),
+                  DynamicListField(
+                    context: context,
+                    label: 'Distinguishing Features',
+                    list: distinguishingFeatures,
+                  ),
+                ],
+              ),
+            ),
             const SizedBox(height: 16),
 
-            // Personality
-            _buildSectionHeader('Personality'),
-            DynamicListField(context: context, label: 'Traits', list: traits),
-            DynamicListField(
-                context: context,
-                label: 'Hobbies and Skills',
-                list: hobbiesSkills),
-            LargeTextField(
-                controller: otherPersonalityDetailsController,
-                label: 'Other Personality Details'),
-
+            // Personality Section
+            _buildSection(
+              context,
+              'Personality',
+              Column(
+                children: [
+                  DynamicListField(
+                    context: context,
+                    label: 'Traits',
+                    list: traits,
+                  ),
+                  DynamicListField(
+                    context: context,
+                    label: 'Hobbies and Skills',
+                    list: hobbiesSkills,
+                  ),
+                  LargeTextField(
+                    controller: otherPersonalityDetailsController,
+                    label: 'Other Personality Details',
+                  ),
+                ],
+              ),
+            ),
             const SizedBox(height: 16),
 
-            // History
-            _buildSectionHeader('History'),
-            DynamicListField(
-                context: context,
-                label: 'Key Family Members',
-                list: keyFamilyMembers),
-            DynamicListField(
-                context: context, label: 'Notable Events', list: notableEvents),
-
+            // History Section
+            _buildSection(
+              context,
+              'History',
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  DynamicListField(
+                    context: context,
+                    label: 'Key Family Members',
+                    list: keyFamilyMembers,
+                  ),
+                  DynamicListField(
+                    context: context,
+                    label: 'Notable Events',
+                    list: notableEvents,
+                  ),
+                ],
+              ),
+            ),
             const SizedBox(height: 16),
 
-            // Character Growth
-            _buildSectionHeader('Character Growth'),
-            DynamicListField(context: context, label: 'Goals', list: goals),
-            DynamicListField(
-                context: context,
-                label: 'Internal Conflicts',
-                list: internalConflicts),
-            DynamicListField(
-                context: context,
-                label: 'External Conflicts',
-                list: externalConflicts),
-            DynamicListField(
-                context: context, label: 'Core Values', list: coreValues),
+            // Character Growth Section
+            _buildSection(
+              context,
+              'Character Growth',
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  DynamicListField(
+                      context: context, label: 'Goals', list: goals),
+                  DynamicListField(
+                    context: context,
+                    label: 'Internal Conflicts',
+                    list: internalConflicts,
+                  ),
+                  DynamicListField(
+                    context: context,
+                    label: 'External Conflicts',
+                    list: externalConflicts,
+                  ),
+                  DynamicListField(
+                    context: context,
+                    label: 'Core Values',
+                    list: coreValues,
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildSectionHeader(String title) {
+  Widget _buildSection(BuildContext context, String title, Widget child) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          _buildSectionHeader(title, context),
+          const SizedBox(height: 8.0),
+          child, // Content of the section
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSectionHeader(String title, context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Text(
-        title,
-        style: const TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
+      child: Text(title, style: Theme.of(context).textTheme.titleMedium),
     );
   }
 

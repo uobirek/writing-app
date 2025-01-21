@@ -15,13 +15,11 @@ class WritingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final projectCubit = context.read<ProjectCubit>();
-    final projectId = projectCubit.allProjects.isNotEmpty
-        ? projectCubit.allProjects.first.id
-        : '';
+    final project = projectCubit.selectedProject;
 
     return BlocProvider(
       create: (context) =>
-          ChapterCubit(ChapterRepository())..fetchChapters(projectId),
+          ChapterCubit(ChapterRepository())..fetchChapters(project!.id),
       child: SidebarLayout(
         activeRoute: '/writing',
         child: Padding(

@@ -43,9 +43,6 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.message)),
           );
-        } else if (state is NoteLoaded) {
-          // Navigate back to notes screen after a successful update
-          context.go('/notes');
         }
       },
       child: SidebarLayout(
@@ -92,15 +89,12 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                                       noteEditing.buildUpdatedNote();
                                   final projectCubit =
                                       context.read<ProjectCubit>();
-                                  final projectId =
-                                      projectCubit.allProjects.isNotEmpty
-                                          ? projectCubit.allProjects.first.id
-                                          : '';
+                                  final project = projectCubit.selectedProject;
                                   // Use the NoteCubit to add the note
                                   context.read<NoteCubit>().updateNote(
                                       updatedNote,
                                       noteEditing.selectedImage,
-                                      projectId);
+                                      project!.id);
                                 }
                               },
                               child: const Text("Save Changes"),

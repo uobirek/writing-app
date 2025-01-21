@@ -17,9 +17,9 @@ class NoteCubit extends Cubit<NoteState> {
     emit(NoteLoading());
     try {
       final userId = FirebaseAuth.instance.currentUser?.uid ?? '';
+
       allNotes = await noteRepository.fetchAllNotes(userId, projectId);
-      print("All notes ${allNotes}");
-      print("NOTES GOT FETCHED");
+      print("ID ${projectId}");
       emit(NoteLoaded(allNotes));
     } catch (e) {
       emit(NoteError("Failed to load notes: ${e.toString()}"));

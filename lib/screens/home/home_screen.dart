@@ -5,6 +5,7 @@ import 'package:writing_app/gradient_text.dart';
 import 'package:writing_app/models/project.dart';
 import 'package:writing_app/models/project_cubit.dart';
 import 'package:writing_app/models/project_states.dart';
+import 'package:writing_app/screens/notes/bloc/note_cubit.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
 
 class HomeScreen extends StatelessWidget {

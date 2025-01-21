@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:writing_app/models/project.dart';
+import 'package:writing_app/models/project_cubit.dart';
 
 class AppSidebar extends StatefulWidget {
   final String activeRoute;
@@ -52,6 +55,7 @@ class _AppSidebarState extends State<AppSidebar> {
 
   @override
   Widget build(BuildContext context) {
+    var project = context.read<ProjectCubit>().selectedProject;
     return Container(
       width: _isExpanded ? 250 : 100, // Adjust width based on state
       decoration: BoxDecoration(
@@ -75,8 +79,11 @@ class _AppSidebarState extends State<AppSidebar> {
               if (_isExpanded) const Icon(Icons.circle_outlined, size: 25),
               if (_isExpanded) const SizedBox(width: 20),
               if (_isExpanded)
-                Text("Projekt RL",
-                    style: Theme.of(context).textTheme.labelLarge),
+                InkWell(
+                  onTap: () => {context.go('/projects')},
+                  child: Text(project!.title,
+                      style: Theme.of(context).textTheme.labelLarge),
+                ),
               const SizedBox(width: 20),
               IconButton(
                 icon: Icon(
