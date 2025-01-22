@@ -1,1 +1,1 @@
-{"flutter":{"platforms":{"dart":{"lib/firebase_options.dart":{"projectId":"writingapp-fantasies","configurations":{"windows":"1:794226507135:web:a17413572feed22c4b2e4a"}}}}}}
+{"flutter":{"platforms":{"android":{"default":{"projectId":"writingapp-fantasies","appId":"1:794226507135:android:0917371190448eb24b2e4a","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"writingapp-fantasies","configurations":{"android":"1:794226507135:android:0917371190448eb24b2e4a","windows":"1:794226507135:web:a17413572feed22c4b2e4a"}}}}}}
