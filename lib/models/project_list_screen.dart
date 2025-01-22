@@ -33,6 +33,7 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: BlocBuilder<ProjectCubit, ProjectState>(
         builder: (context, state) {
           if (state is ProjectLoading) {

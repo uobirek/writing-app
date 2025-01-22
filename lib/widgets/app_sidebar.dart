@@ -104,7 +104,7 @@ class _AppSidebarState extends State<AppSidebar> {
             isActive: widget.activeRoute == '/',
           ),
           _buildSidebarItem(
-            icon: Icons.notes_outlined,
+            icon: Icons.note_outlined,
             label: 'Notes',
             route: '/notes',
             isActive: widget.activeRoute == '/notes',

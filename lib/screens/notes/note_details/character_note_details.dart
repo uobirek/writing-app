@@ -10,24 +10,27 @@ class CharacterNoteDetails implements NoteDetails {
   Widget buildDetailsScreen(BuildContext context) {
     final theme = Theme.of(context);
 
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSection(context, "Name", note.name),
-            _buildSection(context, "Role", note.role),
-            _buildSection(context, "Gender", note.gender),
-            _buildSection(context, "Age", note.age.toString()),
-            _buildAppearanceSection(),
-            _buildTraitsSection(context),
-            _buildSection(context, "Key Family Members",
-                _listToString(note.keyFamilyMembers)),
-            _buildSection(
-                context, "Notable Events", _listToString(note.notableEvents)),
-            _buildCharacterGrowthSection(context),
-          ],
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildSection(context, "Name", note.name),
+              _buildSection(context, "Role", note.role),
+              _buildSection(context, "Gender", note.gender),
+              _buildSection(context, "Age", note.age.toString()),
+              _buildAppearanceSection(),
+              _buildTraitsSection(context),
+              _buildSection(context, "Key Family Members",
+                  _listToString(note.keyFamilyMembers)),
+              _buildSection(
+                  context, "Notable Events", _listToString(note.notableEvents)),
+              _buildCharacterGrowthSection(context),
+            ],
+          ),
         ),
       ),
     );

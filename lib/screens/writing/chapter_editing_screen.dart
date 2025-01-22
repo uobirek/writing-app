@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quill/flutter_quill.dart';
@@ -92,9 +94,15 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
     });
   }
 
+  bool _isMobile() {
+    // Checks if the platform is mobile (Android/iOS)
+    return Platform.isAndroid || Platform.isIOS;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: BlocBuilder<ChapterCubit, ChapterState>(
         builder: (context, state) {
           if (!widget.isNewChapter) {
@@ -114,18 +122,23 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
           return SidebarLayout(
             activeRoute: '/chapters',
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+              padding: _isMobile()
+                  ? const EdgeInsets.symmetric(horizontal: 20, vertical: 10)
+                  : const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
               child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Theme.of(context).canvasColor,
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.1),
-                          blurRadius: 30,
-                          spreadRadius: 6,
-                          offset: const Offset(0, 10)),
-                    ]),
+                decoration: _isMobile()
+                    ? null // No decoration for mobile
+                    : BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Theme.of(context).canvasColor,
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 30,
+                              spreadRadius: 6,
+                              offset: const Offset(0, 10)),
+                        ],
+                      ),
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
@@ -150,15 +163,49 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
                       const SizedBox(height: 15),
                       QuillSimpleToolbar(
                         controller: _controller,
-                        configurations:
-                            QuillSimpleToolbarConfigurations(customButtons: [
-                          QuillToolbarCustomButtonOptions(
-                            icon: const Icon(Icons.save),
-                            onPressed: () {
-                              _saveChapter(context);
-                            },
-                          ),
-                        ]),
+                        configurations: _isMobile()
+                            ? QuillSimpleToolbarConfigurations(
+                                customButtons: [
+                                  QuillToolbarCustomButtonOptions(
+                                    icon: const Icon(Icons.save),
+                                    onPressed: () {
+                                      _saveChapter(context);
+                                    },
+                                  ),
+                                ],
+                                multiRowsDisplay:
+                                    false, // Single row for mobile
+                                showFontFamily: false, // Remove font family
+                                showFontSize: false, // Remove font size
+                                showBoldButton: true, // Show Bold button
+                                showItalicButton: true, // Show Italic button
+                                showColorButton: true, // Show Color button
+                                showLink: true, // Show Link button
+                                showUndo: true, // Show Undo button
+                                showRedo: true, // Show Redo button
+                              )
+                            : QuillSimpleToolbarConfigurations(
+                                customButtons: [
+                                  QuillToolbarCustomButtonOptions(
+                                    icon: const Icon(Icons.save),
+                                    onPressed: () {
+                                      _saveChapter(context);
+                                    },
+                                  ),
+                                ],
+                                multiRowsDisplay: true,
+                                showFontFamily: true,
+                                showFontSize: true,
+                                showBoldButton: true,
+                                showItalicButton: true,
+                                showAlignmentButtons: true,
+                                showListNumbers: true,
+                                showListBullets: true,
+                                showColorButton: true,
+                                showBackgroundColorButton: true,
+                                showUndo: true,
+                                showRedo: true,
+                              ),
                       ),
                       const SizedBox(height: 10),
                       Expanded(

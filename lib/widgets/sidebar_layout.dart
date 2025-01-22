@@ -12,54 +12,70 @@ class SidebarLayout extends StatelessWidget {
     required this.activeRoute,
     required this.child,
   });
-
   @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 600;
-
     return Scaffold(
+      resizeToAvoidBottomInset:
+          false, // Keep this as it is for preventing screen resize when keyboard appears
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: isMobile
-          ? Column(
-              children: [
-                Expanded(child: child),
-                _buildBottomNavigationBar(context),
-              ],
-            )
-          : Row(
-              children: [
-                AppSidebar(
-                  activeRoute: activeRoute,
-                ),
-                Expanded(
-                  child: child,
-                ),
-              ],
-            ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final isMobile = constraints.maxWidth < 600;
+
+          return isMobile
+              ? Column(
+                  children: [
+                    Expanded(child: child),
+                    _buildBottomNavigationBar(context),
+                  ],
+                )
+              : Row(
+                  children: [
+                    AppSidebar(
+                      activeRoute: activeRoute,
+                    ),
+                    Expanded(
+                      child: child,
+                    ),
+                  ],
+                );
+        },
+      ),
     );
   }
 
   Widget _buildBottomNavigationBar(BuildContext context) {
+    var colorScheme = Theme.of(context).colorScheme;
     return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
       currentIndex: _getActiveIndex(),
       onTap: (index) {
         _handleNavigation(context, index);
       },
       items: [
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.home_outlined),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home_outlined, color: colorScheme.secondary),
+          activeIcon: Icon(Icons.home, color: colorScheme.secondary),
           label: 'Home',
         ),
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.notes_outlined),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.note_outlined, color: colorScheme.secondary),
+          activeIcon: Icon(Icons.note_sharp, color: colorScheme.secondary),
           label: 'Notes',
         ),
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.edit_outlined),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.apps_outlined, color: colorScheme.secondary),
+          activeIcon: Icon(Icons.apps, color: colorScheme.secondary),
+          label: 'Projects',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.edit_outlined, color: colorScheme.secondary),
+          activeIcon: Icon(Icons.edit, color: colorScheme.secondary),
           label: 'Writing',
         ),
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.search),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.search_outlined, color: colorScheme.secondary),
+          activeIcon: Icon(Icons.search, color: colorScheme.secondary),
           label: 'Research',
         ),
       ],
@@ -71,9 +87,11 @@ class SidebarLayout extends StatelessWidget {
       case '/notes':
         return 1;
       case '/writing':
+        return 3;
+      case '/projects':
         return 2;
       case '/research':
-        return 3;
+        return 4;
       default:
         return 0;
     }
@@ -88,9 +106,12 @@ class SidebarLayout extends StatelessWidget {
         context.go('/notes');
         break;
       case 2:
-        context.go('/writing');
+        context.go('/projects');
         break;
       case 3:
+        context.go('/writing');
+        break;
+      case 4:
         context.go('/research');
         break;
     }

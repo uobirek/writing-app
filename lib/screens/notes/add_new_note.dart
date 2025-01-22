@@ -83,6 +83,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
       child: SidebarLayout(
         activeRoute: '/notes',
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: AppBar(
             title: const Text('Add New Note'),
             actions: [

@@ -41,18 +41,30 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<ProjectCubit>(
           create: (context) {
-            print(
-                'Initializing ProjectCubit'); // Debug print to confirm initialization
+            print('Initializing ProjectCubit'); // Debug print
             return ProjectCubit(ProjectRepository());
           },
         ),
       ],
-      child: MaterialApp.router(
-        themeMode: ThemeMode.light,
-        theme: GlobalThemeData.lightThemeData,
-        darkTheme: GlobalThemeData.darkThemeData,
-        title: 'Writing App',
-        routerConfig: AppRouter.router, // GoRouter is fully initialized here
+      child: Builder(
+        builder: (context) {
+          return LayoutBuilder(
+            builder: (context, constraints) {
+              // Determine whether it's mobile or not based on screen width
+              final isMobile = constraints.maxWidth < 600;
+
+              return MaterialApp.router(
+                themeMode: ThemeMode.light,
+                theme: GlobalThemeData.lightThemeData(
+                    context, isMobile), // Pass isMobile here
+                darkTheme: GlobalThemeData.darkThemeData(
+                    context, isMobile), // Pass isMobile here
+                title: 'Writing App',
+                routerConfig: AppRouter.router, // GoRouter is fully initialized
+              );
+            },
+          );
+        },
       ),
     );
   }
