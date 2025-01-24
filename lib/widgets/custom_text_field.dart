@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:writing_app/screens/notes/widgets/input_decoration.dart';
+import 'package:writing_app/utils/input_decoration.dart';
 
 class CustomTextField extends StatefulWidget {
   const CustomTextField({

@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:writing_app/firebase_options.dart';
-import 'package:writing_app/models/project_cubit.dart';
-import 'package:writing_app/models/project_repository.dart';
-import 'package:writing_app/screens/notes/bloc/note_cubit.dart';
-import 'package:writing_app/screens/notes/repositories/note_repository.dart';
-import 'package:writing_app/screens/writing/chapter_cubit.dart';
-import 'package:writing_app/screens/writing/chapter_repository.dart';
-import 'package:writing_app/utils/router.dart';
-import 'package:writing_app/utils/theme.dart';
+import 'package:writing_app/features/projects/cubit/project_cubit.dart';
+import 'package:writing_app/features/projects/repositories/project_repository.dart';
+import 'package:writing_app/features/notes/cubit/note_cubit.dart';
+import 'package:writing_app/features/notes/repositories/note_repository.dart';
+import 'package:writing_app/features/writing/cubit/chapter_cubit.dart';
+import 'package:writing_app/features/writing/repositories/chapter_repository.dart';
+import 'package:writing_app/core/router.dart';
+import 'package:writing_app/core/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
