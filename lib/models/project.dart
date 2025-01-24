@@ -1,8 +1,5 @@
 class Project {
-  final String id;
-  final String title;
-  final String description;
-  final String? imageUrl; // Add image URL
+  // Add image URL
 
   Project({
     required this.id,
@@ -12,14 +9,17 @@ class Project {
   });
 
   factory Project.fromJson(Map<String, dynamic> json) {
-    print('Mapping project from json: $json');
     return Project(
-      id: json['id'] ?? '',
-      title: json['title'] ?? 'Untitled',
-      description: json['description'] ?? 'No description',
-      imageUrl: json['imageUrl'], // Fetch image from JSON
+      id: json['id'] as String? ?? '',
+      title: json['title'] as String? ?? 'Untitled',
+      description: json['description'] as String? ?? 'No description',
+      imageUrl: json['imageUrl'] as String?, // Explicitly cast to String?
     );
   }
+  final String id;
+  final String title;
+  final String description;
+  final String? imageUrl;
 
   Map<String, dynamic> toJson() {
     return {

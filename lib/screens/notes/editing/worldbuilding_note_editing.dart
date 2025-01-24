@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:writing_app/screens/notes/editing/note_editing.dart';
 import 'package:writing_app/screens/notes/models/worldbuilding_note.dart';
-import 'package:writing_app/widgets/custom_text_field.dart';
 import 'package:writing_app/screens/notes/widgets/dynamic_list_field.dart';
+import 'package:writing_app/widgets/custom_text_field.dart';
 import 'package:writing_app/widgets/large_text_field.dart';
 
 class WorldbuildingNoteEditing extends NoteEditing {
-  final WorldbuildingNote note;
-  late TextEditingController placeNameController;
-  late TextEditingController geographyController;
-  late TextEditingController cultureController;
-  late List<String> pointsOfInterest; // Dynamic list
+  // Dynamic list
 
   WorldbuildingNoteEditing(this.note) : super(note.imageUrl) {
     placeNameController = TextEditingController(text: note.placeName);
@@ -18,6 +14,11 @@ class WorldbuildingNoteEditing extends NoteEditing {
     cultureController = TextEditingController(text: note.culture);
     pointsOfInterest = note.pointsOfInterest ?? []; // Initialize dynamically
   }
+  final WorldbuildingNote note;
+  late TextEditingController placeNameController;
+  late TextEditingController geographyController;
+  late TextEditingController cultureController;
+  late List<String> pointsOfInterest;
 
   @override
   Widget buildDetailsForm(GlobalKey<FormState> formKey, BuildContext context) {
@@ -42,9 +43,10 @@ class WorldbuildingNoteEditing extends NoteEditing {
           ),
           const SizedBox(height: 16),
           DynamicListField(
-              context: context,
-              label: 'Points of Interest',
-              list: pointsOfInterest),
+            context: context,
+            label: 'Points of Interest',
+            list: pointsOfInterest,
+          ),
         ],
       ),
     );

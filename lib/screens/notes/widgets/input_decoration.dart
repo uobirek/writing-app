@@ -5,6 +5,8 @@ InputDecoration formInputDecoration({
   required String label,
 }) {
   return InputDecoration(
+    constraints:
+        const BoxConstraints(minHeight: 40, minWidth: 100, maxWidth: 350),
     labelStyle: Theme.of(context).textTheme.bodyLarge,
     labelText: label,
     filled: true,

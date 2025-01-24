@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:writing_app/utils/global_text.dart';
 
 class GlobalThemeData {
-  static final Color _lightFocusColor = Colors.black.withOpacity(0.12);
-  static final Color _darkFocusColor = Colors.white.withOpacity(0.12);
+  static final Color _lightFocusColor = Colors.black.withValues(alpha: 0.12);
+  static final Color _darkFocusColor = Colors.white.withValues(alpha: 0.12);
 
   static ThemeData themeData(
     ColorScheme colorScheme,
@@ -25,18 +24,23 @@ class GlobalThemeData {
         labelMedium: GlobalTextStyles.labelMedium(colorScheme, isMobile),
         labelSmall: GlobalTextStyles.labelSmall(colorScheme, isMobile),
         labelLarge: GlobalTextStyles.labelLarge(colorScheme, isMobile),
+        titleSmall: GlobalTextStyles.titleSmall(colorScheme, isMobile),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: colorScheme.secondary,
-          textStyle: GlobalTextStyles.labelMedium(
-              colorScheme, isMobile), // Example for button text
+          textStyle: GlobalTextStyles.labelLarge(
+            colorScheme,
+            isMobile,
+          ), // Example for button text
         ),
       ),
       textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(
-              foregroundColor: colorScheme.tertiary,
-              textStyle: GlobalTextStyles.labelMedium(colorScheme, isMobile))),
+        style: TextButton.styleFrom(
+          foregroundColor: colorScheme.surface,
+          textStyle: GlobalTextStyles.labelLarge(colorScheme, isMobile),
+        ),
+      ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: colorScheme.secondary,
         foregroundColor: colorScheme.surface,
@@ -55,7 +59,7 @@ class GlobalThemeData {
     secondary: Color(0xFFA7A3EB),
     secondaryContainer: Color(0xFFE9E8FA),
     onSecondary: Color(0xFF827FC0),
-    tertiary: Color(0xFFAF8A05),
+    tertiary: Color.fromARGB(255, 107, 203, 197),
     error: Colors.redAccent,
     onError: Colors.white,
     surface: Color(0xFFFEFEFE),

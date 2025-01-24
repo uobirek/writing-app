@@ -2,22 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:writing_app/screens/notes/widgets/input_decoration.dart';
 
 class CustomTextField extends StatefulWidget {
-  final TextEditingController controller;
-  final String label;
-  final bool isNumber;
-
   const CustomTextField({
     super.key,
     required this.controller,
     required this.label,
     this.isNumber = false,
   });
+  final TextEditingController controller;
+  final String label;
+  final bool isNumber;
 
   @override
-  _CustomTextFieldState createState() => _CustomTextFieldState();
+  CustomTextFieldState createState() => CustomTextFieldState();
 }
 
-class _CustomTextFieldState extends State<CustomTextField> {
+class CustomTextFieldState extends State<CustomTextField> {
   late FocusNode _focusNode;
 
   @override
@@ -39,7 +38,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8),
       child: MouseRegion(
         onEnter: (_) {
           setState(() {});

@@ -1,14 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:writing_app/models/project_cubit.dart';
 import 'package:writing_app/screens/writing/chapter_state.dart';
 import 'package:writing_app/screens/writing/models/chapter.dart';
 import 'chapter_repository.dart';
 
 class ChapterCubit extends Cubit<ChapterState> {
-  final ChapterRepository chapterRepository;
-
   ChapterCubit(this.chapterRepository) : super(ChapterInitial());
+  final ChapterRepository chapterRepository;
 
   List<Chapter> allChapters = [];
 
@@ -50,7 +48,7 @@ class ChapterCubit extends Cubit<ChapterState> {
 
     try {
       await chapterRepository.updateChapter(chapter, userId, projectId);
-      int index = allChapters.indexWhere((c) => c.id == chapter.id);
+      final int index = allChapters.indexWhere((c) => c.id == chapter.id);
       if (index != -1) {
         allChapters[index] = chapter;
       }

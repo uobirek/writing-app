@@ -21,11 +21,12 @@ class ParallaxFlowDelegate extends FlowDelegate {
   @override
   void paintChildren(FlowPaintingContext context) {
     // Calculate the position of this list item within the viewport.
-    final scrollableBox = scrollable.context.findRenderObject() as RenderBox;
-    final listItemBox = listItemContext.findRenderObject() as RenderBox;
+    final scrollableBox = scrollable.context.findRenderObject()! as RenderBox;
+    final listItemBox = listItemContext.findRenderObject()! as RenderBox;
     final listItemOffset = listItemBox.localToGlobal(
-        listItemBox.size.centerLeft(Offset.zero),
-        ancestor: scrollableBox);
+      listItemBox.size.centerLeft(Offset.zero),
+      ancestor: scrollableBox,
+    );
 
     // Determine the percent position of this list item within the
     // scrollable area.
@@ -35,12 +36,12 @@ class ParallaxFlowDelegate extends FlowDelegate {
 
     // Calculate the vertical alignment of the background
     // based on the scroll percent.
-    final verticalAlignment = Alignment(0.0, scrollFraction * 2 - 1);
+    final verticalAlignment = Alignment(0, scrollFraction * 2 - 1);
 
     // Convert the background alignment into a pixel offset for
     // painting purposes.
     final backgroundSize =
-        (backgroundImageKey.currentContext!.findRenderObject() as RenderBox)
+        (backgroundImageKey.currentContext!.findRenderObject()! as RenderBox)
             .size;
     final listItemSize = context.size;
     final childRect =
@@ -50,7 +51,7 @@ class ParallaxFlowDelegate extends FlowDelegate {
     context.paintChild(
       0,
       transform:
-          Transform.translate(offset: Offset(0.0, childRect.top)).transform,
+          Transform.translate(offset: Offset(0, childRect.top)).transform,
     );
   }
 

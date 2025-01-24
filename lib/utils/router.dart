@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:writing_app/authentication/login_screen.dart';
+import 'package:writing_app/authentication/register_screen.dart';
+import 'package:writing_app/authentication/welcome_screen.dart';
 import 'package:writing_app/models/project_list_screen.dart';
-import 'package:writing_app/screens/notes/bloc/note_cubit.dart';
 import 'package:writing_app/screens/home/home_screen.dart';
 import 'package:writing_app/screens/notes/add_new_note.dart';
+import 'package:writing_app/screens/notes/bloc/note_cubit.dart';
 import 'package:writing_app/screens/notes/note_details_screen.dart';
 import 'package:writing_app/screens/notes/note_editing_screen.dart';
 import 'package:writing_app/screens/notes/notes_screen.dart';
@@ -16,7 +18,7 @@ import 'package:writing_app/screens/writing/writing_screen.dart';
 class AppRouter {
   static GoRouter get router {
     return GoRouter(
-      initialLocation: '/login', // Set the initial route
+      initialLocation: '/welcome', // Set the initial route
       routes: [
         GoRoute(
           path: '/',
@@ -63,35 +65,64 @@ class AppRouter {
           builder: (context, state) => const AddNoteScreen(),
         ),
         GoRoute(
-            path: '/chapter/:id',
-            builder: (context, state) {
-              final chapterId = state.pathParameters['id']!;
-              return BlocProvider.value(
-                  value: context.read<ChapterCubit>(),
-                  child: EditChapterScreen(
-                    chapterId: chapterId,
-                    isNewChapter: false,
-                  ));
-            }),
+          path: '/chapter/:id',
+          builder: (context, state) {
+            final chapterId = state.pathParameters['id']!;
+            return BlocProvider.value(
+              value: context.read<ChapterCubit>(),
+              child: EditChapterScreen(
+                chapterId: chapterId,
+                isNewChapter: false,
+              ),
+            );
+          },
+        ),
         GoRoute(
-            path: '/new-chapter',
-            builder: (context, state) {
-              return const EditChapterScreen(chapterId: "", isNewChapter: true);
-            }),
+          path: '/new-chapter',
+          builder: (context, state) {
+            return const EditChapterScreen(chapterId: '', isNewChapter: true);
+          },
+        ),
         GoRoute(
-            path: '/login',
-            builder: (context, state) {
-              return LoginScreen();
-            }),
+          path: '/welcome',
+          builder: (context, state) {
+            return const WelcomeScreen();
+          },
+        ),
         GoRoute(
-            path: '/projects',
-            builder: (context, state) {
-              return ProjectListScreen();
-            }),
+          path: '/login',
+          builder: (context, state) {
+            return const LoginScreen();
+          },
+          pageBuilder: (context, state) {
+            return _slideTransitionPage(
+              child: const LoginScreen(),
+              pageKey: state.pageKey,
+            );
+          },
+        ),
+        GoRoute(
+          path: '/register',
+          builder: (context, state) {
+            return const RegisterScreen();
+          },
+          pageBuilder: (context, state) {
+            return _slideTransitionPage(
+              child: const RegisterScreen(),
+              pageKey: state.pageKey,
+            );
+          },
+        ),
+        GoRoute(
+          path: '/projects',
+          builder: (context, state) {
+            return const ProjectListScreen();
+          },
+        ),
       ],
       errorBuilder: (context, state) => Scaffold(
         body: Center(
-          child: Text('No route defined for ${state.uri.toString()}'),
+          child: Text('No route defined for ${state.uri}'),
         ),
       ),
     );
@@ -106,4 +137,27 @@ class AppRouter {
       child: child,
     );
   }
+}
+
+CustomTransitionPage _slideTransitionPage({
+  required Widget child,
+  required LocalKey pageKey,
+  Duration duration = const Duration(milliseconds: 300),
+}) {
+  return CustomTransitionPage(
+    key: pageKey,
+    child: child,
+    transitionDuration: duration,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(1, 0); // Start from the right
+      const end = Offset.zero; // End at the current position
+      const curve = Curves.easeInOut;
+
+      final tween =
+          Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+      final offsetAnimation = animation.drive(tween);
+
+      return SlideTransition(position: offsetAnimation, child: child);
+    },
+  );
 }

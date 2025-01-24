@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:writing_app/models/parallax_flow_delegate.dart';
 
 @immutable

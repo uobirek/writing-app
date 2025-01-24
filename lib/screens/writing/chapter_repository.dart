@@ -2,13 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:writing_app/screens/writing/models/chapter.dart';
 
 class ChapterRepository {
-  final FirebaseFirestore _firestore;
-
   ChapterRepository({FirebaseFirestore? firestore})
       : _firestore = firestore ?? FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore;
 
   Future<List<Chapter>> fetchAllChapters(
-      String userId, String projectId) async {
+    String userId,
+    String projectId,
+  ) async {
     try {
       final querySnapshot = await _firestore
           .collection('users')
@@ -27,7 +28,10 @@ class ChapterRepository {
   }
 
   Future<Chapter> addChapter(
-      Chapter chapter, String userId, String projectId) async {
+    Chapter chapter,
+    String userId,
+    String projectId,
+  ) async {
     try {
       final docRef = await _firestore
           .collection('users')
@@ -45,7 +49,10 @@ class ChapterRepository {
   }
 
   Future<void> deleteChapter(
-      String chapterId, String userId, String projectId) async {
+    String chapterId,
+    String userId,
+    String projectId,
+  ) async {
     try {
       await _firestore
           .collection('users')
@@ -61,7 +68,10 @@ class ChapterRepository {
   }
 
   Future<void> updateChapter(
-      Chapter chapter, String userId, String projectId) async {
+    Chapter chapter,
+    String userId,
+    String projectId,
+  ) async {
     try {
       await _firestore
           .collection('users')

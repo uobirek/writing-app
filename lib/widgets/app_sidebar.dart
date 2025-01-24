@@ -1,17 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:writing_app/models/project.dart';
 import 'package:writing_app/models/project_cubit.dart';
 
 class AppSidebar extends StatefulWidget {
-  final String activeRoute;
-
   const AppSidebar({
     super.key,
     required this.activeRoute,
   });
+  final String activeRoute;
 
   @override
   _AppSidebarState createState() => _AppSidebarState();
@@ -43,10 +41,10 @@ class _AppSidebarState extends State<AppSidebar> {
     try {
       await FirebaseAuth.instance.signOut();
       context.go('/login'); // Navigate to the login screen after logging out
-    } catch (e) {
+    } catch (err) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Logout failed: $e'),
+          content: Text('Logout failed: $err'),
           backgroundColor: Colors.red,
         ),
       );
@@ -55,7 +53,7 @@ class _AppSidebarState extends State<AppSidebar> {
 
   @override
   Widget build(BuildContext context) {
-    var project = context.read<ProjectCubit>().selectedProject;
+    final project = context.read<ProjectCubit>().selectedProject;
     return Container(
       width: _isExpanded ? 250 : 100, // Adjust width based on state
       decoration: BoxDecoration(
@@ -70,7 +68,6 @@ class _AppSidebarState extends State<AppSidebar> {
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(height: 40),
           Row(
@@ -81,8 +78,10 @@ class _AppSidebarState extends State<AppSidebar> {
               if (_isExpanded)
                 InkWell(
                   onTap: () => {context.go('/projects')},
-                  child: Text(project!.title,
-                      style: Theme.of(context).textTheme.labelLarge),
+                  child: Text(
+                    project!.title,
+                    style: Theme.of(context).textTheme.labelLarge,
+                  ),
                 ),
               const SizedBox(width: 20),
               IconButton(
@@ -160,18 +159,22 @@ class _AppSidebarState extends State<AppSidebar> {
             child: Row(
               children: [
                 const SizedBox(width: 15),
-                Icon(icon,
-                    color: isActive
-                        ? Theme.of(context).colorScheme.onSecondary
-                        : Theme.of(context).colorScheme.onPrimary),
+                Icon(
+                  icon,
+                  color: isActive
+                      ? Theme.of(context).colorScheme.onSecondary
+                      : Theme.of(context).colorScheme.onPrimary,
+                ),
                 if (_isExpanded) const SizedBox(width: 12),
                 if (_isExpanded)
-                  Text(label,
-                      style: !isActive
-                          ? Theme.of(context).textTheme.labelMedium
-                          : Theme.of(context).textTheme.labelMedium?.copyWith(
-                              color:
-                                  Theme.of(context).colorScheme.onSecondary)),
+                  Text(
+                    label,
+                    style: !isActive
+                        ? Theme.of(context).textTheme.labelMedium
+                        : Theme.of(context).textTheme.labelMedium?.copyWith(
+                              color: Theme.of(context).colorScheme.onSecondary,
+                            ),
+                  ),
               ],
             ),
           ),
@@ -204,9 +207,12 @@ class _AppSidebarState extends State<AppSidebar> {
               Icon(Icons.logout, color: Theme.of(context).colorScheme.onError),
               if (_isExpanded) const SizedBox(width: 12),
               if (_isExpanded)
-                Text('Logout',
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.onError)),
+                Text(
+                  'Logout',
+                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.onError,
+                      ),
+                ),
             ],
           ),
         ),

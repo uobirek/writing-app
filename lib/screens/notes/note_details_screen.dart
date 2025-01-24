@@ -8,9 +8,8 @@ import 'package:writing_app/screens/notes/widgets/dynamic_image.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
 
 class NoteDetailsScreen extends StatefulWidget {
-  final String noteId; // Pass only the ID, not the full Note object
-
   const NoteDetailsScreen({super.key, required this.noteId});
+  final String noteId;
 
   @override
   State<NoteDetailsScreen> createState() => _NoteDetailsScreenState();
@@ -27,7 +26,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
     final projectCubit = context.read<ProjectCubit>();
     final project = projectCubit.selectedProject;
     noteCubit.fetchNotes(project!.id);
-    final note = noteCubit.getNoteById(widget.noteId); // Fetch the note by ID
+    final note = noteCubit.getNoteById(widget.noteId);
     if (note != null) {
       currentNote = note;
     }
@@ -37,11 +36,10 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
   Widget build(BuildContext context) {
     final projectCubit = context.read<ProjectCubit>();
     final project = projectCubit.selectedProject;
-    // Ensure the Cubit fetches notes when the screen is built
     context.read<NoteCubit>().fetchNotes(project!.id);
 
     return SidebarLayout(
-      activeRoute: "/notes",
+      activeRoute: '/notes',
       child: BlocBuilder<NoteCubit, NoteState>(
         builder: (context, state) {
           if (state is NoteLoading) {
@@ -49,9 +47,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
               child: CircularProgressIndicator(),
             );
           } else if (state is NoteLoaded) {
-            // Fetch the note by ID from the loaded notes
             try {
-              print("trying to build note details for ${currentNote}");
               return _buildNoteDetails(context, currentNote);
             } catch (e) {
               return const Center(
@@ -64,7 +60,6 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
             );
           }
 
-          // Default fallback
           return const Center(
             child: CircularProgressIndicator(),
           );
@@ -75,22 +70,19 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
 
   Widget _buildNoteDetails(BuildContext context, Note note) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Note Image
             if (note.imageUrl != null)
               DynamicImageWidget(
-                imagePath: note.imageUrl!,
+                imagePath: note.imageUrl,
                 width: 140,
                 height: 140,
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
               ),
             const SizedBox(height: 20),
-
-            // Note Details
             note.getNoteDetails().buildDetailsScreen(context),
           ],
         ),

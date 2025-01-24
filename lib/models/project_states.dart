@@ -13,18 +13,18 @@ class ProjectInitial extends ProjectState {}
 class ProjectLoading extends ProjectState {}
 
 class ProjectLoaded extends ProjectState {
-  final List<Project> projects;
   ProjectLoaded(this.projects);
+  final List<Project> projects;
 }
 
 class ProjectError extends ProjectState {
-  final String message;
   ProjectError(this.message);
+  final String message;
 }
 
 class ProjectSelected extends ProjectState {
-  final String projectId;
   ProjectSelected(this.projectId);
+  final String projectId;
 }
 
 class ProjectUpdating extends ProjectState {}

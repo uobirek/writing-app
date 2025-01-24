@@ -5,10 +5,7 @@ import 'package:writing_app/screens/notes/note_details/note_details.dart';
 import 'package:writing_app/screens/notes/note_details/worldbuilding_note_details.dart';
 
 class WorldbuildingNote extends Note {
-  final String placeName; // Name of the place
-  final String? geography; // Description of geography
-  final String? culture; // Culture or societal description
-  final List<String>? pointsOfInterest; // List of important locations
+  // List of important locations
 
   WorldbuildingNote({
     required super.id,
@@ -20,7 +17,33 @@ class WorldbuildingNote extends Note {
     required this.culture,
     this.pointsOfInterest,
     required super.position,
-  }) : super(category: "Worldbuilding");
+  }) : super(category: 'Worldbuilding');
+  factory WorldbuildingNote.fromJson(Map<String, dynamic> json) {
+    return WorldbuildingNote(
+      id: json['id'] as String? ?? '',
+      title: json['title'] as String? ?? 'Untitled',
+      createdAt: json['createdAt'] != null
+          ? DateTime.tryParse(json['createdAt'].toString()) ?? DateTime.now()
+          : DateTime.now(),
+      placeName: json['placeName'] as String,
+      geography: json['geography'] as String?,
+      culture: json['culture'] as String?,
+      pointsOfInterest: (json['pointsOfInterest'] as List<dynamic>?)
+              ?.map((e) => e.toString())
+              .toList() ??
+          [],
+      imageUrl: json['imageUrl'] as String? ??
+          json['image'] as String? ??
+          'assets/images/placeholder.jpg',
+      position:
+          (json['position'] as num?)?.toInt() ?? 0, // Safe conversion to int
+    );
+  }
+
+  final String placeName; // Name of the place
+  final String? geography; // Description of geography
+  final String? culture; // Culture or societal description
+  final List<String>? pointsOfInterest;
 
   @override
   Map<String, dynamic> toJson() {
@@ -35,24 +58,10 @@ class WorldbuildingNote extends Note {
       'image': imageUrl,
       'type': 'WorldbuildingNote',
       'position': position,
-      'category': category
+      'category': category,
     };
   }
 
-  factory WorldbuildingNote.fromJson(Map<String, dynamic> json) {
-    return WorldbuildingNote(
-      id: json['id'],
-      title: json['title'],
-      createdAt: DateTime.parse(json['createdAt']),
-      placeName: json['placeName'],
-      geography: json['geography'],
-      culture: json['culture'],
-      pointsOfInterest: List<String>.from(json['pointsOfInterest']),
-      imageUrl:
-          json['imageUrl'] ?? json['image'] ?? 'assets/images/placeholder.jpg',
-      position: json['position'],
-    );
-  }
   @override
   NoteDetails getNoteDetails() {
     return WorldbuildingNoteDetails(this);

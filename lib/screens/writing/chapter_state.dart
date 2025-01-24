@@ -11,9 +11,8 @@ class ChapterInitial extends ChapterState {}
 class ChapterLoading extends ChapterState {}
 
 class ChapterLoaded extends ChapterState {
-  final List<Chapter> chapters;
-
   ChapterLoaded(this.chapters);
+  final List<Chapter> chapters;
 
   @override
   List<Object?> get props => [chapters];
@@ -22,9 +21,8 @@ class ChapterLoaded extends ChapterState {
 class ChapterUpdating extends ChapterState {}
 
 class ChapterError extends ChapterState {
-  final String message;
-
   ChapterError(this.message);
+  final String message;
 
   @override
   List<Object?> get props => [message];

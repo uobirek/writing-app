@@ -4,12 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class DynamicImageWidget extends StatelessWidget {
-  final String? imagePath; // Local path or remote Cloudinary URL
-  final double? width; // Desired width of the image
-  final double? height; // Desired height of the image
-  final BoxFit fit;
-  final BorderRadius? borderRadius;
-
   const DynamicImageWidget({
     super.key,
     required this.imagePath,
@@ -18,6 +12,11 @@ class DynamicImageWidget extends StatelessWidget {
     this.fit = BoxFit.cover,
     this.borderRadius,
   });
+  final String? imagePath; // Local path or remote Cloudinary URL
+  final double? width; // Desired width of the image
+  final double? height; // Desired height of the image
+  final BoxFit fit;
+  final BorderRadius? borderRadius;
 
   @override
   Widget build(BuildContext context) {

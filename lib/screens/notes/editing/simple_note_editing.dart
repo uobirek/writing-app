@@ -4,14 +4,13 @@ import 'package:writing_app/screens/notes/models/simple_note.dart';
 import 'package:writing_app/widgets/custom_text_field.dart';
 
 class SimpleNoteEditing extends NoteEditing {
-  final SimpleNote note;
-  late TextEditingController titleController;
-  late TextEditingController contentController;
-
   SimpleNoteEditing(this.note) : super(note.imageUrl) {
     titleController = TextEditingController(text: note.title);
     contentController = TextEditingController(text: note.specialData);
   }
+  final SimpleNote note;
+  late TextEditingController titleController;
+  late TextEditingController contentController;
 
   @override
   Widget buildDetailsForm(GlobalKey<FormState> formKey, BuildContext context) {

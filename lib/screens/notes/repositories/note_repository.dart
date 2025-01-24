@@ -2,52 +2,59 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
-import '../models/note.dart';
+
 import '../models/character_note.dart';
+import '../models/note.dart';
 import '../models/worldbuilding_note.dart';
 
 class NoteRepository {
+  // Replace with your Cloudinary Upload Preset
+
+  NoteRepository({FirebaseFirestore? firestore})
+      : _firestore = firestore ?? FirebaseFirestore.instance;
   final FirebaseFirestore _firestore;
 
   // Cloudinary configuration
   final String cloudName =
-      "do1dcq82t"; // Replace with your Cloudinary Cloud Name
-  final String uploadPreset =
-      "flutter_notes_upload"; // Replace with your Cloudinary Upload Preset
-
-  NoteRepository({FirebaseFirestore? firestore})
-      : _firestore = firestore ?? FirebaseFirestore.instance;
+      'do1dcq82t'; // Replace with your Cloudinary Cloud Name
+  final String uploadPreset = 'flutter_notes_upload';
 
   /// Upload image to Cloudinary
-  Future<String> uploadImageToCloudinary(File imageFile) async {
+  Future<String?> uploadImageToCloudinary(File imageFile) async {
     try {
-      final String uploadUrl =
-          "https://api.cloudinary.com/v1_1/$cloudName/image/upload";
+      final uploadUrl =
+          'https://api.cloudinary.com/v1_1/$cloudName/image/upload';
 
       final formData = FormData.fromMap({
-        "file": await MultipartFile.fromFile(imageFile.path),
-        "upload_preset": uploadPreset,
+        'file': await MultipartFile.fromFile(imageFile.path),
+        'upload_preset': uploadPreset,
       });
 
       final response = await Dio().post(uploadUrl, data: formData);
 
       if (response.statusCode == 200) {
-        return response.data["secure_url"]; // Return the Cloudinary URL
+        final responseData = response.data as Map<String, dynamic>;
+        return responseData['secure_url'] as String?;
       } else {
-        throw Exception("Failed to upload image: ${response.data}");
+        throw Exception('Failed to upload image: ${response.data}');
       }
     } catch (e) {
-      print('Error uploading image to Cloudinary: $e');
       rethrow;
     }
   }
 
   /// Delete image from Cloudinary
-  Future<void> deleteImageFromCloudinary(String imageUrl) async {}
+  Future<void> deleteImageFromCloudinary(String imageUrl) async {
+    // Function implementation remains as is.
+  }
 
   /// Add a new note with optional image
   Future<void> addNote(
-      Note note, File? imageFile, String userId, String projectId) async {
+    Note note,
+    File? imageFile,
+    String userId,
+    String projectId,
+  ) async {
     try {
       String? imageUrl;
 
@@ -67,15 +74,18 @@ class NoteRepository {
         'imageUrl': imageUrl,
         'userId': userId, // Ensure the note is tied to the user
       });
-    } catch (e) {
-      print('Error adding note: $e');
+    } catch (err) {
       rethrow;
     }
   }
 
   /// Update an existing note with optional image
   Future<void> updateNote(
-      Note note, File? imageFile, String userId, String projectId) async {
+    Note note,
+    File? imageFile,
+    String userId,
+    String projectId,
+  ) async {
     try {
       String? imageUrl = note.imageUrl;
 
@@ -102,14 +112,16 @@ class NoteRepository {
         'imageUrl': imageUrl, // Update image URL if a new image is uploaded
       });
     } catch (e) {
-      print('Error updating note: $e');
       rethrow;
     }
   }
 
   /// Delete note and its associated image
   Future<void> deleteNoteById(
-      String noteId, String userId, String projectId) async {
+    String noteId,
+    String userId,
+    String projectId,
+  ) async {
     try {
       final noteRef = _firestore
           .collection('users')
@@ -122,7 +134,8 @@ class NoteRepository {
       final noteData = await noteRef.get();
 
       if (noteData.exists) {
-        final imageUrl = noteData.data()?['imageUrl'];
+        final imageUrl =
+            noteData.data()?['imageUrl'] as String?; // Cast to String?
         if (imageUrl != null) {
           await deleteImageFromCloudinary(imageUrl); // Delete the image
         }
@@ -130,7 +143,6 @@ class NoteRepository {
         await noteRef.delete(); // Delete the note
       }
     } catch (e) {
-      print('Error deleting note: $e');
       rethrow;
     }
   }
@@ -152,14 +164,15 @@ class NoteRepository {
         return _mapJsonToNote(data, doc.id);
       }).toList();
     } catch (e) {
-      print('Error fetching notes: $e');
       rethrow;
     }
   }
 
   Future<List<Note>> fetchNotesByCategory(
-      String userId, String category, String projectId) async {
-    print(category);
+    String userId,
+    String category,
+    String projectId,
+  ) async {
     try {
       final snapshot = await _firestore
           .collection('users')
@@ -176,7 +189,6 @@ class NoteRepository {
         return _mapJsonToNote(data, doc.id);
       }).toList();
     } catch (e) {
-      print('Error fetching notes by category: $e');
       rethrow;
     }
   }
@@ -195,20 +207,22 @@ class NoteRepository {
           .get();
 
       if (querySnapshot.docs.isNotEmpty) {
-        // Extract the highest position from the document
-        return querySnapshot.docs.first['position'] + 1;
+        // Safely extract and cast the highest position from the document
+        return (querySnapshot.docs.first['position'] as int?) ?? 0 + 1;
       } else {
         // If no notes exist, start from position 0
         return 0;
       }
     } catch (e) {
-      print("Error getting next position: $e");
       rethrow;
     }
   }
 
   Future<void> updateNoteOrder(
-      List<Note> reorderedNotes, String userId, String projectId) async {
+    List<Note> reorderedNotes,
+    String userId,
+    String projectId,
+  ) async {
     final batch = _firestore.batch();
 
     for (int i = 0; i < reorderedNotes.length; i++) {
@@ -222,14 +236,13 @@ class NoteRepository {
           .doc(note.id);
 
       batch.update(noteRef, {
-        'position': i
+        'position': i,
       }); // Assuming "position" is the field that tracks order
     }
 
     try {
       await batch.commit(); // Perform all updates in a batch
     } catch (e) {
-      print('Error updating note order in Firestore: $e');
       rethrow;
     }
   }
@@ -249,7 +262,10 @@ class NoteRepository {
   }
 
   Future<Note?> getNoteById(
-      String noteId, String userId, String projectId) async {
+    String noteId,
+    String userId,
+    String projectId,
+  ) async {
     try {
       final doc = await _firestore
           .collection('users')
@@ -264,8 +280,7 @@ class NoteRepository {
       }
       return null;
     } catch (e) {
-      print('Error fetching note by ID: $e');
-      return null;
+      rethrow;
     }
   }
 }

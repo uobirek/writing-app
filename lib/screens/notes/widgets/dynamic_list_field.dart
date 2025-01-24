@@ -16,21 +16,21 @@ class DynamicListField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(15.0),
+      padding: const EdgeInsets.all(15),
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 8,
               offset: const Offset(0, 4),
             ),
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -44,13 +44,15 @@ class DynamicListField extends StatelessWidget {
                   return Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(4.0),
+                        padding: const EdgeInsets.all(4),
                         child: SizedBox(
                           width: 400,
                           child: TextFormField(
                             initialValue: list[index],
                             decoration: formInputDecoration(
-                                context: context, label: ''),
+                              context: context,
+                              label: '',
+                            ),
                             onChanged: (value) {
                               list[index] = value;
                             },
@@ -58,8 +60,10 @@ class DynamicListField extends StatelessWidget {
                         ),
                       ),
                       IconButton(
-                        icon: Icon(Icons.delete,
-                            color: Theme.of(context).colorScheme.secondary),
+                        icon: Icon(
+                          Icons.delete,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
                         onPressed: () {
                           list.removeAt(index);
                           (context as Element).markNeedsBuild();
@@ -70,8 +74,10 @@ class DynamicListField extends StatelessWidget {
                 },
               ),
               TextButton.icon(
-                icon: Icon(Icons.add,
-                    color: Theme.of(context).colorScheme.secondary),
+                icon: Icon(
+                  Icons.add,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
                 label: const Text('Add Item'),
                 onPressed: () {
                   list.add(''); // Add an empty item

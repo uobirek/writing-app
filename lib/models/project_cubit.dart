@@ -5,13 +5,12 @@ import 'package:writing_app/models/project_states.dart';
 import 'project_repository.dart';
 
 class ProjectCubit extends Cubit<ProjectState> {
+  ProjectCubit(this.projectRepository) : super(ProjectInitial());
   final ProjectRepository projectRepository;
   List<Project> allProjects = [];
   Project? _selectedProject;
 
   Project? get selectedProject => _selectedProject;
-
-  ProjectCubit(this.projectRepository) : super(ProjectInitial());
 
   // Fetch all projects
   Future<void> fetchProjects(String userId) async {
@@ -62,7 +61,10 @@ class ProjectCubit extends Cubit<ProjectState> {
 
   // Add a new project
   Future<void> addProject(
-      Project newProject, String userId, File? imageFile) async {
+    Project newProject,
+    String userId,
+    File? imageFile,
+  ) async {
     emit(ProjectUpdating());
     try {
       final projectWithId =
@@ -76,16 +78,20 @@ class ProjectCubit extends Cubit<ProjectState> {
 
   // Update an existing project
   Future<void> updateProject(
-      Project project, String userId, File? imageFile) async {
+    Project project,
+    String userId,
+    File? imageFile,
+  ) async {
     emit(ProjectUpdating());
     try {
       await projectRepository.updateProject(project, userId, imageFile);
-      int index = allProjects.indexWhere((p) => p.id == project.id);
+      final int index = allProjects.indexWhere((p) => p.id == project.id);
       if (index != -1) {
         allProjects[index] = project.copyWith(
-            imageUrl: imageFile != null
-                ? await projectRepository.uploadImageToCloudinary(imageFile)
-                : project.imageUrl);
+          imageUrl: imageFile != null
+              ? await projectRepository.uploadImageToCloudinary(imageFile)
+              : project.imageUrl,
+        );
       }
       emit(ProjectLoaded(List.from(allProjects)));
     } catch (e) {

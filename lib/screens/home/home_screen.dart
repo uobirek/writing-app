@@ -5,7 +5,6 @@ import 'package:writing_app/gradient_text.dart';
 import 'package:writing_app/models/project.dart';
 import 'package:writing_app/models/project_cubit.dart';
 import 'package:writing_app/models/project_states.dart';
-import 'package:writing_app/screens/notes/bloc/note_cubit.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -40,7 +39,6 @@ class HomeScreen extends StatelessWidget {
                 child: Text('Error: ${state.message}'),
               );
             } else {
-              print(state);
               return const Center(child: Text('No projects available'));
             }
           },
@@ -50,7 +48,7 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class ProjectInfo extends StatelessWidget {
+class ProjectInfo extends StatefulWidget {
   const ProjectInfo({
     super.key,
     required this.project,
@@ -59,27 +57,84 @@ class ProjectInfo extends StatelessWidget {
   final Project project;
 
   @override
+  ProjectInfoState createState() => ProjectInfoState();
+}
+
+class ProjectInfoState extends State<ProjectInfo> {
+  bool _isDescriptionExpanded = false; // Track the description state
+
+  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            GradientText(
-              project.title,
-              style: Theme.of(context).textTheme.titleLarge,
-              gradient: LinearGradient(colors: [
-                Theme.of(context).colorScheme.secondary,
-                Theme.of(context).colorScheme.onSecondary
-              ]),
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header image
+          Container(
+            width: double.infinity,
+            height: 250, // Fixed size for header image
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                  'assets/images/dottie.jpg',
+                ), // Replace with your image asset
+                fit: BoxFit.cover,
+              ),
             ),
-            const SizedBox(height: 20),
-            Text(project.description,
-                style: Theme.of(context).textTheme.labelMedium),
-          ],
-        ),
+          ),
+
+          // Title and Edit Button
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GradientText(
+                  widget.project.title,
+                  style: Theme.of(context).textTheme.titleLarge,
+                  gradient: LinearGradient(
+                    colors: [
+                      Theme.of(context).colorScheme.secondary,
+                      Theme.of(context).colorScheme.onSecondary,
+                    ],
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(
+                    Icons.edit,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  onPressed: () {
+                    // Add functionality to edit the project
+                  },
+                ),
+              ],
+            ),
+          ),
+
+          // Description Section with Expand/Collapse Feature
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  _isDescriptionExpanded = !_isDescriptionExpanded;
+                });
+              },
+              child: Text(
+                _isDescriptionExpanded
+                    ? widget.project.description
+                    : widget.project.description.length > 100
+                        ? '${widget.project.description.substring(0, 100)}...' // Preview text
+                        : widget.project.description,
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
+            ),
+          ),
+
+          // Add some spacing at the bottom of the screen
+          const SizedBox(height: 20),
+        ],
       ),
     );
   }

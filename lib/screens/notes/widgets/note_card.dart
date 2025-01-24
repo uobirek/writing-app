@@ -8,18 +8,18 @@ import 'package:writing_app/screens/notes/models/note.dart';
 import 'package:writing_app/screens/notes/widgets/dynamic_image.dart';
 
 class NoteCard extends StatelessWidget {
-  final Note note;
-  final VoidCallback onDelete; // Callback for delete
+  // Callback for delete
 
   const NoteCard({
     super.key,
     required this.note,
     required this.onDelete, // Accept delete callback
   });
+  final Note note;
+  final VoidCallback onDelete;
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey inkWellKey = GlobalKey();
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       elevation: 1,
@@ -27,20 +27,20 @@ class NoteCard extends StatelessWidget {
         width: 360,
         height: 180,
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(20),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 12,
             children: [
               if (note.imageUrl != null)
                 DynamicImageWidget(
-                  imagePath: note.imageUrl!,
+                  imagePath: note.imageUrl,
                   width: 140,
                   height: 140,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                 ),
               NoteInfo(note: note),
-              _noteMenu(context)
+              _noteMenu(context),
             ],
           ),
         ),
@@ -57,7 +57,7 @@ class NoteCard extends StatelessWidget {
             children: [
               Icon(Icons.edit, color: Theme.of(context).colorScheme.secondary),
               const SizedBox(width: 8),
-              const Text("Edit"),
+              const Text('Edit'),
             ],
           ),
         ),
@@ -65,10 +65,12 @@ class NoteCard extends StatelessWidget {
           value: 1,
           child: Row(
             children: [
-              Icon(Icons.preview,
-                  color: Theme.of(context).colorScheme.secondary),
+              Icon(
+                Icons.preview,
+                color: Theme.of(context).colorScheme.secondary,
+              ),
               const SizedBox(width: 8),
-              const Text("Preview"),
+              const Text('Preview'),
             ],
           ),
         ),
@@ -76,30 +78,32 @@ class NoteCard extends StatelessWidget {
           value: 2,
           child: Row(
             children: [
-              Icon(Icons.delete,
-                  color: Theme.of(context).colorScheme.secondary),
+              Icon(
+                Icons.delete,
+                color: Theme.of(context).colorScheme.secondary,
+              ),
               const SizedBox(width: 8),
-              const Text("Delete"),
+              const Text('Delete'),
             ],
           ),
         ),
       ],
-      elevation: 8.0,
+      elevation: 8,
       initialValue: 0,
-      onSelected: ((value) {
+      onSelected: (value) {
         if (value == 0) {
-          // Handle "Edit" action
+          // Handle 'Edit' action
 
           context.go('/note/${note.id}/editing');
         } else if (value == 1) {
-          // Handle "Preview" action
+          // Handle 'Preview' action
           context.go('/note/${note.id}');
         } else if (value == 2) {
-          // Handle "Delete" action
+          // Handle 'Delete' action
           _showDeleteConfirmationDialog(context);
         }
-      }),
-      offset: Offset(0, -90),
+      },
+      offset: const Offset(0, -90),
       child: const Icon(Icons.more_horiz),
     );
   }
@@ -107,27 +111,29 @@ class NoteCard extends StatelessWidget {
   void _showDeleteConfirmationDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (context) {
         return AlertDialog(
-          title: const Text("Confirm Delete"),
-          content: const Text("Are you sure you want to delete this note?"),
+          title: const Text('Confirm Delete'),
+          content: const Text('Are you sure you want to delete this note?'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: const Text("Cancel"),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
                 final projectCubit = context.read<ProjectCubit>();
                 final project = projectCubit.selectedProject;
                 context.read<NoteCubit>().deleteNote(
-                    note.id, project!.id); // Trigger the delete action
+                      note.id,
+                      project!.id,
+                    ); // Trigger the delete action
                 Navigator.of(context).pop(); // Close the dialog
               },
               child: const Text(
-                "Delete",
+                'Delete',
                 style: TextStyle(color: Colors.red),
               ),
             ),
@@ -154,26 +160,30 @@ class NoteInfo extends StatelessWidget {
         spacing: 8,
         children: [
           DecoratedBox(
-              decoration: BoxDecoration(
-                  color: note.category == "Worldbuilding"
-                      ? Theme.of(context)
-                          .colorScheme
-                          .secondary
-                          .withValues(alpha: 0.4)
-                      : Theme.of(context)
-                          .colorScheme
-                          .tertiary
-                          .withValues(alpha: 0.4),
-                  borderRadius: BorderRadius.circular(10)),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 2.0, horizontal: 8.0),
-                child: Text(note.category,
-                    style: note.category == "Worldbuilding"
-                        ? Theme.of(context).textTheme.labelSmall
-                        : Theme.of(context).textTheme.labelSmall?.copyWith(
-                            color: Theme.of(context).colorScheme.tertiary)),
-              )),
+            decoration: BoxDecoration(
+              color: note.category == 'Worldbuilding'
+                  ? Theme.of(context)
+                      .colorScheme
+                      .secondary
+                      .withValues(alpha: 0.4)
+                  : Theme.of(context)
+                      .colorScheme
+                      .tertiary
+                      .withValues(alpha: 0.4),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+              child: Text(
+                note.category,
+                style: note.category == 'Worldbuilding'
+                    ? Theme.of(context).textTheme.labelSmall
+                    : Theme.of(context).textTheme.labelSmall?.copyWith(
+                          color: Theme.of(context).colorScheme.tertiary,
+                        ),
+              ),
+            ),
+          ),
           Text(
             note.title,
             style: Theme.of(context).textTheme.labelLarge,

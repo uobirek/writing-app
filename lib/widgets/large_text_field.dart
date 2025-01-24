@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:writing_app/screens/notes/widgets/input_decoration.dart';
 
 class LargeTextField extends StatefulWidget {
-  final TextEditingController controller;
-  final String label;
-
   const LargeTextField({
     super.key,
     required this.controller,
     required this.label,
   });
+  final TextEditingController controller;
+  final String label;
 
   @override
   _LargeTextFieldState createState() => _LargeTextFieldState();
@@ -37,7 +36,7 @@ class _LargeTextFieldState extends State<LargeTextField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8),
       child: MouseRegion(
         onEnter: (_) {
           setState(() {});
@@ -46,9 +45,7 @@ class _LargeTextFieldState extends State<LargeTextField> {
           setState(() {});
         },
         child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxHeight: double.infinity, // Allow infinite vertical growth
-          ),
+          constraints: const BoxConstraints(),
           child: TextFormField(
             cursorColor: Theme.of(context).colorScheme.secondary,
             controller: widget.controller,

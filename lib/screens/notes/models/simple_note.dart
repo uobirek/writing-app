@@ -5,15 +5,14 @@ import 'package:writing_app/screens/notes/note_details/note_details.dart';
 import 'package:writing_app/screens/notes/note_details/simple_note_details.dart';
 
 class SimpleNote extends Note {
-  final String specialData;
-
   SimpleNote(
     this.specialData, {
     required super.id,
     required super.title,
     required super.createdAt,
     required super.imageUrl,
-  }) : super(category: "SimpleNote", position: 13);
+  }) : super(category: 'SimpleNote', position: 13);
+  final String specialData;
 
   @override
   Map<String, dynamic> toJson() {

@@ -1,12 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:writing_app/screens/notes/editing/note_editing.dart';
 import 'package:writing_app/screens/notes/models/character_note.dart';
-import 'package:writing_app/widgets/custom_text_field.dart';
 import 'package:writing_app/screens/notes/widgets/dynamic_list_field.dart';
+import 'package:writing_app/widgets/custom_text_field.dart';
 import 'package:writing_app/widgets/large_text_field.dart';
 import 'package:writing_app/widgets/minimal_text_field.dart';
 
 class CharacterNoteEditing extends NoteEditing {
+  CharacterNoteEditing(this.note) : super(note.imageUrl) {
+    nameController = TextEditingController(text: note.name);
+    roleController = TextEditingController(text: note.role);
+    genderController = TextEditingController(text: note.gender);
+    ageController = TextEditingController(text: note.age.toString());
+    eyeColorController = TextEditingController(text: note.eyeColor);
+    hairColorController = TextEditingController(text: note.hairColor);
+    skinColorController = TextEditingController(text: note.skinColor);
+    fashionStyleController = TextEditingController(text: note.fashionStyle);
+
+    // Initialize list-based fields
+    distinguishingFeatures = note.distinguishingFeatures ?? [];
+    traits = note.traits ?? [];
+    hobbiesSkills = note.hobbiesSkills ?? [];
+    keyFamilyMembers = note.keyFamilyMembers ?? [];
+    notableEvents = note.notableEvents ?? [];
+    goals = note.goals ?? [];
+    internalConflicts = note.internalConflicts ?? [];
+    externalConflicts = note.externalConflicts ?? [];
+    coreValues = note.coreValues ?? [];
+
+    // Large text field
+    otherPersonalityDetailsController =
+        TextEditingController(text: note.otherPersonalityDetails ?? '');
+  }
   final CharacterNote note;
 
   // Controllers for single-line text fields
@@ -33,32 +58,6 @@ class CharacterNoteEditing extends NoteEditing {
   // Large text field
   late TextEditingController otherPersonalityDetailsController;
 
-  CharacterNoteEditing(this.note) : super(note.imageUrl) {
-    nameController = TextEditingController(text: note.name);
-    roleController = TextEditingController(text: note.role);
-    genderController = TextEditingController(text: note.gender);
-    ageController = TextEditingController(text: note.age.toString());
-    eyeColorController = TextEditingController(text: note.eyeColor);
-    hairColorController = TextEditingController(text: note.hairColor);
-    skinColorController = TextEditingController(text: note.skinColor);
-    fashionStyleController = TextEditingController(text: note.fashionStyle);
-
-    // Initialize list-based fields
-    distinguishingFeatures = note.distinguishingFeatures ?? [];
-    traits = note.traits ?? [];
-    hobbiesSkills = note.hobbiesSkills ?? [];
-    keyFamilyMembers = note.keyFamilyMembers ?? [];
-    notableEvents = note.notableEvents ?? [];
-    goals = note.goals ?? [];
-    internalConflicts = note.internalConflicts ?? [];
-    externalConflicts = note.externalConflicts ?? [];
-    coreValues = note.coreValues ?? [];
-
-    // Large text field
-    otherPersonalityDetailsController =
-        TextEditingController(text: note.otherPersonalityDetails ?? '');
-  }
-
   @override
   Widget buildDetailsForm(GlobalKey<FormState> formKey, BuildContext context) {
     return Form(
@@ -81,13 +80,19 @@ class CharacterNoteEditing extends NoteEditing {
                     controller: nameController,
                     hintText: 'Name...',
                     textStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
-                        color: Theme.of(context).colorScheme.secondary),
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
                   ),
                   CustomTextField(controller: roleController, label: 'Role'),
                   CustomTextField(
-                      controller: genderController, label: 'Gender'),
+                    controller: genderController,
+                    label: 'Gender',
+                  ),
                   CustomTextField(
-                      controller: ageController, label: 'Age', isNumber: true),
+                    controller: ageController,
+                    label: 'Age',
+                    isNumber: true,
+                  ),
                 ],
               ),
             ),
@@ -101,14 +106,21 @@ class CharacterNoteEditing extends NoteEditing {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomTextField(
-                      controller: eyeColorController, label: 'Eye Color'),
+                    controller: eyeColorController,
+                    label: 'Eye Color',
+                  ),
                   CustomTextField(
-                      controller: hairColorController, label: 'Hair Color'),
+                    controller: hairColorController,
+                    label: 'Hair Color',
+                  ),
                   CustomTextField(
-                      controller: skinColorController, label: 'Skin Color'),
+                    controller: skinColorController,
+                    label: 'Skin Color',
+                  ),
                   CustomTextField(
-                      controller: fashionStyleController,
-                      label: 'Fashion Style'),
+                    controller: fashionStyleController,
+                    label: 'Fashion Style',
+                  ),
                   DynamicListField(
                     context: context,
                     label: 'Distinguishing Features',
@@ -174,7 +186,10 @@ class CharacterNoteEditing extends NoteEditing {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   DynamicListField(
-                      context: context, label: 'Goals', list: goals),
+                    context: context,
+                    label: 'Goals',
+                    list: goals,
+                  ),
                   DynamicListField(
                     context: context,
                     label: 'Internal Conflicts',
@@ -201,14 +216,14 @@ class CharacterNoteEditing extends NoteEditing {
 
   Widget _buildSection(BuildContext context, String title, Widget child) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
-      padding: const EdgeInsets.all(16.0),
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
@@ -216,19 +231,18 @@ class CharacterNoteEditing extends NoteEditing {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           _buildSectionHeader(title, context),
-          const SizedBox(height: 8.0),
+          const SizedBox(height: 8),
           child, // Content of the section
         ],
       ),
     );
   }
 
-  Widget _buildSectionHeader(String title, context) {
+  Widget _buildSectionHeader(String title, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Text(title, style: Theme.of(context).textTheme.titleMedium),
     );
   }

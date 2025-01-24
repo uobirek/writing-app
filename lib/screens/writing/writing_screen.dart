@@ -6,11 +6,11 @@ import 'package:writing_app/screens/writing/chapter_card.dart';
 import 'package:writing_app/screens/writing/chapter_cubit.dart';
 import 'package:writing_app/screens/writing/chapter_repository.dart';
 import 'package:writing_app/screens/writing/chapter_state.dart';
-import 'package:writing_app/screens/writing/models/chapter.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
 
 class WritingScreen extends StatelessWidget {
   const WritingScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final projectCubit = context.read<ProjectCubit>();
@@ -19,71 +19,79 @@ class WritingScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) =>
           ChapterCubit(ChapterRepository())..fetchChapters(project!.id),
-      child: SidebarLayout(
-        activeRoute: '/writing',
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            // Determine if the device is mobile based on width using constraints
-            bool isMobile = constraints.maxWidth < 600;
+      child: SafeArea(
+        // Wrap the entire content inside SafeArea
+        child: SidebarLayout(
+          activeRoute: '/writing',
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              // Determine if the device is mobile based on width using constraints
+              final bool isMobile = constraints.maxWidth < 600;
 
-            return Padding(
-              padding: isMobile
-                  ? const EdgeInsets.symmetric(horizontal: 0, vertical: 0)
-                  : const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
-              child: Container(
-                decoration: BoxDecoration(
-                  // Remove shadow and border-radius on mobile
-                  borderRadius:
-                      isMobile ? BorderRadius.zero : BorderRadius.circular(20),
-                  boxShadow: isMobile
-                      ? []
-                      : [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 30,
-                            spreadRadius: 6,
-                            offset: const Offset(0, 10),
-                          ),
-                        ],
-                  gradient: LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                    colors: [
-                      Theme.of(context).colorScheme.secondaryContainer,
-                      Colors.white,
-                    ],
+              return Padding(
+                padding: EdgeInsets.all(
+                  isMobile ? 0 : 50.0,
+                ), // Adjust padding based on screen size
+                child: Container(
+                  decoration: BoxDecoration(
+                    // Remove shadow and border-radius on mobile
+                    borderRadius: isMobile
+                        ? BorderRadius.zero
+                        : BorderRadius.circular(20),
+                    boxShadow: isMobile
+                        ? []
+                        : [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.1),
+                              blurRadius: 30,
+                              spreadRadius: 6,
+                              offset: const Offset(0, 10),
+                            ),
+                          ],
+                    gradient: LinearGradient(
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      colors: [
+                        Theme.of(context).colorScheme.secondaryContainer,
+                        Theme.of(context).colorScheme.surface,
+                      ],
+                    ),
                   ),
-                ),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 40, horizontal: 30),
-                  child: Stack(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Chapters",
-                              style: Theme.of(context).textTheme.titleMedium),
-                          const SizedBox(height: 30),
-                          const ChapterList(),
-                        ],
-                      ),
-                      Positioned(
-                        bottom: isMobile ? 8 : 15,
-                        right: isMobile ? 8 : 15,
-                        child: FloatingActionButton(
-                          onPressed: () {
-                            context.go('/new-chapter');
-                          },
-                          child: const Icon(Icons.add),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: isMobile ? 20.0 : 40.0,
+                      horizontal: isMobile ? 16.0 : 30.0,
+                    ),
+                    child: Stack(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Chapters',
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            const SizedBox(height: 30),
+                            const ChapterList(),
+                          ],
                         ),
-                      ),
-                    ],
+                        Positioned(
+                          bottom: isMobile ? 8 : 15,
+                          right: isMobile ? 8 : 15,
+                          child: FloatingActionButton(
+                            onPressed: () {
+                              context.go('/new-chapter');
+                            },
+                            child: const Icon(Icons.add),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class CategoryTabs extends StatelessWidget {
-  final String currentCategory;
-  final ValueChanged<String> onCategorySelected;
-
   const CategoryTabs({
     super.key,
     required this.currentCategory,
     required this.onCategorySelected,
   });
+  final String currentCategory;
+  final ValueChanged<String> onCategorySelected;
 
   @override
   Widget build(BuildContext context) {

@@ -3,22 +3,23 @@ import 'package:writing_app/screens/notes/models/note.dart';
 import 'package:writing_app/screens/notes/widgets/note_card.dart';
 
 class DraggableNote extends StatelessWidget {
-  final Note note;
-  final Function(String draggedNoteId, String targetNoteId) onNoteDropped;
-  final VoidCallback onDelete; // New callback for delete
+  // New callback for delete
 
   const DraggableNote({
     super.key,
     required this.note,
     required this.onNoteDropped,
-    required this.onDelete, // Accept delete callback
+    required this.onDelete,
   });
+  final Note note;
+  final Function(String draggedNoteId, String targetNoteId) onNoteDropped;
+  final VoidCallback onDelete;
 
   @override
   Widget build(BuildContext context) {
     return DragTarget<String>(
       onWillAcceptWithDetails: (draggedNoteId) {
-        return draggedNoteId != note.id;
+        return draggedNoteId.data != note.id;
       },
       onAcceptWithDetails: (details) {
         onNoteDropped(details.data, note.id);
@@ -32,14 +33,14 @@ class DraggableNote extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             child: NoteCard(
               note: note,
-              onDelete: onDelete, // Pass delete callback to NoteCard
+              onDelete: onDelete,
             ),
           ),
           childWhenDragging: Opacity(
             opacity: 0.5,
             child: NoteCard(
               note: note,
-              onDelete: onDelete, // Pass delete callback to NoteCard
+              onDelete: onDelete,
             ),
           ),
           child: Container(
@@ -49,7 +50,7 @@ class DraggableNote extends StatelessWidget {
                       color: Theme.of(context)
                           .colorScheme
                           .secondary
-                          .withOpacity(0.5),
+                          .withValues(alpha: 0.5),
                       width: 2,
                     )
                   : null,
@@ -57,7 +58,7 @@ class DraggableNote extends StatelessWidget {
             ),
             child: NoteCard(
               note: note,
-              onDelete: onDelete, // Pass delete callback to NoteCard
+              onDelete: onDelete,
             ),
           ),
         );

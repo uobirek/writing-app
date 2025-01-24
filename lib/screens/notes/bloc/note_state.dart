@@ -11,9 +11,8 @@ class NoteInitial extends NoteState {}
 class NoteLoading extends NoteState {}
 
 class NoteLoaded extends NoteState {
-  final List<Note> notes;
-
   NoteLoaded(this.notes);
+  final List<Note> notes;
 
   @override
   List<Object?> get props => [notes];
@@ -22,9 +21,8 @@ class NoteLoaded extends NoteState {
 class NoteUpdating extends NoteState {}
 
 class NoteError extends NoteState {
-  final String message;
-
   NoteError(this.message);
+  final String message;
 
   @override
   List<Object?> get props => [message];

@@ -3,31 +3,31 @@ import 'package:writing_app/screens/notes/models/worldbuilding_note.dart';
 import 'package:writing_app/screens/notes/note_details/note_details.dart';
 
 class WorldbuildingNoteDetails implements NoteDetails {
-  final WorldbuildingNote note;
   WorldbuildingNoteDetails(this.note);
+  final WorldbuildingNote note;
 
   @override
   Widget buildDetailsScreen(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _sectionTitle("Place Name"),
+            _sectionTitle('Place Name'),
             Text(note.placeName, style: _infoTextStyle),
             const SizedBox(height: 10),
-            _sectionTitle("Geography"),
+            _sectionTitle('Geography'),
             Text(note.geography ?? '', style: _infoTextStyle),
             const SizedBox(height: 10),
-            _sectionTitle("Culture"),
+            _sectionTitle('Culture'),
             Text(note.culture ?? '', style: _infoTextStyle),
             const SizedBox(height: 10),
-            _sectionTitle("Points of Interest"),
+            _sectionTitle('Points of Interest'),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children:
-                  note.pointsOfInterest!.map((poi) => Text("- $poi")).toList(),
+                  note.pointsOfInterest!.map((poi) => Text('- $poi')).toList(),
             ),
           ],
         ),

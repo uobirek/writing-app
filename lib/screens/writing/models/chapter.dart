@@ -1,10 +1,4 @@
 class Chapter {
-  final String? id;
-  final String? title;
-  final int? position;
-  final String? content;
-  final List<dynamic>? jsonContent;
-
   Chapter({
     this.id,
     this.title,
@@ -23,13 +17,23 @@ class Chapter {
     );
   }
 
-  factory Chapter.fromJson(Map<String, dynamic> json) => Chapter(
-        id: json['id'],
-        title: json['title'],
-        position: json['position'],
-        content: json['content'],
-        jsonContent: json['jsonContent'],
-      );
+  factory Chapter.fromJson(Map<String, dynamic> json) {
+    final jsonContent = json['jsonContent'];
+    return Chapter(
+      id: json['id'] as String?,
+      title: json['title'] as String?,
+      position: json['position'] as int?,
+      content: json['content'] as String?,
+      jsonContent:
+          jsonContent is Iterable ? List<dynamic>.from(jsonContent) : [],
+    );
+  }
+
+  final String? id;
+  final String? title;
+  final int? position;
+  final String? content;
+  final List<dynamic>? jsonContent;
 
   Map<String, dynamic> toJson() => {
         'id': id,

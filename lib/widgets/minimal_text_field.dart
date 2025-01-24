@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
 class MinimalTextField extends StatelessWidget {
-  final TextEditingController controller;
-  final String hintText;
-  final TextStyle? textStyle;
-
   const MinimalTextField({
     super.key,
     required this.controller,
     this.hintText = '',
     this.textStyle,
   });
+  final TextEditingController controller;
+  final String hintText;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {

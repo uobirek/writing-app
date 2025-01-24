@@ -12,10 +12,10 @@ class AddNoteScreen extends StatefulWidget {
   const AddNoteScreen({super.key});
 
   @override
-  _AddNoteScreenState createState() => _AddNoteScreenState();
+  AddNoteScreenState createState() => AddNoteScreenState();
 }
 
-class _AddNoteScreenState extends State<AddNoteScreen> {
+class AddNoteScreenState extends State<AddNoteScreen> {
   late NoteEditing noteEditing;
   final _formKey = GlobalKey<FormState>();
   String _selectedNoteType = 'SimpleNote';
@@ -97,7 +97,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
           body: _isLoading
               ? const Center(child: CircularProgressIndicator())
               : Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -105,17 +105,22 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                         value: _selectedNoteType,
                         items: const [
                           DropdownMenuItem(
-                              value: 'SimpleNote', child: Text('Simple Note')),
+                            value: 'SimpleNote',
+                            child: Text('Simple Note'),
+                          ),
                           DropdownMenuItem(
-                              value: 'CharacterNote',
-                              child: Text('Character Note')),
+                            value: 'CharacterNote',
+                            child: Text('Character Note'),
+                          ),
                           DropdownMenuItem(
-                              value: 'WorldbuildingNote',
-                              child: Text('Worldbuilding Note')),
+                            value: 'WorldbuildingNote',
+                            child: Text('Worldbuilding Note'),
+                          ),
                         ],
                         onChanged: _onNoteTypeChanged,
                         decoration: const InputDecoration(
-                            labelText: 'Select Note Type'),
+                          labelText: 'Select Note Type',
+                        ),
                       ),
                       const SizedBox(height: 16),
                       const SizedBox(height: 16),

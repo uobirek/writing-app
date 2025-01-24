@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -52,6 +51,15 @@ class GlobalTextStyles {
       fontSize: isMobile ? 14 : 16,
       fontWeight: FontWeight.w600,
       color: colorScheme.onPrimary,
+      letterSpacing: -0.01,
+    );
+  }
+
+  static TextStyle titleSmall(ColorScheme colorScheme, bool isMobile) {
+    return GoogleFonts.berkshireSwash(
+      fontSize: isMobile ? 26 : 34,
+      fontWeight: FontWeight.w600,
+      color: colorScheme.secondary,
       letterSpacing: -0.01,
     );
   }

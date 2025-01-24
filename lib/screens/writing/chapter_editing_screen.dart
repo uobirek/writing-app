@@ -13,14 +13,13 @@ import 'package:writing_app/widgets/minimal_text_field.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
 
 class EditChapterScreen extends StatefulWidget {
-  final String? chapterId; // Nullable for new chapters
-  final bool isNewChapter;
-
   const EditChapterScreen({
     super.key,
     this.chapterId,
     required this.isNewChapter,
   });
+  final String? chapterId; // Nullable for new chapters
+  final bool isNewChapter;
 
   @override
   State<EditChapterScreen> createState() => _EditChapterScreenState();
@@ -113,7 +112,7 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
             } else if (state is ChapterLoaded) {
               final chapter = state.chapters.firstWhere(
                 (c) => c.id == widget.chapterId,
-                orElse: () => Chapter.empty(),
+                orElse: Chapter.empty,
               );
               _initializeControllers(chapter);
             }
@@ -133,14 +132,15 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
                         color: Theme.of(context).canvasColor,
                         boxShadow: [
                           BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 30,
-                              spreadRadius: 6,
-                              offset: const Offset(0, 10)),
+                            color: Colors.black.withValues(alpha: 0.1),
+                            blurRadius: 30,
+                            spreadRadius: 6,
+                            offset: const Offset(0, 10),
+                          ),
                         ],
                       ),
                 child: Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -155,7 +155,7 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
                           const SizedBox(height: 15),
                           CustomTextField(
                             controller: _positionController,
-                            label: "Number",
+                            label: 'Number',
                             isNumber: true,
                           ),
                         ],
@@ -177,12 +177,6 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
                                     false, // Single row for mobile
                                 showFontFamily: false, // Remove font family
                                 showFontSize: false, // Remove font size
-                                showBoldButton: true, // Show Bold button
-                                showItalicButton: true, // Show Italic button
-                                showColorButton: true, // Show Color button
-                                showLink: true, // Show Link button
-                                showUndo: true, // Show Undo button
-                                showRedo: true, // Show Redo button
                               )
                             : QuillSimpleToolbarConfigurations(
                                 customButtons: [
@@ -193,18 +187,7 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
                                     },
                                   ),
                                 ],
-                                multiRowsDisplay: true,
-                                showFontFamily: true,
-                                showFontSize: true,
-                                showBoldButton: true,
-                                showItalicButton: true,
                                 showAlignmentButtons: true,
-                                showListNumbers: true,
-                                showListBullets: true,
-                                showColorButton: true,
-                                showBackgroundColorButton: true,
-                                showUndo: true,
-                                showRedo: true,
                               ),
                       ),
                       const SizedBox(height: 10),

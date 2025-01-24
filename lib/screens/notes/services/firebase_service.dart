@@ -26,7 +26,7 @@ class FirebaseService {
       json = doc.data()!;
     } else {
       final snapshot = await _realtimeDb.ref('notes/$id').get();
-      json = Map<String, dynamic>.from(snapshot.value as Map);
+      json = Map<String, dynamic>.from(snapshot.value! as Map);
     }
 
     switch (json['type']) {

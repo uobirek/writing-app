@@ -44,19 +44,21 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
               padding: const EdgeInsets.all(50),
               child: Center(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Choose a project",
+                      'Choose a project',
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          color: Theme.of(context).colorScheme.secondary),
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
                     ),
                     const SizedBox(
                       height: 5,
                     ),
-                    Text("Which one are we working on today?",
-                        style: Theme.of(context).textTheme.labelMedium),
+                    Text(
+                      'Which one are we working on today?',
+                      style: Theme.of(context).textTheme.labelMedium,
+                    ),
                     const SizedBox(height: 20), // Spacing
                     Expanded(
                       // Makes only the project list scrollable
@@ -87,7 +89,7 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
           } else {
             return Center(
               child: Text(
-                "Failed to load projects",
+                'Failed to load projects',
                 style: theme.textTheme.bodyMedium,
               ),
             );

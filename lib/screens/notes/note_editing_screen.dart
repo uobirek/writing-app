@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:writing_app/models/project_cubit.dart';
 import 'package:writing_app/screens/notes/bloc/note_cubit.dart';
 import 'package:writing_app/screens/notes/bloc/note_state.dart';
@@ -9,15 +8,14 @@ import 'package:writing_app/screens/notes/models/note.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
 
 class EditNoteScreen extends StatefulWidget {
+  const EditNoteScreen({super.key, required this.noteId});
   final String noteId;
 
-  const EditNoteScreen({super.key, required this.noteId});
-
   @override
-  _EditNoteScreenState createState() => _EditNoteScreenState();
+  EditNoteScreenState createState() => EditNoteScreenState();
 }
 
-class _EditNoteScreenState extends State<EditNoteScreen> {
+class EditNoteScreenState extends State<EditNoteScreen> {
   late NoteEditing noteEditing;
   final _formKey = GlobalKey<FormState>();
   Note? currentNote;
@@ -58,10 +56,10 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: Colors.black.withValues(alpha: 0.1),
                         blurRadius: 30,
                         spreadRadius: 6,
-                      )
+                      ),
                     ],
                   ),
                   child: Padding(
@@ -81,8 +79,9 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                           Center(
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      Theme.of(context).colorScheme.secondary),
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.secondary,
+                              ),
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   final updatedNote =
@@ -92,12 +91,13 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
                                   final project = projectCubit.selectedProject;
                                   // Use the NoteCubit to add the note
                                   context.read<NoteCubit>().updateNote(
-                                      updatedNote,
-                                      noteEditing.selectedImage,
-                                      project!.id);
+                                        updatedNote,
+                                        noteEditing.selectedImage,
+                                        project!.id,
+                                      );
                                 }
                               },
-                              child: const Text("Save Changes"),
+                              child: const Text('Save Changes'),
                             ),
                           ),
                         ],

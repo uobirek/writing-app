@@ -40,7 +40,10 @@ class NotesList extends StatelessWidget {
                           final projectCubit = context.read<ProjectCubit>();
                           final project = projectCubit.selectedProject;
                           context.read<NoteCubit>().reorderNotes(
-                              draggedNoteId, targetNoteId, project!.id);
+                                draggedNoteId,
+                                targetNoteId,
+                                project!.id,
+                              );
                         },
                         onDelete: () {
                           final projectCubit = context.read<ProjectCubit>();

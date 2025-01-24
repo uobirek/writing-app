@@ -4,37 +4,38 @@ import 'package:dio/dio.dart';
 import '../models/project.dart';
 
 class ProjectRepository {
+  // Replace with your Cloudinary Upload Preset
+
+  ProjectRepository({FirebaseFirestore? firestore})
+      : _firestore = firestore ?? FirebaseFirestore.instance;
   final FirebaseFirestore _firestore;
 
   // Cloudinary configuration
   final String cloudName =
-      "do1dcq82t"; // Replace with your Cloudinary Cloud Name
-  final String uploadPreset =
-      "flutter_notes_upload"; // Replace with your Cloudinary Upload Preset
+      'do1dcq82t'; // Replace with your Cloudinary Cloud Name
+  final String uploadPreset = 'flutter_notes_upload';
 
-  ProjectRepository({FirebaseFirestore? firestore})
-      : _firestore = firestore ?? FirebaseFirestore.instance;
-
-  /// Upload image to Cloudinary
   Future<String> uploadImageToCloudinary(File imageFile) async {
     try {
-      final String uploadUrl =
-          "https://api.cloudinary.com/v1_1/$cloudName/image/upload";
+      final uploadUrl =
+          'https://api.cloudinary.com/v1_1/$cloudName/image/upload';
 
       final formData = FormData.fromMap({
-        "file": await MultipartFile.fromFile(imageFile.path),
-        "upload_preset": uploadPreset,
+        'file': await MultipartFile.fromFile(imageFile.path),
+        'upload_preset': uploadPreset,
       });
 
       final response = await Dio().post(uploadUrl, data: formData);
 
       if (response.statusCode == 200) {
-        return response.data["secure_url"]; // Return the Cloudinary URL
+        final responseData =
+            response.data as Map<String, dynamic>; // Explicit cast
+        return responseData['secure_url']
+            as String; // Return the Cloudinary URL
       } else {
-        throw Exception("Failed to upload image: ${response.data}");
+        throw Exception('Failed to upload image: ${response.data}');
       }
     } catch (e) {
-      print('Error uploading image to Cloudinary: $e');
       rethrow;
     }
   }
@@ -47,16 +48,16 @@ class ProjectRepository {
           .last
           .split('.')
           .first; // Extract public ID from URL
-      final String deleteUrl =
-          "https://api.cloudinary.com/v1_1/$cloudName/delete_by_token";
+      final deleteUrl =
+          'https://api.cloudinary.com/v1_1/$cloudName/delete_by_token';
 
       final response =
-          await Dio().post(deleteUrl, data: {"public_id": publicId});
+          await Dio().post(deleteUrl, data: {'public_id': publicId});
 
       if (response.statusCode == 200) {
-        print("Image deleted successfully");
+        print('Image deleted successfully');
       } else {
-        throw Exception("Failed to delete image: ${response.data}");
+        throw Exception('Failed to delete image: ${response.data}');
       }
     } catch (e) {
       print('Error deleting image from Cloudinary: $e');
@@ -90,7 +91,10 @@ class ProjectRepository {
 
   /// Add new project with optional image
   Future<Project> addProject(
-      Project project, String userId, File? imageFile) async {
+    Project project,
+    String userId,
+    File? imageFile,
+  ) async {
     try {
       String? imageUrl;
       if (imageFile != null) {
@@ -115,7 +119,10 @@ class ProjectRepository {
 
   /// Update project with optional new image
   Future<void> updateProject(
-      Project project, String userId, File? imageFile) async {
+    Project project,
+    String userId,
+    File? imageFile,
+  ) async {
     try {
       String? imageUrl = project.imageUrl;
 
@@ -155,7 +162,7 @@ class ProjectRepository {
       final projectData = await projectRef.get();
 
       if (projectData.exists) {
-        final imageUrl = projectData.data()?['imageUrl'];
+        final imageUrl = projectData.data()?['imageUrl'] as String?;
         if (imageUrl != null) {
           await deleteImageFromCloudinary(imageUrl); // Delete image if exists
         }
@@ -181,7 +188,8 @@ class ProjectRepository {
       if (projectSnapshot.exists) {
         final data = projectSnapshot.data();
         return Project.fromJson(
-            data!); // Assuming Project has a fromJson constructor
+          data!,
+        ); // Assuming Project has a fromJson constructor
       } else {
         print('Project not found for projectId: $projectId');
         return null; // Return null if project is not found
