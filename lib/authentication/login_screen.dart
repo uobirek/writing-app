@@ -113,7 +113,9 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _login() async {
-    if (!_formKey.currentState!.validate()) return;
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
 
     setState(() {
       _isLoading = true;
@@ -132,8 +134,7 @@ class LoginScreenState extends State<LoginScreen> {
 
       // Navigate to the home screen after successful login
       context.go('/projects');
-    } catch (e) {
-      print('Login failed: $e');
+    } catch (err) {
       _showErrorDialog('Login failed. Please check your email and password.');
     } finally {
       setState(() {

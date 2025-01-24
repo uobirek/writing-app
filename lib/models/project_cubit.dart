@@ -18,8 +18,8 @@ class ProjectCubit extends Cubit<ProjectState> {
     try {
       allProjects = await projectRepository.fetchAllProjects(userId);
       emit(ProjectLoaded(allProjects));
-    } catch (e) {
-      emit(ProjectError('Failed to load projects: $e'));
+    } catch (err) {
+      emit(ProjectError('Failed to load projects: $err'));
     }
   }
 
@@ -53,8 +53,8 @@ class ProjectCubit extends Cubit<ProjectState> {
         } else {
           emit(ProjectError('Project not found'));
         }
-      } catch (e) {
-        emit(ProjectError('Error fetching project: $e'));
+      } catch (err) {
+        emit(ProjectError('Error fetching project: $err'));
       }
     }
   }
@@ -71,8 +71,8 @@ class ProjectCubit extends Cubit<ProjectState> {
           await projectRepository.addProject(newProject, userId, imageFile);
       allProjects.add(projectWithId);
       emit(ProjectLoaded(List.from(allProjects)));
-    } catch (e) {
-      emit(ProjectError('Failed to add project: $e'));
+    } catch (err) {
+      emit(ProjectError('Failed to add project: $err'));
     }
   }
 
@@ -94,8 +94,8 @@ class ProjectCubit extends Cubit<ProjectState> {
         );
       }
       emit(ProjectLoaded(List.from(allProjects)));
-    } catch (e) {
-      emit(ProjectError('Failed to update project: $e'));
+    } catch (err) {
+      emit(ProjectError('Failed to update project: $err'));
     }
   }
 
@@ -110,8 +110,8 @@ class ProjectCubit extends Cubit<ProjectState> {
       }
 
       emit(ProjectLoaded(List.from(allProjects)));
-    } catch (e) {
-      emit(ProjectError('Failed to delete project: $e'));
+    } catch (err) {
+      emit(ProjectError('Failed to delete project: $err'));
     }
   }
 }

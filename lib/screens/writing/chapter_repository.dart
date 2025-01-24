@@ -22,8 +22,8 @@ class ChapterRepository {
       return querySnapshot.docs
           .map((doc) => Chapter.fromJson(doc.data()))
           .toList();
-    } catch (e) {
-      throw Exception('Failed to fetch chapters: $e');
+    } catch (err) {
+      throw Exception('Failed to fetch chapters: $err');
     }
   }
 
@@ -43,8 +43,8 @@ class ChapterRepository {
       await docRef.update({'id': docRef.id});
 
       return chapter.copyWith(id: docRef.id);
-    } catch (e) {
-      throw Exception('Failed to add chapter: $e');
+    } catch (err) {
+      throw Exception('Failed to add chapter: $err');
     }
   }
 
@@ -62,8 +62,8 @@ class ChapterRepository {
           .collection('chapters')
           .doc(chapterId)
           .delete();
-    } catch (e) {
-      throw Exception('Failed to delete chapter: $e');
+    } catch (err) {
+      throw Exception('Failed to delete chapter: $err');
     }
   }
 
@@ -81,8 +81,8 @@ class ChapterRepository {
           .collection('chapters')
           .doc(chapter.id)
           .set(chapter.toJson());
-    } catch (e) {
-      throw Exception('Failed to update chapter: $e');
+    } catch (err) {
+      throw Exception('Failed to update chapter: $err');
     }
   }
 }

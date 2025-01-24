@@ -38,7 +38,7 @@ class NoteRepository {
       } else {
         throw Exception('Failed to upload image: ${response.data}');
       }
-    } catch (e) {
+    } catch (err) {
       rethrow;
     }
   }
@@ -111,7 +111,7 @@ class NoteRepository {
         ...note.toJson(),
         'imageUrl': imageUrl, // Update image URL if a new image is uploaded
       });
-    } catch (e) {
+    } catch (err) {
       rethrow;
     }
   }
@@ -142,7 +142,7 @@ class NoteRepository {
 
         await noteRef.delete(); // Delete the note
       }
-    } catch (e) {
+    } catch (err) {
       rethrow;
     }
   }
@@ -163,7 +163,7 @@ class NoteRepository {
         final data = doc.data();
         return _mapJsonToNote(data, doc.id);
       }).toList();
-    } catch (e) {
+    } catch (err) {
       rethrow;
     }
   }
@@ -188,7 +188,7 @@ class NoteRepository {
         final data = doc.data();
         return _mapJsonToNote(data, doc.id);
       }).toList();
-    } catch (e) {
+    } catch (err) {
       rethrow;
     }
   }
@@ -213,7 +213,7 @@ class NoteRepository {
         // If no notes exist, start from position 0
         return 0;
       }
-    } catch (e) {
+    } catch (err) {
       rethrow;
     }
   }
@@ -242,7 +242,7 @@ class NoteRepository {
 
     try {
       await batch.commit(); // Perform all updates in a batch
-    } catch (e) {
+    } catch (err) {
       rethrow;
     }
   }
@@ -279,7 +279,7 @@ class NoteRepository {
         return Note.fromJson(doc.data()!);
       }
       return null;
-    } catch (e) {
+    } catch (err) {
       rethrow;
     }
   }

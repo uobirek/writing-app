@@ -4,8 +4,6 @@ import 'package:dio/dio.dart';
 import '../models/project.dart';
 
 class ProjectRepository {
-  // Replace with your Cloudinary Upload Preset
-
   ProjectRepository({FirebaseFirestore? firestore})
       : _firestore = firestore ?? FirebaseFirestore.instance;
   final FirebaseFirestore _firestore;
@@ -13,7 +11,8 @@ class ProjectRepository {
   // Cloudinary configuration
   final String cloudName =
       'do1dcq82t'; // Replace with your Cloudinary Cloud Name
-  final String uploadPreset = 'flutter_notes_upload';
+  final String uploadPreset =
+      'flutter_notes_upload'; // Replace with your Cloudinary preset
 
   Future<String> uploadImageToCloudinary(File imageFile) async {
     try {
@@ -28,44 +27,37 @@ class ProjectRepository {
       final response = await Dio().post(uploadUrl, data: formData);
 
       if (response.statusCode == 200) {
-        final responseData =
-            response.data as Map<String, dynamic>; // Explicit cast
-        return responseData['secure_url']
-            as String; // Return the Cloudinary URL
+        final responseData = response.data as Map<String, dynamic>;
+        return responseData['secure_url'] as String;
       } else {
-        throw Exception('Failed to upload image: ${response.data}');
+        throw Exception(
+          'Cloudinary upload failed',
+        );
       }
     } catch (e) {
-      rethrow;
+      throw Exception('Failed to upload image to Cloudinary: $e');
     }
   }
 
-  /// Delete image from Cloudinary
   Future<void> deleteImageFromCloudinary(String imageUrl) async {
     try {
-      final String publicId = imageUrl
-          .split('/')
-          .last
-          .split('.')
-          .first; // Extract public ID from URL
+      final String publicId =
+          imageUrl.split('/').last.split('.').first; // Extract public ID
       final deleteUrl =
           'https://api.cloudinary.com/v1_1/$cloudName/delete_by_token';
 
       final response =
           await Dio().post(deleteUrl, data: {'public_id': publicId});
 
-      if (response.statusCode == 200) {
-        print('Image deleted successfully');
-      } else {
-        throw Exception('Failed to delete image: ${response.data}');
+      if (response.statusCode != 200) {
+        throw Exception(
+            'Cloudinary delete failed: ${response.data['error'] ?? response.data}');
       }
-    } catch (e) {
-      print('Error deleting image from Cloudinary: $e');
-      rethrow;
+    } catch (err) {
+      throw Exception('Failed to delete image from Cloudinary: $err');
     }
   }
 
-  /// Fetch all projects
   Future<List<Project>> fetchAllProjects(String userId) async {
     try {
       final snapshot = await _firestore
@@ -75,21 +67,18 @@ class ProjectRepository {
           .get();
 
       if (snapshot.docs.isEmpty) {
-        print('No projects found for userId: $userId');
-        return [];
+        throw Exception('No projects found for userId: $userId');
       }
 
       return snapshot.docs.map((doc) {
         final data = doc.data();
         return Project.fromJson(data);
       }).toList();
-    } catch (e) {
-      print('Error fetching projects: $e');
-      throw Exception('Failed to fetch projects: $e');
+    } catch (err) {
+      throw Exception('Failed to fetch projects: $err');
     }
   }
 
-  /// Add new project with optional image
   Future<Project> addProject(
     Project project,
     String userId,
@@ -107,17 +96,16 @@ class ProjectRepository {
           .collection('projects')
           .add({
         ...project.toJson(),
-        'imageUrl': imageUrl, // Store image URL
+        'imageUrl': imageUrl,
       });
 
       await docRef.update({'id': docRef.id});
       return project.copyWith(id: docRef.id, imageUrl: imageUrl);
-    } catch (e) {
-      throw Exception('Failed to add project: $e');
+    } catch (err) {
+      throw Exception('Failed to add project: $err');
     }
   }
 
-  /// Update project with optional new image
   Future<void> updateProject(
     Project project,
     String userId,
@@ -127,13 +115,10 @@ class ProjectRepository {
       String? imageUrl = project.imageUrl;
 
       if (imageFile != null) {
-        // Delete the old image if one exists
         if (imageUrl != null) {
-          await deleteImageFromCloudinary(imageUrl);
+          await deleteImageFromCloudinary(imageUrl); // Delete old image
         }
-
-        // Upload the new image to Cloudinary
-        imageUrl = await uploadImageToCloudinary(imageFile);
+        imageUrl = await uploadImageToCloudinary(imageFile); // Upload new image
       }
 
       await _firestore
@@ -143,14 +128,13 @@ class ProjectRepository {
           .doc(project.id)
           .update({
         ...project.toJson(),
-        'imageUrl': imageUrl, // Update image URL if a new one is uploaded
+        'imageUrl': imageUrl,
       });
-    } catch (e) {
-      throw Exception('Failed to update project: $e');
+    } catch (err) {
+      throw Exception('Failed to update project: $err');
     }
   }
 
-  /// Delete project and its associated image
   Future<void> deleteProject(String projectId, String userId) async {
     try {
       final projectRef = _firestore
@@ -164,17 +148,18 @@ class ProjectRepository {
       if (projectData.exists) {
         final imageUrl = projectData.data()?['imageUrl'] as String?;
         if (imageUrl != null) {
-          await deleteImageFromCloudinary(imageUrl); // Delete image if exists
+          await deleteImageFromCloudinary(imageUrl); // Delete image
         }
 
-        await projectRef.delete(); // Delete the project
+        await projectRef.delete(); // Delete project
+      } else {
+        throw Exception('Project not found for ID: $projectId');
       }
-    } catch (e) {
-      throw Exception('Failed to delete project: $e');
+    } catch (err) {
+      throw Exception('Failed to delete project: $err');
     }
   }
 
-  /// Fetch a project by its ID
   Future<Project?> getProjectById(String projectId, String userId) async {
     try {
       final projectRef = _firestore
@@ -187,16 +172,12 @@ class ProjectRepository {
 
       if (projectSnapshot.exists) {
         final data = projectSnapshot.data();
-        return Project.fromJson(
-          data!,
-        ); // Assuming Project has a fromJson constructor
+        return Project.fromJson(data!);
       } else {
-        print('Project not found for projectId: $projectId');
-        return null; // Return null if project is not found
+        throw Exception('Project not found for ID: $projectId');
       }
-    } catch (e) {
-      print('Error fetching project by ID: $e');
-      rethrow; // Rethrow exception
+    } catch (err) {
+      throw Exception('Failed to fetch project by ID: $err');
     }
   }
 }

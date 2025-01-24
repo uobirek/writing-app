@@ -1,15 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:go_router/go_router.dart';
-import 'package:writing_app/models/parallax_flow_delegate.dart';
 import 'package:writing_app/models/project.dart';
 import 'package:writing_app/models/project_cubit.dart';
 import 'package:writing_app/models/project_list_item.dart';
 import 'package:writing_app/models/project_states.dart';
 import 'package:writing_app/screens/notes/bloc/note_cubit.dart';
-import 'package:writing_app/screens/notes/widgets/dynamic_image.dart';
 import 'package:writing_app/screens/writing/chapter_cubit.dart';
 
 class ProjectListScreen extends StatefulWidget {

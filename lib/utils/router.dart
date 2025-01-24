@@ -129,7 +129,7 @@ class AppRouter {
   }
 
   // Custom page with no animation
-  static CustomTransitionPage _noAnimationPage(Widget child) {
+  static CustomTransitionPage<void> _noAnimationPage(Widget child) {
     return CustomTransitionPage(
       transitionsBuilder: (_, __, ___, child) =>
           child, // No transition, just show the child
@@ -139,12 +139,12 @@ class AppRouter {
   }
 }
 
-CustomTransitionPage _slideTransitionPage({
+CustomTransitionPage<void> _slideTransitionPage({
   required Widget child,
   required LocalKey pageKey,
   Duration duration = const Duration(milliseconds: 300),
 }) {
-  return CustomTransitionPage(
+  return CustomTransitionPage<void>(
     key: pageKey,
     child: child,
     transitionDuration: duration,

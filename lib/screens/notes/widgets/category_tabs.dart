@@ -19,35 +19,29 @@ class CategoryTabs extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(12)),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          // Categories aligned to the left
-          Row(
-            children: categories.map((category) {
-              final isActive = currentCategory == category;
-              return InkWell(
-                onTap: () => onCategorySelected(category),
-                child: Container(
-                  height: 50,
-                  width: 150,
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  decoration: BoxDecoration(
-                    color: isActive
-                        ? Theme.of(context).colorScheme.surface
-                        : Theme.of(context).colorScheme.primaryContainer,
-                    borderRadius:
-                        const BorderRadius.vertical(top: Radius.circular(12)),
-                  ),
-                  child: Text(
-                    category,
-                    style: Theme.of(context).textTheme.labelLarge,
-                  ),
-                ),
-              );
-            }).toList(),
-          ),
-        ],
+        children: categories.map((category) {
+          final isActive = currentCategory == category;
+          return InkWell(
+            onTap: () => onCategorySelected(category),
+            child: Container(
+              height: 50,
+              width: 150,
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                color: isActive
+                    ? Theme.of(context).colorScheme.surface
+                    : Theme.of(context).colorScheme.primaryContainer,
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(12)),
+              ),
+              child: Text(
+                category,
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
+            ),
+          );
+        }).toList(),
       ),
     );
   }

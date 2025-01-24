@@ -124,8 +124,8 @@ class RegisterScreenState extends State<RegisterScreen> {
       );
       await userCredential.user?.updateDisplayName(_nameController.text);
       context.go('/projects');
-    } catch (e) {
-      print('Error: $e');
+    } catch (err) {
+      print('Error: $err');
     }
   }
 }

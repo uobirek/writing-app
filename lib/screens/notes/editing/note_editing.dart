@@ -38,47 +38,42 @@ abstract class NoteEditing {
   }
 
   Widget buildImageField(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        InkWell(
-          onTap: () async {
-            await pickImage(context);
-            (context as Element).markNeedsBuild();
-          },
-          onHover: (isHovering) {
-            _isHovered = isHovering;
-            (context as Element).markNeedsBuild();
-          },
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              DynamicImageWidget(
-                imagePath: imagePath ?? '', // Use imagePath (could be a URL)
+    return InkWell(
+      onTap: () async {
+        await pickImage(context);
+        (context as Element).markNeedsBuild();
+      },
+      onHover: (isHovering) {
+        _isHovered = isHovering;
+        (context as Element).markNeedsBuild();
+      },
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          DynamicImageWidget(
+            imagePath: imagePath ?? '', // Use imagePath (could be a URL)
+            width: 150,
+            height: 150,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          if (_isHovered)
+            AnimatedOpacity(
+              opacity: 0.5, // Show dark overlay on hover
+              duration: const Duration(milliseconds: 200),
+              child: Container(
                 width: 150,
                 height: 150,
-                borderRadius: BorderRadius.circular(8),
+                color: Colors.black.withValues(alpha: 0.5),
               ),
-              if (_isHovered)
-                AnimatedOpacity(
-                  opacity: 0.5, // Show dark overlay on hover
-                  duration: const Duration(milliseconds: 200),
-                  child: Container(
-                    width: 150,
-                    height: 150,
-                    color: Colors.black.withValues(alpha: 0.5),
-                  ),
-                ),
-              if (_isHovered)
-                const Icon(
-                  Icons.camera_alt,
-                  size: 40,
-                  color: Colors.white,
-                ),
-            ],
-          ),
-        ),
-      ],
+            ),
+          if (_isHovered)
+            const Icon(
+              Icons.camera_alt,
+              size: 40,
+              color: Colors.white,
+            ),
+        ],
+      ),
     );
   }
 }

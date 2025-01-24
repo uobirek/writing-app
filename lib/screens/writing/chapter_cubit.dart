@@ -17,8 +17,8 @@ class ChapterCubit extends Cubit<ChapterState> {
     try {
       allChapters = await chapterRepository.fetchAllChapters(userId, projectId);
       emit(ChapterLoaded(allChapters));
-    } catch (e) {
-      emit(ChapterError('Failed to load chapters: $e'));
+    } catch (err) {
+      emit(ChapterError('Failed to load chapters: $err'));
     }
   }
 
@@ -37,8 +37,8 @@ class ChapterCubit extends Cubit<ChapterState> {
           await chapterRepository.addChapter(newChapter, userId, projectId);
       allChapters.add(chapterWithId);
       emit(ChapterLoaded(List.from(allChapters)));
-    } catch (e) {
-      emit(ChapterError('Failed to add chapter: $e'));
+    } catch (err) {
+      emit(ChapterError('Failed to add chapter: $err'));
     }
   }
 
@@ -53,8 +53,8 @@ class ChapterCubit extends Cubit<ChapterState> {
         allChapters[index] = chapter;
       }
       emit(ChapterLoaded(List.from(allChapters)));
-    } catch (e) {
-      emit(ChapterError('Failed to update chapter: $e'));
+    } catch (err) {
+      emit(ChapterError('Failed to update chapter: $err'));
     }
   }
 
@@ -65,8 +65,8 @@ class ChapterCubit extends Cubit<ChapterState> {
       await chapterRepository.deleteChapter(chapterId, userId, projectId);
       allChapters.removeWhere((chapter) => chapter.id == chapterId);
       emit(ChapterLoaded(List.from(allChapters)));
-    } catch (e) {
-      emit(ChapterError('Failed to delete chapter: $e'));
+    } catch (err) {
+      emit(ChapterError('Failed to delete chapter: $err'));
     }
   }
 }

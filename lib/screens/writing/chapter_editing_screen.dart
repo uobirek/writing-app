@@ -86,9 +86,9 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Chapter saved successfully!')),
       );
-    }).catchError((error) {
+    }).catchError((err) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to save chapter: $error')),
+        SnackBar(content: Text('Failed to save chapter: $err')),
       );
     });
   }

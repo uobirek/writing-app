@@ -109,7 +109,7 @@ class NoteCard extends StatelessWidget {
   }
 
   void _showDeleteConfirmationDialog(BuildContext context) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) {
         return AlertDialog(

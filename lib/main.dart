@@ -37,7 +37,6 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<ProjectCubit>(
           create: (context) {
-            print('Initializing ProjectCubit'); // Debug print
             return ProjectCubit(ProjectRepository());
           },
         ),

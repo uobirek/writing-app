@@ -13,17 +13,17 @@ class ProjectInitial extends ProjectState {}
 class ProjectLoading extends ProjectState {}
 
 class ProjectLoaded extends ProjectState {
-  ProjectLoaded(this.projects);
+  const ProjectLoaded(this.projects);
   final List<Project> projects;
 }
 
 class ProjectError extends ProjectState {
-  ProjectError(this.message);
+  const ProjectError(this.message);
   final String message;
 }
 
 class ProjectSelected extends ProjectState {
-  ProjectSelected(this.projectId);
+  const ProjectSelected(this.projectId);
   final String projectId;
 }
 
