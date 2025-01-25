@@ -51,7 +51,8 @@ class ProjectRepository {
 
       if (response.statusCode != 200) {
         throw Exception(
-            'Cloudinary delete failed: ${response.data['error'] ?? response.data}');
+          'Cloudinary delete failed: ${response.data['error'] ?? response.data}',
+        );
       }
     } catch (err) {
       throw Exception('Failed to delete image from Cloudinary: $err');

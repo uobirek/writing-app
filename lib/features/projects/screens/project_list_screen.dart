@@ -95,7 +95,7 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Open a dialog to create a new project
+          context.go('/add_project');
         },
         child: const Icon(Icons.add),
       ),

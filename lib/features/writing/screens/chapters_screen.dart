@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:writing_app/features/projects/cubit/project_cubit.dart';
+import 'package:writing_app/features/writing/chapter_card.dart';
 import 'package:writing_app/features/writing/cubit/chapter_cubit.dart';
 import 'package:writing_app/features/writing/cubit/chapter_state.dart';
 import 'package:writing_app/features/writing/repositories/chapter_repository.dart';
-import 'package:writing_app/features/writing/widgets/chapter_card.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
 
 class ChaptersScreen extends StatelessWidget {

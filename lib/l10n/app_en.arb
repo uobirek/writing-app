@@ -1,0 +1,23 @@
+{
+  "helloWorld": "Hello World!",
+  "signInToContinue": "Sign in to continue",
+  "email": "Email",
+  "pleaseEnterAnEmail": "Please enter an email",
+  "password": "Password",
+  "pleaseEnterAPassword": "Please enter a password",
+  "login": "Login",
+  "dontHaveAnAccount": "Don't have an account?",
+  "register": "Register",
+  "loginFailed": "Login failed. Please check your email and password.",
+  "error": "Error",
+  "ok": "OK",
+  "createAnAccount": "Create an account",
+  "fullName": "Full Name",
+  "pleaseEnterYourName": "Please enter your name",
+  "alreadyHaveAnAccount": "Already have an account?",
+  "hiWelcomeTo": "Hi! Welcome to",
+  "fantasies": "fantasies",
+  "perfectOrganizationTool": "Perfect organization tool for writing, worldbuilding, and outlining",
+  "getStartedNow": "Get started now",
+  "alreadyAUser": "Already a User?"
+}

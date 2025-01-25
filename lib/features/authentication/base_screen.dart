@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 class BaseScreen extends StatelessWidget {
-  // This will be the dynamic content passed to the screen
-
   const BaseScreen({required this.child, super.key});
   final Widget child;
 
@@ -29,26 +27,27 @@ class BaseScreen extends StatelessWidget {
                 ),
               ),
               child: Center(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: isMobile ? 20 : 40,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // Common Image
-                      ClipRect(
-                        child: Image.asset(
-                          'assets/images/welcome.jpg',
-                          width: isMobile ? 200 : 350,
-                          height: isMobile ? 200 : 350,
-                          fit: BoxFit.cover,
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: isMobile ? 20 : 40,
+                    ),
+                    child: Column(
+                      // Use flexible layout based on screen size
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ClipRect(
+                          child: Image.asset(
+                            'assets/images/welcome.jpg',
+                            width: isMobile ? 200 : 350,
+                            height: isMobile ? 200 : 350,
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: isMobile ? 40 : 60),
-
-                      child,
-                    ],
+                        SizedBox(height: isMobile ? 40 : 60),
+                        child,
+                      ],
+                    ),
                   ),
                 ),
               ),

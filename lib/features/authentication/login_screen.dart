@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:writing_app/features/projects/cubit/project_cubit.dart';
+import 'package:writing_app/l10n/app_localizations.dart';
 import 'package:writing_app/utils/input_decoration.dart';
 
 import 'base_screen.dart'; // Assuming BaseScreen handles common layout
@@ -24,89 +25,87 @@ class LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     return BaseScreen(
+      // Ensure this is scrollable for small screens
       child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Welcome Text
-            RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: 'Sign in to continue',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 30),
-
-            // Login Form
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  TextFormField(
-                    controller: _emailController,
-                    decoration:
-                        formInputDecoration(label: 'Email', context: context),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter an email';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    controller: _passwordController,
-                    obscureText: true,
-                    decoration: formInputDecoration(
-                      label: 'Password',
-                      context: context,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: localizations!.signInToContinue,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter a password';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 20),
-
-                  // Login Button
-                  if (_isLoading)
-                    const CircularProgressIndicator()
-                  else
-                    ElevatedButton(
-                      onPressed: _login,
-                      child: const Text('Login'),
-                    ),
-                ],
+                  ],
+                ),
               ),
-            ),
-
-            // Register Navigation
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Don't have an account?",
-                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.surface,
+              const SizedBox(height: 10),
+              // Login Form
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: _emailController,
+                      decoration: formInputDecoration(
+                          label: localizations!.email, context: context),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return localizations.pleaseEnterAnEmail;
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    TextFormField(
+                      controller: _passwordController,
+                      obscureText: true,
+                      decoration: formInputDecoration(
+                        label: localizations.password,
+                        context: context,
                       ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return localizations.pleaseEnterAPassword;
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    if (_isLoading)
+                      const CircularProgressIndicator()
+                    else
+                      ElevatedButton(
+                        onPressed: _login,
+                        child: Text(localizations.login),
+                      ),
+                  ],
                 ),
-                TextButton(
-                  onPressed: () {
-                    context.go('/register');
-                  },
-                  child: const Text('Register'),
-                ),
-              ],
-            ),
-          ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    localizations.dontHaveAnAccount,
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.surface,
+                        ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      context.go('/register');
+                    },
+                    child: Text(localizations.register),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

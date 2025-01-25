@@ -2,16 +2,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
-import 'package:writing_app/firebase_options.dart';
-import 'package:writing_app/features/projects/cubit/project_cubit.dart';
-import 'package:writing_app/features/projects/repositories/project_repository.dart';
-import 'package:writing_app/features/notes/cubit/note_cubit.dart';
-import 'package:writing_app/features/notes/repositories/note_repository.dart';
-import 'package:writing_app/features/writing/cubit/chapter_cubit.dart';
-import 'package:writing_app/features/writing/repositories/chapter_repository.dart';
+import 'package:provider/provider.dart';
 import 'package:writing_app/core/router.dart';
 import 'package:writing_app/core/theme.dart';
+import 'package:writing_app/features/notes/cubit/note_cubit.dart';
+import 'package:writing_app/features/notes/repositories/note_repository.dart';
+import 'package:writing_app/features/projects/cubit/project_cubit.dart';
+import 'package:writing_app/features/projects/repositories/project_repository.dart';
+import 'package:writing_app/features/writing/cubit/chapter_cubit.dart';
+import 'package:writing_app/features/writing/repositories/chapter_repository.dart';
+import 'package:writing_app/firebase_options.dart';
+import 'package:writing_app/l10n/app_localizations.dart';
+import 'package:writing_app/locale_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +23,12 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => LocaleProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -41,14 +50,26 @@ class MyApp extends StatelessWidget {
           },
         ),
       ],
-      child: Builder(
-        builder: (context) {
+      child: Consumer<LocaleProvider>(
+        builder: (context, localeProvider, child) {
           return LayoutBuilder(
             builder: (context, constraints) {
               // Determine whether it's mobile or not based on screen width
               final isMobile = constraints.maxWidth < 600;
 
               return MaterialApp.router(
+                locale: localeProvider.locale, // Dynamically set locale
+                localizationsDelegates: const [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                supportedLocales: const [
+                  Locale('en'), // English
+                  Locale('es'), // Spanish
+                  Locale('pl'), // Polish
+                ],
                 themeMode: ThemeMode.light,
                 theme: GlobalThemeData.lightThemeData(
                   context,

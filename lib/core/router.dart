@@ -10,6 +10,7 @@ import 'package:writing_app/features/notes/screens/add_new_note.dart';
 import 'package:writing_app/features/notes/screens/note_details_screen.dart';
 import 'package:writing_app/features/notes/screens/note_editing_screen.dart';
 import 'package:writing_app/features/notes/screens/notes_screen.dart';
+import 'package:writing_app/features/projects/screens/add_project_screen.dart';
 import 'package:writing_app/features/projects/screens/project_list_screen.dart';
 import 'package:writing_app/features/writing/cubit/chapter_cubit.dart';
 import 'package:writing_app/features/writing/screens/chapter_editing_screen.dart';
@@ -118,6 +119,10 @@ class AppRouter {
           builder: (context, state) {
             return const ProjectListScreen();
           },
+        ),
+        GoRoute(
+          path: '/add_project',
+          builder: (context, state) => AddProjectScreen(),
         ),
       ],
       errorBuilder: (context, state) => Scaffold(

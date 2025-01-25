@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:writing_app/features/writing/cubit/chapter_state.dart';
 import 'package:writing_app/features/writing/models/chapter.dart';
-import '../repositories/chapter_repository.dart';
+import 'package:writing_app/features/writing/repositories/chapter_repository.dart';
 
 class ChapterCubit extends Cubit<ChapterState> {
   ChapterCubit(this.chapterRepository) : super(ChapterInitial());
