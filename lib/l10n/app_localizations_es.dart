@@ -76,27 +76,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get noProjectsAvailable => 'No hay proyectos disponibles';
 
   @override
-  String get chapter_saved_successfully => '¡Capítulo guardado con éxito!';
+  String get chapterSavedSuccessfully => 'Chapter saved successfully!';
 
   @override
-  String failed_to_save_chapter(Object error) {
-    return 'No se pudo guardar el capítulo: $error';
+  String failedToSaveChapter(Object error) {
+    return 'Failed to save chapter: $error';
   }
 
   @override
-  String get no_project_selected => 'Ningún proyecto seleccionado';
+  String get title => 'Title';
 
   @override
-  String get title => 'Título';
+  String get number => 'Number';
 
   @override
-  String get number => 'Número';
+  String get chapters => 'Chapters';
 
   @override
-  String get chapters => 'Capítulos';
-
-  @override
-  String get no_chapter_available => 'No hay capítulos disponibles.';
+  String get noChapterAvailable => 'No chapter available.';
 
   @override
   String get addNewProject => 'Agregar nuevo proyecto';
@@ -130,4 +127,54 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get failedToLoadProjects => 'Error al cargar los proyectos';
+
+  @override
+  String get sidebarHome => 'Home';
+
+  @override
+  String get sidebarNotes => 'Notes';
+
+  @override
+  String get sidebarWriting => 'Writing';
+
+  @override
+  String get sidebarResearch => 'Research';
+
+  @override
+  String get sidebarLogout => 'Logout';
+
+  @override
+  String get sidebarProjectTitle => 'Selected Project';
+
+  @override
+  String get sidebarToggleCollapse => 'Expand/Collapse Sidebar';
+
+  @override
+  String get addNewNote => 'Add New Note';
+
+  @override
+  String get saveNote => 'Save';
+
+  @override
+  String get selectNoteType => 'Select Note Type';
+
+  @override
+  String get simpleNote => 'Simple Note';
+
+  @override
+  String get characterNote => 'Character Note';
+
+  @override
+  String get worldbuildingNote => 'Worldbuilding Note';
+
+  @override
+  String get loading => 'Loading...';
+
+  @override
+  String get noteNotFound => 'Note not found';
+
+  @override
+  String errorMessage(Object message) {
+    return 'Error: $message';
+  }
 }

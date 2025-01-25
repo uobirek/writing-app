@@ -37,7 +37,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get loginFailed => 'Logowanie nie powiodło się. Sprawdź swój e-mail i hasło.';
 
   @override
-  String get error => 'Błąd: ';
+  String get error => 'Błąd';
 
   @override
   String get ok => 'OK';
@@ -76,15 +76,12 @@ class AppLocalizationsPl extends AppLocalizations {
   String get noProjectsAvailable => 'Brak dostępnych projektów';
 
   @override
-  String get chapter_saved_successfully => 'Rozdział zapisano pomyślnie!';
+  String get chapterSavedSuccessfully => 'Rozdział zapisano pomyślnie!';
 
   @override
-  String failed_to_save_chapter(Object error) {
+  String failedToSaveChapter(Object error) {
     return 'Nie udało się zapisać rozdziału: $error';
   }
-
-  @override
-  String get no_project_selected => 'Nie wybrano projektu';
 
   @override
   String get title => 'Tytuł';
@@ -96,7 +93,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get chapters => 'Rozdziały';
 
   @override
-  String get no_chapter_available => 'Brak dostępnych rozdziałów.';
+  String get noChapterAvailable => 'Brak dostępnych rozdziałów.';
 
   @override
   String get addNewProject => 'Dodaj nowy projekt';
@@ -130,4 +127,54 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get failedToLoadProjects => 'Nie udało się załadować projektów';
+
+  @override
+  String get sidebarHome => 'Strona główna';
+
+  @override
+  String get sidebarNotes => 'Notatki';
+
+  @override
+  String get sidebarWriting => 'Pisanie';
+
+  @override
+  String get sidebarResearch => 'Badania';
+
+  @override
+  String get sidebarLogout => 'Wyloguj się';
+
+  @override
+  String get sidebarProjectTitle => 'Wybrany projekt';
+
+  @override
+  String get sidebarToggleCollapse => 'Rozwiń/Zwiń pasek boczny';
+
+  @override
+  String get addNewNote => 'Dodaj nową notatkę';
+
+  @override
+  String get saveNote => 'Zapisz';
+
+  @override
+  String get selectNoteType => 'Wybierz typ notatki';
+
+  @override
+  String get simpleNote => 'Prosta notatka';
+
+  @override
+  String get characterNote => 'Notatka o postaci';
+
+  @override
+  String get worldbuildingNote => 'Notatka o budowaniu świata';
+
+  @override
+  String get loading => 'Ładowanie...';
+
+  @override
+  String get noteNotFound => 'Notatka nie znaleziona';
+
+  @override
+  String errorMessage(Object message) {
+    return 'Błąd: $message';
+  }
 }

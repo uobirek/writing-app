@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:writing_app/features/projects/cubit/project_cubit.dart';
+import 'package:writing_app/l10n/app_localizations.dart';
 
 class AppSidebar extends StatefulWidget {
   const AppSidebar({
@@ -53,6 +54,8 @@ class _AppSidebarState extends State<AppSidebar> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     final project = context.read<ProjectCubit>().selectedProject;
     return Container(
       width: _isExpanded ? 250 : 100, // Adjust width based on state
@@ -98,25 +101,25 @@ class _AppSidebarState extends State<AppSidebar> {
           const SizedBox(height: 150),
           _buildSidebarItem(
             icon: Icons.home_outlined,
-            label: 'Home',
+            label: localizations!.sidebarHome,
             route: '/',
             isActive: widget.activeRoute == '/',
           ),
           _buildSidebarItem(
             icon: Icons.note_outlined,
-            label: 'Notes',
+            label: localizations.sidebarNotes,
             route: '/notes',
             isActive: widget.activeRoute == '/notes',
           ),
           _buildSidebarItem(
             icon: Icons.edit_outlined,
-            label: 'Writing',
+            label: localizations.sidebarWriting,
             route: '/writing',
             isActive: widget.activeRoute == '/writing',
           ),
           _buildSidebarItem(
             icon: Icons.search,
-            label: 'Research',
+            label: localizations.sidebarResearch,
             route: '/research',
             isActive: widget.activeRoute == '/research',
           ),
@@ -184,7 +187,10 @@ class _AppSidebarState extends State<AppSidebar> {
   }
 
   Widget _buildLogoutItem() {
+    final localizations = AppLocalizations.of(context);
+
     final isHovered = _hoveredRoute == 'logout';
+
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       onEnter: (_) => _onHover('logout'),
@@ -208,7 +214,7 @@ class _AppSidebarState extends State<AppSidebar> {
               if (_isExpanded) const SizedBox(width: 12),
               if (_isExpanded)
                 Text(
-                  'Logout',
+                  localizations!.sidebarLogout,
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(
                         color: Theme.of(context).colorScheme.onError,
                       ),

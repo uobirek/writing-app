@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:writing_app/features/notes/cubit/note_cubit.dart';
 import 'package:writing_app/features/notes/cubit/note_state.dart';
 import 'package:writing_app/features/projects/cubit/project_cubit.dart';
+import 'package:writing_app/l10n/app_localizations.dart';
 
 import '../../../widgets/sidebar_layout.dart';
 import '../widgets/category_tabs.dart';
@@ -26,6 +27,7 @@ class _NotesScreenState extends State<NotesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     final projectCubit = context.read<ProjectCubit>();
     final project = projectCubit.selectedProject;
     final noteCubit = context.read<NoteCubit>();

@@ -5,6 +5,7 @@ import 'package:writing_app/features/notes/cubit/note_state.dart';
 import 'package:writing_app/features/notes/models/note.dart';
 import 'package:writing_app/features/notes/screens/editing/note_editing.dart';
 import 'package:writing_app/features/projects/cubit/project_cubit.dart';
+import 'package:writing_app/l10n/app_localizations.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
 
 class EditNoteScreen extends StatefulWidget {
@@ -34,6 +35,8 @@ class EditNoteScreenState extends State<EditNoteScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return BlocListener<NoteCubit, NoteState>(
       listener: (context, state) {
         if (state is NoteError) {

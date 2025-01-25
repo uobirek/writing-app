@@ -5,6 +5,7 @@ import 'package:writing_app/features/notes/cubit/note_state.dart';
 import 'package:writing_app/features/notes/models/note.dart';
 import 'package:writing_app/features/notes/widgets/dynamic_image.dart';
 import 'package:writing_app/features/projects/cubit/project_cubit.dart';
+import 'package:writing_app/l10n/app_localizations.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
 
 class NoteDetailsScreen extends StatefulWidget {
@@ -34,6 +35,7 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     final projectCubit = context.read<ProjectCubit>();
     final project = projectCubit.selectedProject;
     context.read<NoteCubit>().fetchNotes(project!.id);
@@ -50,8 +52,8 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
             try {
               return _buildNoteDetails(context, currentNote);
             } catch (err) {
-              return const Center(
-                child: Text('Note not found'),
+              return Center(
+                child: Text(localizations!.noteNotFound),
               );
             }
           } else if (state is NoteError) {

@@ -86,11 +86,11 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
 
     saveFuture.then((_) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(localizations!.chapter_saved_successfully)),
+        SnackBar(content: Text(localizations!.chapterSavedSuccessfully)),
       );
     }).catchError((err) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(localizations!.failed_to_save_chapter(''))),
+        SnackBar(content: Text(localizations!.failedToSaveChapter(''))),
       );
     });
   }
@@ -103,7 +103,6 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);
-    print(localizations);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: BlocBuilder<ChapterCubit, ChapterState>(

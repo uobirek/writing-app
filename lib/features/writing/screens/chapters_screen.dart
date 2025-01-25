@@ -127,7 +127,7 @@ class ChapterList extends StatelessWidget {
             ),
           );
         } else {
-          return Center(child: Text(localizations!.no_chapter_available));
+          return Center(child: Text(localizations!.noChapterAvailable));
         }
       },
     );

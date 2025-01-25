@@ -235,47 +235,41 @@ abstract class AppLocalizations {
   /// **'No projects available'**
   String get noProjectsAvailable;
 
-  /// No description provided for @chapter_saved_successfully.
+  /// No description provided for @chapterSavedSuccessfully.
   ///
   /// In en, this message translates to:
-  /// **'¡Capítulo guardado con éxito!'**
-  String get chapter_saved_successfully;
+  /// **'Chapter saved successfully!'**
+  String get chapterSavedSuccessfully;
 
-  /// No description provided for @failed_to_save_chapter.
+  /// No description provided for @failedToSaveChapter.
   ///
   /// In en, this message translates to:
-  /// **'No se pudo guardar el capítulo: {error}'**
-  String failed_to_save_chapter(Object error);
-
-  /// No description provided for @no_project_selected.
-  ///
-  /// In en, this message translates to:
-  /// **'Ningún proyecto seleccionado'**
-  String get no_project_selected;
+  /// **'Failed to save chapter: {error}'**
+  String failedToSaveChapter(Object error);
 
   /// No description provided for @title.
   ///
   /// In en, this message translates to:
-  /// **'Título'**
+  /// **'Title'**
   String get title;
 
   /// No description provided for @number.
   ///
   /// In en, this message translates to:
-  /// **'Número'**
+  /// **'Number'**
   String get number;
 
   /// No description provided for @chapters.
   ///
   /// In en, this message translates to:
-  /// **'Capítulos'**
+  /// **'Chapters'**
   String get chapters;
 
-  /// No description provided for @no_chapter_available.
+  /// No description provided for @noChapterAvailable.
   ///
   /// In en, this message translates to:
-  /// **'No hay capítulos disponibles.'**
-  String get no_chapter_available;
+  /// **'No chapter available.'**
+  String get noChapterAvailable;
 
   /// No description provided for @addNewProject.
   ///
@@ -342,6 +336,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to load projects'**
   String get failedToLoadProjects;
+
+  /// No description provided for @sidebarHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get sidebarHome;
+
+  /// No description provided for @sidebarNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get sidebarNotes;
+
+  /// No description provided for @sidebarWriting.
+  ///
+  /// In en, this message translates to:
+  /// **'Writing'**
+  String get sidebarWriting;
+
+  /// No description provided for @sidebarResearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Research'**
+  String get sidebarResearch;
+
+  /// No description provided for @sidebarLogout.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get sidebarLogout;
+
+  /// No description provided for @sidebarProjectTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected Project'**
+  String get sidebarProjectTitle;
+
+  /// No description provided for @sidebarToggleCollapse.
+  ///
+  /// In en, this message translates to:
+  /// **'Expand/Collapse Sidebar'**
+  String get sidebarToggleCollapse;
+
+  /// No description provided for @addNewNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Note'**
+  String get addNewNote;
+
+  /// No description provided for @saveNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get saveNote;
+
+  /// No description provided for @selectNoteType.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Note Type'**
+  String get selectNoteType;
+
+  /// No description provided for @simpleNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Simple Note'**
+  String get simpleNote;
+
+  /// No description provided for @characterNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Character Note'**
+  String get characterNote;
+
+  /// No description provided for @worldbuildingNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Worldbuilding Note'**
+  String get worldbuildingNote;
+
+  /// No description provided for @loading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading...'**
+  String get loading;
+
+  /// No description provided for @noteNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Note not found'**
+  String get noteNotFound;
+
+  /// No description provided for @errorMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {message}'**
+  String errorMessage(Object message);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

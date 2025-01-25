@@ -6,6 +6,7 @@ import 'package:writing_app/features/notes/cubit/note_state.dart';
 import 'package:writing_app/features/notes/screens/create_a_blank_note.dart';
 import 'package:writing_app/features/notes/screens/editing/note_editing.dart';
 import 'package:writing_app/features/projects/cubit/project_cubit.dart';
+import 'package:writing_app/l10n/app_localizations.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
 
 class AddNoteScreen extends StatefulWidget {
@@ -68,6 +69,8 @@ class AddNoteScreenState extends State<AddNoteScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return BlocListener<NoteCubit, NoteState>(
       listener: (context, state) {
         if (state is NoteError) {
@@ -85,7 +88,7 @@ class AddNoteScreenState extends State<AddNoteScreen> {
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
-            title: const Text('Add New Note'),
+            title: Text(localizations!.addNewNote),
             actions: [
               IconButton(
                 icon: const Icon(Icons.save),
@@ -103,23 +106,23 @@ class AddNoteScreenState extends State<AddNoteScreen> {
                     children: [
                       DropdownButtonFormField<String>(
                         value: _selectedNoteType,
-                        items: const [
+                        items: [
                           DropdownMenuItem(
                             value: 'SimpleNote',
-                            child: Text('Simple Note'),
+                            child: Text(localizations.simpleNote),
                           ),
                           DropdownMenuItem(
                             value: 'CharacterNote',
-                            child: Text('Character Note'),
+                            child: Text(localizations.characterNote),
                           ),
                           DropdownMenuItem(
                             value: 'WorldbuildingNote',
-                            child: Text('Worldbuilding Note'),
+                            child: Text(localizations.worldbuildingNote),
                           ),
                         ],
                         onChanged: _onNoteTypeChanged,
-                        decoration: const InputDecoration(
-                          labelText: 'Select Note Type',
+                        decoration: InputDecoration(
+                          labelText: localizations.selectNoteType,
                         ),
                       ),
                       const SizedBox(height: 16),

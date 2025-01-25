@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:writing_app/features/projects/cubit/project_cubit.dart';
 import 'package:writing_app/features/projects/cubit/project_states.dart';
 import 'package:writing_app/features/projects/models/project.dart';
+import 'package:writing_app/l10n/app_localizations.dart';
 
 class AddProjectScreen extends StatefulWidget {
   AddProjectScreen({super.key});
@@ -23,9 +24,11 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add New Project'),
+        title: Text(localizations!.addNewProject),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -46,8 +49,8 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                 children: [
                   TextFormField(
                     controller: _titleController,
-                    decoration: const InputDecoration(
-                      labelText: 'Project Title',
+                    decoration: InputDecoration(
+                      labelText: localizations!.projectTitle,
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -59,8 +62,8 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                   const SizedBox(height: 16),
                   TextFormField(
                     controller: _descriptionController,
-                    decoration: const InputDecoration(
-                      labelText: 'Project Description',
+                    decoration: InputDecoration(
+                      labelText: localizations.pleaseEnterProjectTitle,
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -87,7 +90,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                     onPressed: _addProject,
                     child: state is ProjectUpdating
                         ? const CircularProgressIndicator()
-                        : const Text('Add Project'),
+                        : Text(localizations.addNewProject),
                   ),
                 ],
               ),
