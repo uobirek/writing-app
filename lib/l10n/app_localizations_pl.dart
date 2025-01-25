@@ -37,35 +37,97 @@ class AppLocalizationsPl extends AppLocalizations {
   String get loginFailed => 'Logowanie nie powiodło się. Sprawdź swój e-mail i hasło.';
 
   @override
-  String get error => 'Błąd';
+  String get error => 'Błąd: ';
 
   @override
   String get ok => 'OK';
 
   @override
-  String get createAnAccount => 'Create an account';
+  String get createAnAccount => 'Utwórz konto';
 
   @override
-  String get fullName => 'Full Name';
+  String get fullName => 'Imię i nazwisko';
 
   @override
-  String get pleaseEnterYourName => 'Please enter your name';
+  String get pleaseEnterYourName => 'Proszę podać swoje imię i nazwisko';
 
   @override
-  String get alreadyHaveAnAccount => 'Already have an account?';
+  String get alreadyHaveAnAccount => 'Masz już konto?';
 
   @override
-  String get hiWelcomeTo => 'Hi! Welcome to';
+  String get hiWelcomeTo => 'Cześć! Witamy w';
 
   @override
-  String get fantasies => 'fantasies';
+  String get fantasies => 'fantazjach';
 
   @override
-  String get perfectOrganizationTool => 'Perfect organization tool for writing, worldbuilding, and outlining';
+  String get perfectOrganizationTool => 'Idealne narzędzie do organizacji pisania, budowania światów i planowania';
 
   @override
-  String get getStartedNow => 'Get started now';
+  String get getStartedNow => 'Rozpocznij teraz';
 
   @override
-  String get alreadyAUser => 'Already a User?';
+  String get alreadyAUser => 'Jesteś już użytkownikiem?';
+
+  @override
+  String get noProjectSelected => 'Nie wybrano projektu';
+
+  @override
+  String get noProjectsAvailable => 'Brak dostępnych projektów';
+
+  @override
+  String get chapter_saved_successfully => 'Rozdział zapisano pomyślnie!';
+
+  @override
+  String failed_to_save_chapter(Object error) {
+    return 'Nie udało się zapisać rozdziału: $error';
+  }
+
+  @override
+  String get no_project_selected => 'Nie wybrano projektu';
+
+  @override
+  String get title => 'Tytuł';
+
+  @override
+  String get number => 'Numer';
+
+  @override
+  String get chapters => 'Rozdziały';
+
+  @override
+  String get no_chapter_available => 'Brak dostępnych rozdziałów.';
+
+  @override
+  String get addNewProject => 'Dodaj nowy projekt';
+
+  @override
+  String get projectTitle => 'Tytuł projektu';
+
+  @override
+  String get pleaseEnterProjectTitle => 'Proszę wprowadzić tytuł projektu';
+
+  @override
+  String get projectDescription => 'Opis projektu';
+
+  @override
+  String get pleaseEnterDescription => 'Proszę wprowadzić opis';
+
+  @override
+  String get noImageSelected => 'Nie wybrano obrazu';
+
+  @override
+  String get addProject => 'Dodaj projekt';
+
+  @override
+  String get pleaseFillInAllFields => 'Proszę wypełnić wszystkie pola';
+
+  @override
+  String get chooseAProject => 'Wybierz projekt';
+
+  @override
+  String get workingOnToday => 'Nad którym dziś pracujemy?';
+
+  @override
+  String get failedToLoadProjects => 'Nie udało się załadować projektów';
 }

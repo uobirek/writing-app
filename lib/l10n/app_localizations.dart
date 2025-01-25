@@ -222,6 +222,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Already a User?'**
   String get alreadyAUser;
+
+  /// No description provided for @noProjectSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'No project selected'**
+  String get noProjectSelected;
+
+  /// No description provided for @noProjectsAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No projects available'**
+  String get noProjectsAvailable;
+
+  /// No description provided for @chapter_saved_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'¡Capítulo guardado con éxito!'**
+  String get chapter_saved_successfully;
+
+  /// No description provided for @failed_to_save_chapter.
+  ///
+  /// In en, this message translates to:
+  /// **'No se pudo guardar el capítulo: {error}'**
+  String failed_to_save_chapter(Object error);
+
+  /// No description provided for @no_project_selected.
+  ///
+  /// In en, this message translates to:
+  /// **'Ningún proyecto seleccionado'**
+  String get no_project_selected;
+
+  /// No description provided for @title.
+  ///
+  /// In en, this message translates to:
+  /// **'Título'**
+  String get title;
+
+  /// No description provided for @number.
+  ///
+  /// In en, this message translates to:
+  /// **'Número'**
+  String get number;
+
+  /// No description provided for @chapters.
+  ///
+  /// In en, this message translates to:
+  /// **'Capítulos'**
+  String get chapters;
+
+  /// No description provided for @no_chapter_available.
+  ///
+  /// In en, this message translates to:
+  /// **'No hay capítulos disponibles.'**
+  String get no_chapter_available;
+
+  /// No description provided for @addNewProject.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Project'**
+  String get addNewProject;
+
+  /// No description provided for @projectTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Project Title'**
+  String get projectTitle;
+
+  /// No description provided for @pleaseEnterProjectTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a project title'**
+  String get pleaseEnterProjectTitle;
+
+  /// No description provided for @projectDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Project Description'**
+  String get projectDescription;
+
+  /// No description provided for @pleaseEnterDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a description'**
+  String get pleaseEnterDescription;
+
+  /// No description provided for @noImageSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'No image selected'**
+  String get noImageSelected;
+
+  /// No description provided for @addProject.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Project'**
+  String get addProject;
+
+  /// No description provided for @pleaseFillInAllFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in all fields'**
+  String get pleaseFillInAllFields;
+
+  /// No description provided for @chooseAProject.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a project'**
+  String get chooseAProject;
+
+  /// No description provided for @workingOnToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Which one are we working on today?'**
+  String get workingOnToday;
+
+  /// No description provided for @failedToLoadProjects.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load projects'**
+  String get failedToLoadProjects;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

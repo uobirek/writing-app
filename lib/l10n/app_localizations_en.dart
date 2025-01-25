@@ -68,4 +68,66 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get alreadyAUser => 'Already a User?';
+
+  @override
+  String get noProjectSelected => 'No project selected';
+
+  @override
+  String get noProjectsAvailable => 'No projects available';
+
+  @override
+  String get chapter_saved_successfully => '¡Capítulo guardado con éxito!';
+
+  @override
+  String failed_to_save_chapter(Object error) {
+    return 'No se pudo guardar el capítulo: $error';
+  }
+
+  @override
+  String get no_project_selected => 'Ningún proyecto seleccionado';
+
+  @override
+  String get title => 'Título';
+
+  @override
+  String get number => 'Número';
+
+  @override
+  String get chapters => 'Capítulos';
+
+  @override
+  String get no_chapter_available => 'No hay capítulos disponibles.';
+
+  @override
+  String get addNewProject => 'Add New Project';
+
+  @override
+  String get projectTitle => 'Project Title';
+
+  @override
+  String get pleaseEnterProjectTitle => 'Please enter a project title';
+
+  @override
+  String get projectDescription => 'Project Description';
+
+  @override
+  String get pleaseEnterDescription => 'Please enter a description';
+
+  @override
+  String get noImageSelected => 'No image selected';
+
+  @override
+  String get addProject => 'Add Project';
+
+  @override
+  String get pleaseFillInAllFields => 'Please fill in all fields';
+
+  @override
+  String get chooseAProject => 'Choose a project';
+
+  @override
+  String get workingOnToday => 'Which one are we working on today?';
+
+  @override
+  String get failedToLoadProjects => 'Failed to load projects';
 }

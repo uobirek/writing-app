@@ -8,6 +8,7 @@ import 'package:writing_app/features/projects/cubit/project_states.dart';
 import 'package:writing_app/features/projects/models/project.dart';
 import 'package:writing_app/features/projects/widgets/project_list_item.dart';
 import 'package:writing_app/features/writing/cubit/chapter_cubit.dart';
+import 'package:writing_app/l10n/app_localizations.dart';
 
 class ProjectListScreen extends StatefulWidget {
   const ProjectListScreen({super.key});
@@ -29,6 +30,8 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final localizations = AppLocalizations.of(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: BlocBuilder<ProjectCubit, ProjectState>(
@@ -44,7 +47,7 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Choose a project',
+                      localizations!.chooseAProject,
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                             color: Theme.of(context).colorScheme.secondary,
                           ),
@@ -53,7 +56,7 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
                       height: 5,
                     ),
                     Text(
-                      'Which one are we working on today?',
+                      localizations.workingOnToday,
                       style: Theme.of(context).textTheme.labelMedium,
                     ),
                     const SizedBox(height: 20), // Spacing
@@ -86,7 +89,7 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
           } else {
             return Center(
               child: Text(
-                'Failed to load projects',
+                localizations!.failedToLoadProjects,
                 style: theme.textTheme.bodyMedium,
               ),
             );

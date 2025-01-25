@@ -6,6 +6,7 @@ import 'package:writing_app/features/writing/chapter_card.dart';
 import 'package:writing_app/features/writing/cubit/chapter_cubit.dart';
 import 'package:writing_app/features/writing/cubit/chapter_state.dart';
 import 'package:writing_app/features/writing/repositories/chapter_repository.dart';
+import 'package:writing_app/l10n/app_localizations.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
 
 class ChaptersScreen extends StatelessWidget {
@@ -15,6 +16,7 @@ class ChaptersScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final projectCubit = context.read<ProjectCubit>();
     final project = projectCubit.selectedProject;
+    final localizations = AppLocalizations.of(context);
 
     return BlocProvider(
       create: (context) =>
@@ -68,7 +70,7 @@ class ChaptersScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Chapters',
+                              localizations!.chapters,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             const SizedBox(height: 30),
@@ -105,6 +107,8 @@ class ChapterList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return BlocBuilder<ChapterCubit, ChapterState>(
       builder: (context, state) {
         if (state is ChapterLoading) {
@@ -123,7 +127,7 @@ class ChapterList extends StatelessWidget {
             ),
           );
         } else {
-          return const Center(child: Text('No chapter available.'));
+          return Center(child: Text(localizations!.no_chapter_available));
         }
       },
     );

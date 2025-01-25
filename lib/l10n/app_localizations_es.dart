@@ -68,4 +68,66 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get alreadyAUser => '¿Ya eres usuario?';
+
+  @override
+  String get noProjectSelected => 'Ningún proyecto seleccionado';
+
+  @override
+  String get noProjectsAvailable => 'No hay proyectos disponibles';
+
+  @override
+  String get chapter_saved_successfully => '¡Capítulo guardado con éxito!';
+
+  @override
+  String failed_to_save_chapter(Object error) {
+    return 'No se pudo guardar el capítulo: $error';
+  }
+
+  @override
+  String get no_project_selected => 'Ningún proyecto seleccionado';
+
+  @override
+  String get title => 'Título';
+
+  @override
+  String get number => 'Número';
+
+  @override
+  String get chapters => 'Capítulos';
+
+  @override
+  String get no_chapter_available => 'No hay capítulos disponibles.';
+
+  @override
+  String get addNewProject => 'Agregar nuevo proyecto';
+
+  @override
+  String get projectTitle => 'Título del proyecto';
+
+  @override
+  String get pleaseEnterProjectTitle => 'Por favor, ingrese un título para el proyecto';
+
+  @override
+  String get projectDescription => 'Descripción del proyecto';
+
+  @override
+  String get pleaseEnterDescription => 'Por favor, ingrese una descripción';
+
+  @override
+  String get noImageSelected => 'No se ha seleccionado ninguna imagen';
+
+  @override
+  String get addProject => 'Agregar proyecto';
+
+  @override
+  String get pleaseFillInAllFields => 'Por favor, complete todos los campos';
+
+  @override
+  String get chooseAProject => 'Elige un proyecto';
+
+  @override
+  String get workingOnToday => '¿En cuál trabajaremos hoy?';
+
+  @override
+  String get failedToLoadProjects => 'Error al cargar los proyectos';
 }

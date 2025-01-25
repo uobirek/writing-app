@@ -19,8 +19,18 @@
   "fantasies": "fantasías",
   "perfectOrganizationTool": "La herramienta perfecta para organizar la escritura, la creación de mundos y la planificación",
   "getStartedNow": "Comienza ahora",
-  "alreadyAUser": "¿Ya eres usuario?"
+  "alreadyAUser": "¿Ya eres usuario?",
   "noProjectSelected": "Ningún proyecto seleccionado",
-  "error": "Error: ",
-  "noProjectsAvailable": "No hay proyectos disponibles"
+  "noProjectsAvailable": "No hay proyectos disponibles",
+  "addNewProject": "Agregar nuevo proyecto",
+  "projectTitle": "Título del proyecto",
+  "pleaseEnterProjectTitle": "Por favor, ingrese un título para el proyecto",
+  "projectDescription": "Descripción del proyecto",
+  "pleaseEnterDescription": "Por favor, ingrese una descripción",
+  "noImageSelected": "No se ha seleccionado ninguna imagen",
+  "addProject": "Agregar proyecto",
+  "pleaseFillInAllFields": "Por favor, complete todos los campos",
+  "chooseAProject": "Elige un proyecto",
+  "workingOnToday": "¿En cuál trabajaremos hoy?",
+  "failedToLoadProjects": "Error al cargar los proyectos"
 }

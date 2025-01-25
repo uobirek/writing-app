@@ -8,6 +8,7 @@ import 'package:writing_app/features/projects/cubit/project_cubit.dart';
 import 'package:writing_app/features/writing/cubit/chapter_cubit.dart';
 import 'package:writing_app/features/writing/cubit/chapter_state.dart';
 import 'package:writing_app/features/writing/models/chapter.dart';
+import 'package:writing_app/l10n/app_localizations.dart';
 import 'package:writing_app/widgets/custom_text_field.dart';
 import 'package:writing_app/widgets/minimal_text_field.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
@@ -81,14 +82,15 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
     final saveFuture = widget.isNewChapter
         ? cubit.addChapter(chapter, project!.id)
         : cubit.updateChapter(chapter, project!.id);
+    final localizations = AppLocalizations.of(context);
 
     saveFuture.then((_) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Chapter saved successfully!')),
+        SnackBar(content: Text(localizations!.chapter_saved_successfully)),
       );
     }).catchError((err) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to save chapter: $err')),
+        SnackBar(content: Text(localizations!.failed_to_save_chapter(''))),
       );
     });
   }
@@ -100,6 +102,8 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+    print(localizations);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: BlocBuilder<ChapterCubit, ChapterState>(
@@ -149,13 +153,13 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
                           Expanded(
                             child: MinimalTextField(
                               controller: _titleController,
-                              hintText: 'Title',
+                              hintText: localizations!.title,
                             ),
                           ),
                           const SizedBox(height: 15),
                           CustomTextField(
                             controller: _positionController,
-                            label: 'Number',
+                            label: localizations.number,
                             isNumber: true,
                           ),
                         ],
