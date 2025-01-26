@@ -16,11 +16,11 @@ class ChapterCard extends StatelessWidget {
       elevation: 1,
       child: SizedBox(
         width: 500,
-        height: 90,
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Row(
             spacing: 22,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Text(
                 chapter.position.toString(),

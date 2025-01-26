@@ -44,9 +44,7 @@ class NoteRepository {
   }
 
   /// Delete image from Cloudinary
-  Future<void> deleteImageFromCloudinary(String imageUrl) async {
-    // Function implementation remains as is.
-  }
+  Future<void> deleteImageFromCloudinary(String imageUrl) async {}
 
   /// Add a new note with optional image
   Future<void> addNote(
@@ -90,11 +88,6 @@ class NoteRepository {
       String? imageUrl = note.imageUrl;
 
       if (imageFile != null) {
-        // Delete the old image if one exists
-        if (imageUrl != null) {
-          await deleteImageFromCloudinary(imageUrl);
-        }
-
         // Upload the new image to Cloudinary
         imageUrl = await uploadImageToCloudinary(imageFile);
       }
@@ -136,9 +129,6 @@ class NoteRepository {
       if (noteData.exists) {
         final imageUrl =
             noteData.data()?['imageUrl'] as String?; // Cast to String?
-        if (imageUrl != null) {
-          await deleteImageFromCloudinary(imageUrl); // Delete the image
-        }
 
         await noteRef.delete(); // Delete the note
       }

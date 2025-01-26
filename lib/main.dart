@@ -54,11 +54,10 @@ class MyApp extends StatelessWidget {
         builder: (context, localeProvider, child) {
           return LayoutBuilder(
             builder: (context, constraints) {
-              // Determine whether it's mobile or not based on screen width
               final isMobile = constraints.maxWidth < 600;
 
               return MaterialApp.router(
-                locale: localeProvider.locale, // Dynamically set locale
+                locale: localeProvider.locale,
                 localizationsDelegates: const [
                   AppLocalizations.delegate,
                   GlobalMaterialLocalizations.delegate,
@@ -66,21 +65,21 @@ class MyApp extends StatelessWidget {
                   GlobalCupertinoLocalizations.delegate,
                 ],
                 supportedLocales: const [
-                  Locale('en'), // English
-                  Locale('es'), // Spanish
-                  Locale('pl'), // Polish
+                  Locale('en'),
+                  Locale('es'),
+                  Locale('pl'),
                 ],
                 themeMode: ThemeMode.light,
                 theme: GlobalThemeData.lightThemeData(
                   context,
                   isMobile,
-                ), // Pass isMobile here
+                ),
                 darkTheme: GlobalThemeData.darkThemeData(
                   context,
                   isMobile,
-                ), // Pass isMobile here
+                ),
                 title: 'Writing App',
-                routerConfig: AppRouter.router, // GoRouter is fully initialized
+                routerConfig: AppRouter.router, // Use static router instance
               );
             },
           );

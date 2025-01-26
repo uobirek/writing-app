@@ -19,7 +19,8 @@ class EditChapterScreen extends StatefulWidget {
     this.chapterId,
     required this.isNewChapter,
   });
-  final String? chapterId; // Nullable for new chapters
+
+  final String? chapterId;
   final bool isNewChapter;
 
   @override
@@ -29,20 +30,20 @@ class EditChapterScreen extends StatefulWidget {
 class _EditChapterScreenState extends State<EditChapterScreen> {
   late QuillController _controller;
   late TextEditingController _titleController;
-  late TextEditingController _positionController;
+  late int _chapterPosition;
+  bool _showToolbar = true;
+  bool _isInitialized = false; // Prevent reinitialization
 
   @override
   void initState() {
     super.initState();
 
     if (!widget.isNewChapter) {
-      // If editing, fetch the chapter data
       final chapterCubit = context.read<ChapterCubit>();
       final projectCubit = context.read<ProjectCubit>();
       final project = projectCubit.selectedProject;
       chapterCubit.fetchChapters(project!.id);
     } else {
-      // If creating a new chapter, initialize with empty/default values
       _initializeControllers(Chapter.empty());
     }
   }
@@ -52,27 +53,23 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
       document: chapter.jsonContent != null && chapter.jsonContent!.isNotEmpty
           ? Document.fromDelta(Delta.fromJson(chapter.jsonContent!))
           : Document()
-        ..insert(0, ''), // Default empty document
+        ..insert(0, ''),
       selection: const TextSelection.collapsed(offset: 0),
     );
 
     _titleController = TextEditingController(text: chapter.title ?? '');
-    _positionController =
-        TextEditingController(text: chapter.position?.toString() ?? '');
+    _chapterPosition = chapter.position ?? 1; // Ensure valid initial value
   }
 
   void _saveChapter(BuildContext context) {
     final cubit = context.read<ChapterCubit>();
-    final content =
-        _controller.document.toPlainText(); // Get plain text content
-    final jsonContent =
-        _controller.document.toDelta().toJson(); // Get Delta JSON
+    final content = _controller.document.toPlainText();
+    final jsonContent = _controller.document.toDelta().toJson();
 
-    // Create or update the chapter object
     final chapter = Chapter(
       id: widget.isNewChapter ? '' : widget.chapterId,
       title: _titleController.text,
-      position: int.tryParse(_positionController.text) ?? 1,
+      position: _chapterPosition,
       content: content,
       jsonContent: jsonContent,
     );
@@ -96,7 +93,6 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
   }
 
   bool _isMobile() {
-    // Checks if the platform is mobile (Android/iOS)
     return Platform.isAndroid || Platform.isIOS;
   }
 
@@ -112,12 +108,13 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
               return const Center(child: CircularProgressIndicator());
             } else if (state is ChapterError) {
               return Center(child: Text(state.message));
-            } else if (state is ChapterLoaded) {
+            } else if (state is ChapterLoaded && !_isInitialized) {
               final chapter = state.chapters.firstWhere(
                 (c) => c.id == widget.chapterId,
                 orElse: Chapter.empty,
               );
               _initializeControllers(chapter);
+              _isInitialized = true; // Prevent reinitialization
             }
           }
 
@@ -129,13 +126,13 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
                   : const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
               child: Container(
                 decoration: _isMobile()
-                    ? null // No decoration for mobile
+                    ? null
                     : BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: Theme.of(context).canvasColor,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.1),
+                            color: Colors.black.withAlpha(25),
                             blurRadius: 30,
                             spreadRadius: 6,
                             offset: const Offset(0, 10),
@@ -148,6 +145,7 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
                             child: MinimalTextField(
@@ -155,44 +153,75 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
                               hintText: localizations!.title,
                             ),
                           ),
-                          const SizedBox(height: 15),
-                          CustomTextField(
-                            controller: _positionController,
-                            label: localizations.number,
-                            isNumber: true,
+                          InkWell(
+                              child: const Icon(Icons.save),
+                              onTap: () {
+                                _saveChapter(context);
+                              }),
+                          const SizedBox(width: 15),
+                          SizedBox(
+                            width: 100,
+                            height: 100,
+                            child: DropdownButtonFormField<int>(
+                              value: _chapterPosition.clamp(
+                                  1, 100), // Ensure value is valid
+                              onChanged: (value) {
+                                if (value != null) {
+                                  setState(() {
+                                    _chapterPosition = value; // Update state
+                                  });
+                                }
+                              },
+                              items: List.generate(
+                                100,
+                                (index) => DropdownMenuItem(
+                                  value: index + 1,
+                                  child: Text('${index + 1}'),
+                                ),
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            icon: Icon(
+                              _showToolbar
+                                  ? Icons.arrow_drop_up
+                                  : Icons.arrow_drop_down,
+                            ),
+                            onPressed: () {
+                              _saveChapter(
+                                  context); // Save changes before toggling
+                              setState(() {
+                                _showToolbar = !_showToolbar;
+                              });
+                            },
                           ),
                         ],
                       ),
                       const SizedBox(height: 15),
-                      QuillSimpleToolbar(
-                        controller: _controller,
-                        configurations: _isMobile()
-                            ? QuillSimpleToolbarConfigurations(
-                                customButtons: [
-                                  QuillToolbarCustomButtonOptions(
-                                    icon: const Icon(Icons.save),
-                                    onPressed: () {
-                                      _saveChapter(context);
-                                    },
-                                  ),
-                                ],
-                                multiRowsDisplay:
-                                    false, // Single row for mobile
-                                showFontFamily: false, // Remove font family
-                                showFontSize: false, // Remove font size
-                              )
-                            : QuillSimpleToolbarConfigurations(
-                                customButtons: [
-                                  QuillToolbarCustomButtonOptions(
-                                    icon: const Icon(Icons.save),
-                                    onPressed: () {
-                                      _saveChapter(context);
-                                    },
-                                  ),
-                                ],
-                                showAlignmentButtons: true,
-                              ),
-                      ),
+                      if (_showToolbar)
+                        QuillSimpleToolbar(
+                          controller: _controller,
+                          configurations: _isMobile()
+                              ? QuillSimpleToolbarConfigurations(
+                                  customButtons: const [
+                                    QuillToolbarCustomButtonOptions(),
+                                  ],
+                                  multiRowsDisplay: false,
+                                  showFontFamily: false,
+                                  showFontSize: false,
+                                )
+                              : QuillSimpleToolbarConfigurations(
+                                  customButtons: [
+                                    QuillToolbarCustomButtonOptions(
+                                      icon: const Icon(Icons.save),
+                                      onPressed: () {
+                                        _saveChapter(context);
+                                      },
+                                    ),
+                                  ],
+                                  showAlignmentButtons: true,
+                                ),
+                        ),
                       const SizedBox(height: 10),
                       Expanded(
                         child: QuillEditor.basic(

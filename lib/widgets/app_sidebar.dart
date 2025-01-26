@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:writing_app/features/projects/cubit/project_cubit.dart';
 import 'package:writing_app/l10n/app_localizations.dart';
+import 'package:writing_app/locale_provider.dart';
 
 class AppSidebar extends StatefulWidget {
   const AppSidebar({
@@ -124,7 +125,7 @@ class _AppSidebarState extends State<AppSidebar> {
             isActive: widget.activeRoute == '/research',
           ),
           const Spacer(), // Push logout button to the bottom
-          _buildLogoutItem(),
+          _buildSettingsItem(),
         ],
       ),
     );
@@ -186,17 +187,17 @@ class _AppSidebarState extends State<AppSidebar> {
     );
   }
 
-  Widget _buildLogoutItem() {
+  Widget _buildSettingsItem() {
     final localizations = AppLocalizations.of(context);
 
-    final isHovered = _hoveredRoute == 'logout';
+    final isHovered = _hoveredRoute == 'settings';
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
-      onEnter: (_) => _onHover('logout'),
+      onEnter: (_) => _onHover('settings'),
       onExit: (_) => _onExitHover(),
       child: GestureDetector(
-        onTap: _logout, // Call the logout method
+        onTap: () => _showSettingsDialog(context), // Opens the settings modal
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           height: 45,
@@ -204,25 +205,101 @@ class _AppSidebarState extends State<AppSidebar> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             color: isHovered
-                ? Theme.of(context).colorScheme.error.withAlpha(30)
-                : Theme.of(context).colorScheme.error.withAlpha(50),
+                ? Theme.of(context).colorScheme.primary.withAlpha(30)
+                : Theme.of(context).colorScheme.primary.withAlpha(50),
           ),
           child: Row(
             children: [
               const SizedBox(width: 15),
-              Icon(Icons.logout, color: Theme.of(context).colorScheme.onError),
+              Icon(Icons.settings,
+                  color: Theme.of(context).colorScheme.onPrimary),
               if (_isExpanded) const SizedBox(width: 12),
               if (_isExpanded)
                 Text(
-                  localizations!.sidebarLogout,
+                  'Settings',
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.onError,
+                        color: Theme.of(context).colorScheme.onPrimary,
                       ),
                 ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  void _showSettingsDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title:
+              Text('Settings', style: Theme.of(context).textTheme.labelLarge),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Language Dropdown
+              Row(
+                children: [
+                  Text(
+                    'Language',
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
+                  const SizedBox(width: 16),
+                  DropdownButton<String>(
+                    value: context.read<LocaleProvider>().locale.languageCode,
+                    onChanged: (String? newLanguageCode) {
+                      if (newLanguageCode != null) {
+                        context
+                            .read<LocaleProvider>()
+                            .setLocale(Locale(newLanguageCode));
+                      }
+                    },
+                    items: [
+                      DropdownMenuItem(
+                          value: 'en',
+                          child: Text(
+                            'English',
+                            style: Theme.of(context).textTheme.labelMedium,
+                          )),
+                      DropdownMenuItem(
+                          value: 'pl',
+                          child: Text('Polski',
+                              style: Theme.of(context).textTheme.labelMedium)),
+                      DropdownMenuItem(
+                          value: 'es',
+                          child: Text('Español',
+                              style: Theme.of(context).textTheme.labelMedium)),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              // Logout Button
+              ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.pop(context); // Close the dialog
+                  _logout(); // Perform logout action
+                },
+                icon: const Icon(Icons.logout),
+                label: Text('Logout'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.error,
+                  foregroundColor: Theme.of(context).colorScheme.onError,
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+              },
+              child: Text('Cancel'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

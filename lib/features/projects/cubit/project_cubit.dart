@@ -51,7 +51,7 @@ class ProjectCubit extends Cubit<ProjectState> {
 
         if (project != null) {
           _selectedProject = project;
-          emit(ProjectLoaded([project]));
+          emit(ProjectSelected(project.id));
         } else {
           emit(const ProjectError('Project not found'));
         }
@@ -95,7 +95,7 @@ class ProjectCubit extends Cubit<ProjectState> {
               : project.imageUrl,
         );
       }
-      emit(ProjectLoaded(List.from(allProjects)));
+      emit(ProjectSelected(project.id));
     } catch (err) {
       emit(ProjectError('Failed to update project: $err'));
     }

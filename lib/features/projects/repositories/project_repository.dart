@@ -116,9 +116,6 @@ class ProjectRepository {
       String? imageUrl = project.imageUrl;
 
       if (imageFile != null) {
-        if (imageUrl != null) {
-          await deleteImageFromCloudinary(imageUrl); // Delete old image
-        }
         imageUrl = await uploadImageToCloudinary(imageFile); // Upload new image
       }
 
@@ -148,9 +145,6 @@ class ProjectRepository {
 
       if (projectData.exists) {
         final imageUrl = projectData.data()?['imageUrl'] as String?;
-        if (imageUrl != null) {
-          await deleteImageFromCloudinary(imageUrl); // Delete image
-        }
 
         await projectRef.delete(); // Delete project
       } else {
