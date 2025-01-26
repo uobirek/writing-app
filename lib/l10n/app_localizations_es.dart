@@ -76,24 +76,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get noProjectsAvailable => 'No hay proyectos disponibles';
 
   @override
-  String get chapterSavedSuccessfully => 'Chapter saved successfully!';
+  String get chapterSavedSuccessfully => '¡Capítulo guardado con éxito!';
 
   @override
   String failedToSaveChapter(Object error) {
-    return 'Failed to save chapter: $error';
+    return 'No se pudo guardar el capítulo: $error';
   }
 
   @override
-  String get title => 'Title';
+  String get title => 'Título';
 
   @override
-  String get number => 'Number';
+  String get number => 'Número';
 
   @override
-  String get chapters => 'Chapters';
+  String get chapters => 'Capítulos';
 
   @override
-  String get noChapterAvailable => 'No chapter available.';
+  String get noChapterAvailable => 'No hay capítulos disponibles.';
 
   @override
   String get addNewProject => 'Agregar nuevo proyecto';
@@ -129,52 +129,91 @@ class AppLocalizationsEs extends AppLocalizations {
   String get failedToLoadProjects => 'Error al cargar los proyectos';
 
   @override
-  String get sidebarHome => 'Home';
+  String get sidebarHome => 'Inicio';
 
   @override
-  String get sidebarNotes => 'Notes';
+  String get sidebarNotes => 'Notas';
 
   @override
-  String get sidebarWriting => 'Writing';
+  String get sidebarWriting => 'Escritura';
 
   @override
-  String get sidebarResearch => 'Research';
+  String get sidebarResearch => 'Investigación';
 
   @override
-  String get sidebarLogout => 'Logout';
+  String get sidebarLogout => 'Cerrar sesión';
 
   @override
-  String get sidebarProjectTitle => 'Selected Project';
+  String get sidebarProjectTitle => 'Proyecto seleccionado';
 
   @override
-  String get sidebarToggleCollapse => 'Expand/Collapse Sidebar';
+  String get sidebarToggleCollapse => 'Expandir/Colapsar barra lateral';
 
   @override
-  String get addNewNote => 'Add New Note';
+  String get addNewNote => 'Agregar nueva nota';
 
   @override
-  String get saveNote => 'Save';
+  String get saveNote => 'Guardar';
 
   @override
-  String get selectNoteType => 'Select Note Type';
+  String get selectNoteType => 'Seleccionar tipo de nota';
 
   @override
-  String get simpleNote => 'Simple Note';
+  String get simpleNote => 'Nota simple';
 
   @override
-  String get characterNote => 'Character Note';
+  String get characterNote => 'Nota de personaje';
 
   @override
-  String get worldbuildingNote => 'Worldbuilding Note';
+  String get worldbuildingNote => 'Nota de creación de mundos';
 
   @override
-  String get loading => 'Loading...';
+  String get loading => 'Cargando...';
 
   @override
-  String get noteNotFound => 'Note not found';
+  String get noteNotFound => 'Nota no encontrada';
 
   @override
   String errorMessage(Object message) {
     return 'Error: $message';
   }
+
+  @override
+  String get showAll => 'Mostrar todo';
+
+  @override
+  String get worldbuilding => 'Creación de mundos';
+
+  @override
+  String get characters => 'Personajes';
+
+  @override
+  String get outline => 'Esquema';
+
+  @override
+  String get noNotesAvailable => 'No hay notas disponibles.';
+
+  @override
+  String get saveChanges => 'Guardar cambios';
+
+  @override
+  String get unsupportedNoteType => 'Tipo de nota no compatible';
+
+  @override
+  String get addItem => 'Agregar elemento';
+
+  @override
+  String get edit => 'Editar';
+
+  @override
+  String get preview => 'Vista previa';
+
+  @override
+  String get delete => 'Eliminar';
+
+  @override
+  String get confirmDelete => 'Confirmar eliminación';
+
+  @override
+  String get areYouSureDeleteNote => '¿Estás seguro de que deseas eliminar esta nota?';
 }

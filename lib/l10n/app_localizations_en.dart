@@ -177,4 +177,43 @@ class AppLocalizationsEn extends AppLocalizations {
   String errorMessage(Object message) {
     return 'Error: $message';
   }
+
+  @override
+  String get showAll => 'Show All';
+
+  @override
+  String get worldbuilding => 'Worldbuilding';
+
+  @override
+  String get characters => 'Characters';
+
+  @override
+  String get outline => 'Outline';
+
+  @override
+  String get noNotesAvailable => 'No notes available.';
+
+  @override
+  String get saveChanges => 'Save Changes';
+
+  @override
+  String get unsupportedNoteType => 'Unsupported note type';
+
+  @override
+  String get addItem => 'Add Item';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get preview => 'Preview';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get confirmDelete => 'Confirm Delete';
+
+  @override
+  String get areYouSureDeleteNote => 'Are you sure you want to delete this note?';
 }

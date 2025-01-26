@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
+import 'package:writing_app/features/notes/models/outline_note.dart';
 
 import '../models/character_note.dart';
 import '../models/note.dart';
@@ -246,6 +247,8 @@ class NoteRepository {
       return CharacterNote.fromJson(data);
     } else if (type == 'WorldbuildingNote') {
       return WorldbuildingNote.fromJson(data);
+    } else if (type == 'OutlineNote') {
+      return OutlineNote.fromJson(data);
     } else {
       throw Exception('Unknown note type: $type');
     }

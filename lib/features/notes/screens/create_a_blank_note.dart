@@ -1,5 +1,6 @@
 import 'package:writing_app/features/notes/models/character_note.dart';
 import 'package:writing_app/features/notes/models/note.dart';
+import 'package:writing_app/features/notes/models/outline_note.dart';
 import 'package:writing_app/features/notes/models/simple_note.dart';
 import 'package:writing_app/features/notes/models/worldbuilding_note.dart';
 
@@ -58,6 +59,19 @@ Future<Note> createBlankNote(String type, List<Note> cachedNotes) async {
         geography: '',
         culture: '',
         pointsOfInterest: [],
+        position: nextPosition,
+      );
+    case 'OutlineNote':
+      return OutlineNote(
+        id: '',
+        createdAt: now,
+        imageUrl: defaultImage,
+        genre: '',
+        themes: [],
+        acts: [],
+        conflicts: [],
+        subplots: [],
+        notes: [],
         position: nextPosition,
       );
     default:

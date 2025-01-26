@@ -432,6 +432,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error: {message}'**
   String errorMessage(Object message);
+
+  /// No description provided for @showAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Show All'**
+  String get showAll;
+
+  /// No description provided for @worldbuilding.
+  ///
+  /// In en, this message translates to:
+  /// **'Worldbuilding'**
+  String get worldbuilding;
+
+  /// No description provided for @characters.
+  ///
+  /// In en, this message translates to:
+  /// **'Characters'**
+  String get characters;
+
+  /// No description provided for @outline.
+  ///
+  /// In en, this message translates to:
+  /// **'Outline'**
+  String get outline;
+
+  /// No description provided for @noNotesAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No notes available.'**
+  String get noNotesAvailable;
+
+  /// No description provided for @saveChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Changes'**
+  String get saveChanges;
+
+  /// No description provided for @unsupportedNoteType.
+  ///
+  /// In en, this message translates to:
+  /// **'Unsupported note type'**
+  String get unsupportedNoteType;
+
+  /// No description provided for @addItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Item'**
+  String get addItem;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @preview.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get preview;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @confirmDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Delete'**
+  String get confirmDelete;
+
+  /// No description provided for @areYouSureDeleteNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this note?'**
+  String get areYouSureDeleteNote;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

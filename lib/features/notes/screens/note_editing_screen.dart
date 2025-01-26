@@ -100,7 +100,7 @@ class EditNoteScreenState extends State<EditNoteScreen> {
                                       );
                                 }
                               },
-                              child: const Text('Save Changes'),
+                              child: Text(localizations!.saveChanges),
                             ),
                           ),
                         ],

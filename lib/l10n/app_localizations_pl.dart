@@ -177,4 +177,43 @@ class AppLocalizationsPl extends AppLocalizations {
   String errorMessage(Object message) {
     return 'Błąd: $message';
   }
+
+  @override
+  String get showAll => 'Pokaż wszystko';
+
+  @override
+  String get worldbuilding => 'Budowanie świata';
+
+  @override
+  String get characters => 'Postacie';
+
+  @override
+  String get outline => 'Zarys';
+
+  @override
+  String get noNotesAvailable => 'Brak dostępnych notatek.';
+
+  @override
+  String get saveChanges => 'Zapisz zmiany';
+
+  @override
+  String get unsupportedNoteType => 'Nieobsługiwany typ notatki';
+
+  @override
+  String get addItem => 'Dodaj element';
+
+  @override
+  String get edit => 'Edytuj';
+
+  @override
+  String get preview => 'Podgląd';
+
+  @override
+  String get delete => 'Usuń';
+
+  @override
+  String get confirmDelete => 'Potwierdź usunięcie';
+
+  @override
+  String get areYouSureDeleteNote => 'Czy na pewno chcesz usunąć tę notatkę?';
 }

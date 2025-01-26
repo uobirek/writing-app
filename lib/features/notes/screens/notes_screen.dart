@@ -102,12 +102,24 @@ class _NotesScreenState extends State<NotesScreen> {
                         children: [
                           BlocBuilder<NoteCubit, NoteState>(
                             builder: (context, state) {
+                              final localizations =
+                                  AppLocalizations.of(context)!;
+
+                              // Map of original category names to their localized counterparts
+                              final categoryMap = {
+                                'Show All': localizations.showAll,
+                                'Worldbuilding': localizations.worldbuilding,
+                                'Characters': localizations.characters,
+                                'Outline': localizations.outline,
+                              };
+
                               return CategoryTabs(
                                 currentCategory: currentCategory,
                                 onCategorySelected: (category) {
                                   noteCubit.filterNotes(category, project!.id);
                                   updateCategory(category);
                                 },
+                                categories: categoryMap,
                               );
                             },
                           ),

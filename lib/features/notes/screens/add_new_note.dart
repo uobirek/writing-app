@@ -19,7 +19,7 @@ class AddNoteScreen extends StatefulWidget {
 class AddNoteScreenState extends State<AddNoteScreen> {
   late NoteEditing noteEditing;
   final _formKey = GlobalKey<FormState>();
-  String _selectedNoteType = 'SimpleNote';
+  String _selectedNoteType = 'WorldbuildingNote';
   bool _isLoading = true; // To track loading state while creating a blank note
 
   @override
@@ -88,7 +88,8 @@ class AddNoteScreenState extends State<AddNoteScreen> {
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
-            title: Text(localizations!.addNewNote),
+            title: Text(localizations!.addNewNote,
+                style: Theme.of(context).textTheme.titleMedium),
             actions: [
               IconButton(
                 icon: const Icon(Icons.save),
@@ -108,16 +109,19 @@ class AddNoteScreenState extends State<AddNoteScreen> {
                         value: _selectedNoteType,
                         items: [
                           DropdownMenuItem(
-                            value: 'SimpleNote',
-                            child: Text(localizations.simpleNote),
+                            value: 'OutlineNote',
+                            child: Text('Outline',
+                                style: Theme.of(context).textTheme.labelMedium),
                           ),
                           DropdownMenuItem(
                             value: 'CharacterNote',
-                            child: Text(localizations.characterNote),
+                            child: Text(localizations.characterNote,
+                                style: Theme.of(context).textTheme.labelMedium),
                           ),
                           DropdownMenuItem(
                             value: 'WorldbuildingNote',
-                            child: Text(localizations.worldbuildingNote),
+                            child: Text(localizations.worldbuildingNote,
+                                style: Theme.of(context).textTheme.labelMedium),
                           ),
                         ],
                         onChanged: _onNoteTypeChanged,
