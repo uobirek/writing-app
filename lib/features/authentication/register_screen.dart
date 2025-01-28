@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:writing_app/utils/input_decoration.dart';
+import 'package:writing_app/utils/scaffold_messenger.dart';
 
 import 'base_screen.dart'; // Import BaseScreen
 
@@ -42,16 +43,6 @@ class RegisterScreenState extends State<RegisterScreen> {
             key: _formKey,
             child: Column(
               children: [
-                TextFormField(
-                  controller: _nameController,
-                  decoration: const InputDecoration(labelText: 'Full Name'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your name';
-                    }
-                    return null;
-                  },
-                ),
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: _emailController,
@@ -114,7 +105,6 @@ class RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  // Firebase Register method
   Future<void> _register() async {
     try {
       final UserCredential userCredential =
@@ -124,8 +114,30 @@ class RegisterScreenState extends State<RegisterScreen> {
       );
       await userCredential.user?.updateDisplayName(_nameController.text);
       context.go('/projects');
+    } on FirebaseAuthException catch (err) {
+      String errorMessage;
+      switch (err.code) {
+        case 'email-already-in-use':
+          errorMessage = 'This email is already in use. Try logging in.';
+        case 'invalid-email':
+          errorMessage = 'Please enter a valid email address.';
+        case 'weak-password':
+          errorMessage = 'Your password is too weak. Use a stronger one.';
+        case 'operation-not-allowed':
+          errorMessage = 'Account creation is currently disabled.';
+        default:
+          errorMessage = 'Registration failed. Please try again later.';
+      }
+
+      showMessage(
+        context,
+        errorMessage,
+      );
     } catch (err) {
-      print('Error: $err');
+      showMessage(
+        context,
+        'An unexpected error occurred.',
+      );
     }
   }
 }

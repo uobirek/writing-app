@@ -14,7 +14,7 @@ class ResearchScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Coming soon",
+                'Coming soon',
                 style: Theme.of(context).textTheme.titleMedium,
                 textAlign: TextAlign.center,
               ),
@@ -23,9 +23,9 @@ class ResearchScreen extends StatelessWidget {
                 size: 100,
                 color: Theme.of(context).colorScheme.secondary,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Text(
-                "Stay tuned!",
+                'Stay tuned!',
                 style: Theme.of(context).textTheme.labelMedium,
                 textAlign: TextAlign.center,
               ),

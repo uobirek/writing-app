@@ -1,11 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:writing_app/features/notes/cubit/note_cubit.dart';
 import 'package:writing_app/features/notes/cubit/note_state.dart';
 import 'package:writing_app/features/notes/models/note.dart';
 import 'package:writing_app/features/notes/screens/editing/note_editing.dart';
 import 'package:writing_app/features/projects/cubit/project_cubit.dart';
 import 'package:writing_app/l10n/app_localizations.dart';
+import 'package:writing_app/utils/scaffold_messenger.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
 
 class EditNoteScreen extends StatefulWidget {
@@ -41,9 +45,7 @@ class EditNoteScreenState extends State<EditNoteScreen> {
       listener: (context, state) {
         if (state is NoteError) {
           // Handle errors
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
+          showMessage(context, state.message);
         }
       },
       child: SidebarLayout(
@@ -51,8 +53,9 @@ class EditNoteScreenState extends State<EditNoteScreen> {
         child: currentNote == null
             ? const Center(child: CircularProgressIndicator())
             : Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+                padding: _isMobile()
+                    ? const EdgeInsets.symmetric(horizontal: 10, vertical: 15)
+                    : const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.primary,
@@ -93,11 +96,15 @@ class EditNoteScreenState extends State<EditNoteScreen> {
                                       context.read<ProjectCubit>();
                                   final project = projectCubit.selectedProject;
                                   // Use the NoteCubit to add the note
-                                  context.read<NoteCubit>().updateNote(
+                                  await context.read<NoteCubit>().updateNote(
                                         updatedNote,
                                         noteEditing.selectedImage,
                                         project!.id,
                                       );
+                                  showMessage(
+                                      context, 'Note saved succesfully');
+
+                                  context.go('/notes');
                                 }
                               },
                               child: Text(localizations!.saveChanges),
@@ -112,4 +119,8 @@ class EditNoteScreenState extends State<EditNoteScreen> {
       ),
     );
   }
+}
+
+bool _isMobile() {
+  return Platform.isAndroid || Platform.isIOS;
 }

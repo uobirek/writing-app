@@ -16,6 +16,7 @@ import 'package:writing_app/features/research/research_screen.dart';
 import 'package:writing_app/features/writing/cubit/chapter_cubit.dart';
 import 'package:writing_app/features/writing/screens/chapter_editing_screen.dart';
 import 'package:writing_app/features/writing/screens/chapters_screen.dart';
+import 'package:writing_app/widgets/settings_dialog.dart';
 
 class AppRouter {
   // Singleton instance of GoRouter
@@ -43,6 +44,12 @@ class AppRouter {
         builder: (context, state) => const ResearchScreen(),
         pageBuilder: (context, state) =>
             _noAnimationPage(const ResearchScreen()),
+      ),
+      GoRoute(
+        path: '/settings',
+        builder: (context, state) => const SettingsDialog(),
+        pageBuilder: (context, state) =>
+            _noAnimationPage(const SettingsDialog()),
       ),
       GoRoute(
         path: '/note/:id',

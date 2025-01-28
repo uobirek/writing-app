@@ -6,6 +6,7 @@ import 'package:writing_app/features/writing/chapter_card.dart';
 import 'package:writing_app/features/writing/cubit/chapter_cubit.dart';
 import 'package:writing_app/features/writing/cubit/chapter_state.dart';
 import 'package:writing_app/features/writing/repositories/chapter_repository.dart';
+import 'package:writing_app/features/writing/widgets/chapter_list.dart';
 import 'package:writing_app/l10n/app_localizations.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
 
@@ -96,40 +97,6 @@ class ChaptersScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class ChapterList extends StatelessWidget {
-  const ChapterList({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context);
-
-    return BlocBuilder<ChapterCubit, ChapterState>(
-      builder: (context, state) {
-        if (state is ChapterLoading) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (state is ChapterError) {
-          return Center(child: Text(state.message));
-        } else if (state is ChapterLoaded) {
-          final chapters = state.chapters;
-
-          return SingleChildScrollView(
-            child: Column(
-              spacing: 10,
-              children: chapters.map((chapter) {
-                return ChapterCard(chapter: chapter);
-              }).toList(),
-            ),
-          );
-        } else {
-          return Center(child: Text(localizations!.noChapterAvailable));
-        }
-      },
     );
   }
 }

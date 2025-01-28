@@ -46,17 +46,14 @@ class CustomTextFieldState extends State<CustomTextField> {
         onExit: (_) {
           setState(() {});
         },
-        child: SizedBox(
-          width: 400,
-          child: TextFormField(
-            cursorColor: Theme.of(context).colorScheme.secondary,
-            controller: widget.controller,
-            focusNode: _focusNode,
-            decoration:
-                formInputDecoration(context: context, label: widget.label),
-            keyboardType:
-                widget.isNumber ? TextInputType.number : TextInputType.text,
-          ),
+        child: TextFormField(
+          cursorColor: Theme.of(context).colorScheme.secondary,
+          controller: widget.controller,
+          focusNode: _focusNode,
+          decoration:
+              formInputDecoration(context: context, label: widget.label),
+          keyboardType:
+              widget.isNumber ? TextInputType.number : TextInputType.text,
         ),
       ),
     );

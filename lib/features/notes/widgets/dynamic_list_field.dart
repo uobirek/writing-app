@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/extensions.dart';
 import 'package:writing_app/l10n/app_localizations.dart';
 import 'package:writing_app/utils/input_decoration.dart';
 
@@ -19,21 +22,25 @@ class DynamicListField extends StatelessWidget {
     final localizations = AppLocalizations.of(context);
 
     return Padding(
-      padding: const EdgeInsets.all(15),
+      padding: _isMobile()
+          ? EdgeInsets.symmetric(horizontal: 0, vertical: 10)
+          : EdgeInsets.all(15),
       child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
-          borderRadius: BorderRadius.circular(8),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.05),
-              blurRadius: 8,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
+        decoration: _isMobile()
+            ? BoxDecoration()
+            : BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.05),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: _isMobile() ? const EdgeInsets.all(4) : EdgeInsets.all(10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -46,10 +53,9 @@ class DynamicListField extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(4),
-                        child: SizedBox(
-                          width: 400,
+                      Flexible(
+                        child: Padding(
+                          padding: const EdgeInsets.all(4),
                           child: TextFormField(
                             initialValue: list[index],
                             decoration: formInputDecoration(
@@ -93,4 +99,8 @@ class DynamicListField extends StatelessWidget {
       ),
     );
   }
+}
+
+bool _isMobile() {
+  return Platform.isAndroid || Platform.isIOS;
 }

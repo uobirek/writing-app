@@ -7,6 +7,7 @@ import 'package:writing_app/features/notes/screens/create_a_blank_note.dart';
 import 'package:writing_app/features/notes/screens/editing/note_editing.dart';
 import 'package:writing_app/features/projects/cubit/project_cubit.dart';
 import 'package:writing_app/l10n/app_localizations.dart';
+import 'package:writing_app/utils/scaffold_messenger.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
 
 class AddNoteScreen extends StatefulWidget {
@@ -20,25 +21,33 @@ class AddNoteScreenState extends State<AddNoteScreen> {
   late NoteEditing noteEditing;
   final _formKey = GlobalKey<FormState>();
   String _selectedNoteType = 'WorldbuildingNote';
-  bool _isLoading = true; // To track loading state while creating a blank note
+  bool _isLoading = true;
+  bool _initialized = false; // Flag to ensure it only runs once
 
   @override
-  void initState() {
-    super.initState();
-    _initializeNoteDetailsUI();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (!_initialized) {
+      _initializeNoteDetailsUI();
+      _initialized = true; // Prevents multiple calls
+    }
   }
 
   Future<void> _initializeNoteDetailsUI() async {
     setState(() {
-      _isLoading = true; // Show loading state
+      _isLoading = true;
     });
 
     final blankNote = await createBlankNote(
-        _selectedNoteType, context.read<NoteCubit>().allNotes, context);
+      _selectedNoteType,
+      context.read<NoteCubit>().allNotes, // Safe to use here
+      context,
+    );
 
     setState(() {
       noteEditing = blankNote.getNoteEditing();
-      _isLoading = false; // Hide loading state
+      _isLoading = false;
     });
   }
 
@@ -73,9 +82,7 @@ class AddNoteScreenState extends State<AddNoteScreen> {
       listener: (context, state) {
         if (state is NoteError) {
           // Show an error message if the note addition fails
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
+          showMessage(context, state.message);
         } else if (state is NoteLoaded) {
           // Navigate back to the notes list on successful addition
           context.go('/notes');

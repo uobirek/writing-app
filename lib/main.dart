@@ -16,6 +16,7 @@ import 'package:writing_app/features/writing/repositories/chapter_repository.dar
 import 'package:writing_app/firebase_options.dart';
 import 'package:writing_app/l10n/app_localizations.dart';
 import 'package:writing_app/locale_provider.dart';
+import 'package:writing_app/theme_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,37 +50,45 @@ class MyApp extends StatelessWidget {
             return ProjectCubit(ProjectRepository());
           },
         ),
+        BlocProvider(
+          create: (context) => ThemeCubit(),
+          child: const MyApp(),
+        ),
       ],
       child: Consumer<LocaleProvider>(
         builder: (context, localeProvider, child) {
           return LayoutBuilder(
             builder: (context, constraints) {
               final isMobile = constraints.maxWidth < 600;
-
-              return MaterialApp.router(
-                locale: localeProvider.locale,
-                localizationsDelegates: const [
-                  AppLocalizations.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                supportedLocales: const [
-                  Locale('en'),
-                  Locale('es'),
-                  Locale('pl'),
-                ],
-                themeMode: ThemeMode.light,
-                theme: GlobalThemeData.lightThemeData(
-                  context,
-                  isMobile,
-                ),
-                darkTheme: GlobalThemeData.darkThemeData(
-                  context,
-                  isMobile,
-                ),
-                title: 'Writing App',
-                routerConfig: AppRouter.router, // Use static router instance
+              return BlocBuilder<ThemeCubit, ThemeMode>(
+                builder: (context, themeMode) {
+                  return MaterialApp.router(
+                    locale: localeProvider.locale,
+                    localizationsDelegates: const [
+                      AppLocalizations.delegate,
+                      GlobalMaterialLocalizations.delegate,
+                      GlobalWidgetsLocalizations.delegate,
+                      GlobalCupertinoLocalizations.delegate,
+                    ],
+                    supportedLocales: const [
+                      Locale('en'),
+                      Locale('es'),
+                      Locale('pl'),
+                    ],
+                    themeMode: themeMode,
+                    theme: GlobalThemeData.lightThemeData(
+                      context,
+                      isMobile,
+                    ),
+                    darkTheme: GlobalThemeData.darkThemeData(
+                      context,
+                      isMobile,
+                    ),
+                    title: 'Writing App',
+                    routerConfig:
+                        AppRouter.router, // Use static router instance
+                  );
+                },
               );
             },
           );

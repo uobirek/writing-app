@@ -7,7 +7,10 @@ import 'package:writing_app/features/notes/models/worldbuilding_note.dart';
 import 'package:writing_app/l10n/app_localizations.dart';
 
 Future<Note> createBlankNote(
-    String type, List<Note> cachedNotes, BuildContext context) async {
+  String type,
+  List<Note> cachedNotes,
+  BuildContext context,
+) async {
   final now = DateTime.now();
   const defaultImage = 'assets/images/placeholder.png';
   final localizations = AppLocalizations.of(context);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:writing_app/widgets/app_sidebar.dart';
+import 'package:writing_app/widgets/settings_dialog.dart';
 
 class SidebarLayout extends StatelessWidget {
   const SidebarLayout({
@@ -52,10 +53,8 @@ class SidebarLayout extends StatelessWidget {
       onTap: (index) {
         _handleNavigation(context, index);
       },
-      selectedItemColor:
-          colorScheme.secondary, // Color when the item is selected
-      unselectedItemColor:
-          colorScheme.secondary, // Color when the item is unselected
+      selectedItemColor: colorScheme.secondary,
+      unselectedItemColor: colorScheme.secondary,
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.home_outlined, color: colorScheme.secondary),
@@ -68,9 +67,9 @@ class SidebarLayout extends StatelessWidget {
           label: 'Notes',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.apps_outlined, color: colorScheme.secondary),
-          activeIcon: Icon(Icons.apps, color: colorScheme.onSecondary),
-          label: 'Projects',
+          icon: Icon(Icons.settings_outlined, color: colorScheme.secondary),
+          activeIcon: Icon(Icons.settings, color: colorScheme.onSecondary),
+          label: 'Settings',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.edit_outlined, color: colorScheme.secondary),
@@ -92,10 +91,12 @@ class SidebarLayout extends StatelessWidget {
         return 1;
       case '/writing':
         return 3;
-      case '/projects':
+      case '/projects': // No longer used, replaced by settings
         return 2;
       case '/research':
         return 4;
+      case '/settings': // Ensure settings is handled
+        return 2;
       default:
         return 0;
     }
@@ -105,14 +106,22 @@ class SidebarLayout extends StatelessWidget {
     switch (index) {
       case 0:
         context.go('/');
+        break;
       case 1:
         context.go('/notes');
+        break;
       case 2:
-        context.go('/projects');
+        showDialog(
+          context: context,
+          builder: (context) => const SettingsDialog(), // Use the new widget
+        );
+        break;
       case 3:
         context.go('/writing');
+        break;
       case 4:
         context.go('/research');
+        break;
     }
   }
 }

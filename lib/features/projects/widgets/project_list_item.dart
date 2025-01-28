@@ -26,7 +26,7 @@ class ProjectListItem extends StatelessWidget {
             children: [
               _buildParallaxBackground(context),
               _buildGradient(),
-              _buildTitleAndSubtitle(),
+              _buildTitleAndSubtitle(context),
             ],
           ),
         ),
@@ -66,30 +66,44 @@ class ProjectListItem extends StatelessWidget {
     );
   }
 
-  Widget _buildTitleAndSubtitle() {
+  Widget _buildTitleAndSubtitle(BuildContext context) {
     return Positioned(
-      left: 20,
-      bottom: 20,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+      left: 10,
+      right: 10, // Added right padding to keep it consistent
+      bottom: 10,
+      child: Padding(
+        padding: const EdgeInsets.all(8), // Same padding from all sides
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: double.infinity, // Ensures constraints are respected
+              child: Text(
+                title,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(color: Theme.of(context).colorScheme.surface),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1, // Ensures "..." is shown for long text
+              ),
             ),
-          ),
-          Text(
-            description,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 14,
+            SizedBox(height: 4), // Adds spacing between title and description
+            SizedBox(
+              width: double.infinity, // Ensures constraints are respected
+              child: Text(
+                description,
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge!
+                    .copyWith(color: Theme.of(context).colorScheme.surface),
+                overflow: TextOverflow.ellipsis, // Ensures "..." is shown
+                maxLines: 2, // Allows two lines before truncating
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

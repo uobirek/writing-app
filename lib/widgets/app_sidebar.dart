@@ -5,6 +5,9 @@ import 'package:go_router/go_router.dart';
 import 'package:writing_app/features/projects/cubit/project_cubit.dart';
 import 'package:writing_app/l10n/app_localizations.dart';
 import 'package:writing_app/locale_provider.dart';
+import 'package:writing_app/theme_cubit.dart';
+import 'package:writing_app/utils/scaffold_messenger.dart';
+import 'package:writing_app/widgets/settings_dialog.dart';
 
 class AppSidebar extends StatefulWidget {
   const AppSidebar({
@@ -44,12 +47,7 @@ class _AppSidebarState extends State<AppSidebar> {
       await FirebaseAuth.instance.signOut();
       context.go('/login'); // Navigate to the login screen after logging out
     } catch (err) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Logout failed: $err'),
-          backgroundColor: Colors.red,
-        ),
-      );
+      showMessage(context, 'Logout failed');
     }
   }
 
@@ -232,6 +230,8 @@ class _AppSidebarState extends State<AppSidebar> {
 
   void _showSettingsDialog(BuildContext context) {
     final localizations = AppLocalizations.of(context);
+    final themeCubit = context.read<ThemeCubit>();
+    final isDarkMode = context.watch<ThemeCubit>().state == ThemeMode.dark;
 
     showDialog(
       context: context,
@@ -250,40 +250,35 @@ class _AppSidebarState extends State<AppSidebar> {
                     style: Theme.of(context).textTheme.labelMedium,
                   ),
                   const SizedBox(width: 16),
-                  DropdownButton<String>(
-                    value: context.read<LocaleProvider>().locale.languageCode,
-                    onChanged: (newLanguageCode) {
-                      if (newLanguageCode != null) {
-                        context
-                            .read<LocaleProvider>()
-                            .setLocale(Locale(newLanguageCode));
-                      }
+                  LanguageDropDown(),
+                ],
+              ),
+              const SizedBox(height: 20),
+              // Dark Mode Toggle
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Dark Mode',
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
+                  Switch(
+                    value: isDarkMode,
+                    onChanged: (value) {
+                      themeCubit.toggleTheme();
                     },
-                    items: [
-                      DropdownMenuItem(
-                        value: 'en',
-                        child: Text(
-                          'English',
-                          style: Theme.of(context).textTheme.labelMedium,
-                        ),
-                      ),
-                      DropdownMenuItem(
-                        value: 'pl',
-                        child: Text(
-                          'Polski',
-                          style: Theme.of(context).textTheme.labelMedium,
-                        ),
-                      ),
-                      DropdownMenuItem(
-                        value: 'es',
-                        child: Text(
-                          'Español',
-                          style: Theme.of(context).textTheme.labelMedium,
-                        ),
-                      ),
-                    ],
                   ),
                 ],
+              ),
+              const SizedBox(height: 20),
+              // "Go to Projects" Button
+              ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.pop(context); // Close the dialog
+                  context.go('/projects'); // Navigate to projects
+                },
+                icon: const Icon(Icons.apps),
+                label: const Text('Go to Projects'),
               ),
               const SizedBox(height: 20),
               // Logout Button
@@ -304,7 +299,7 @@ class _AppSidebarState extends State<AppSidebar> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context); // Close the dialog
+                Navigator.pop(context);
               },
               child: Text(localizations!.cancel),
             ),

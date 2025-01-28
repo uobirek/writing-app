@@ -1,16 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:writing_app/features/notes/models/character_note.dart';
-import 'package:writing_app/features/notes/screens/editing/note_editing.dart';
-import 'package:writing_app/features/notes/widgets/dynamic_list_field.dart';
-import 'package:writing_app/l10n/app_localizations.dart';
-import 'package:writing_app/widgets/custom_text_field.dart';
-import 'package:writing_app/widgets/large_text_field.dart';
-import 'package:writing_app/widgets/minimal_text_field.dart';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:writing_app/features/notes/models/character_note.dart';
 import 'package:writing_app/features/notes/screens/editing/note_editing.dart';
-import 'package:writing_app/features/notes/screens/details/note_details.dart';
 import 'package:writing_app/features/notes/widgets/dynamic_list_field.dart';
 import 'package:writing_app/l10n/app_localizations.dart';
 import 'package:writing_app/widgets/custom_text_field.dart';
@@ -215,9 +207,15 @@ class CharacterNoteEditing extends NoteEditing {
     );
   }
 
+  bool _isMobile() {
+    return Platform.isAndroid || Platform.isIOS;
+  }
+
   Widget _buildSection(BuildContext context, String title, Widget child) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
+      margin: _isMobile()
+          ? const EdgeInsets.symmetric(vertical: 8)
+          : EdgeInsets.zero,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,

@@ -7,6 +7,7 @@ import 'package:writing_app/features/notes/widgets/dynamic_image.dart';
 import 'package:writing_app/features/projects/cubit/project_cubit.dart';
 import 'package:writing_app/features/projects/models/project.dart';
 import 'package:writing_app/utils/gradient_text.dart';
+import 'package:writing_app/utils/scaffold_messenger.dart';
 
 class ProjectInfo extends StatefulWidget {
   const ProjectInfo({
@@ -40,7 +41,7 @@ class ProjectInfoState extends State<ProjectInfo> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,14 +75,16 @@ class ProjectInfoState extends State<ProjectInfo> {
                       ),
                     )
                   else
-                    GradientText(
-                      _titleController.text,
-                      style: Theme.of(context).textTheme.titleLarge,
-                      gradient: LinearGradient(
-                        colors: [
-                          Theme.of(context).colorScheme.secondary,
-                          Theme.of(context).colorScheme.onSecondary,
-                        ],
+                    Flexible(
+                      child: GradientText(
+                        _titleController.text,
+                        style: Theme.of(context).textTheme.titleLarge,
+                        gradient: LinearGradient(
+                          colors: [
+                            Theme.of(context).colorScheme.secondary,
+                            Theme.of(context).colorScheme.onSecondary,
+                          ],
+                        ),
                       ),
                     ),
                   IconButton(
@@ -155,9 +158,7 @@ class ProjectInfoState extends State<ProjectInfo> {
     if (userId == null) {
       // Handle the case where the user is not logged in
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('User is not logged in')),
-        );
+        showMessage(context, 'User is not logged in');
       }
       return;
     }
@@ -180,16 +181,12 @@ class ProjectInfoState extends State<ProjectInfo> {
         setState(() {
           _isEditing = false;
         });
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Project updated successfully')),
-        );
+        showMessage(context, 'Project updated succesfully');
       }
     } catch (e) {
       if (mounted) {
         // Handle errors safely
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to update project: $e')),
-        );
+        showMessage(context, 'Failed to update project');
       }
     }
   }

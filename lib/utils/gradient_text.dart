@@ -16,10 +16,17 @@ class GradientText extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShaderMask(
       blendMode: BlendMode.srcIn,
-      shaderCallback: (bounds) => gradient.createShader(
-        Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+      shaderCallback: (bounds) {
+        return gradient
+            .createShader(Rect.fromLTWH(0, 0, bounds.width, bounds.height));
+      },
+      child: Text(
+        text,
+        style: style?.copyWith(color: Colors.white) ??
+            const TextStyle(color: Colors.white),
+        softWrap: true, // Allow text to wrap onto multiple lines
+        overflow: TextOverflow.visible, // Make sure text is not truncated
       ),
-      child: Text(text, style: style),
     );
   }
 }

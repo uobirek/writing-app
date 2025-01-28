@@ -6,17 +6,14 @@ import 'package:writing_app/features/notes/save_image.dart';
 import 'package:writing_app/features/notes/widgets/dynamic_image.dart';
 
 abstract class NoteEditing {
-  // Track hover state
-
   NoteEditing(String? initialImage) {
     imagePath = initialImage;
     if (initialImage != null && !initialImage.startsWith('http')) {
-      // Only treat as a local file path if it's not a URL
       selectedImage = File(initialImage);
     }
   }
   String? imagePath;
-  File? selectedImage; // Stores the selected image file
+  File? selectedImage;
   bool _isHovered = false;
 
   Widget buildDetailsForm(GlobalKey<FormState> formKey, BuildContext context);
@@ -32,7 +29,6 @@ abstract class NoteEditing {
       selectedImage = File(savedPath);
       imagePath = savedPath;
 
-      // Trigger UI update
       (context as Element).markNeedsBuild();
     }
   }
@@ -51,14 +47,14 @@ abstract class NoteEditing {
         alignment: Alignment.center,
         children: [
           DynamicImageWidget(
-            imagePath: imagePath ?? '', // Use imagePath (could be a URL)
+            imagePath: imagePath ?? '',
             width: 150,
             height: 150,
             borderRadius: BorderRadius.circular(8),
           ),
           if (_isHovered)
             AnimatedOpacity(
-              opacity: 0.5, // Show dark overlay on hover
+              opacity: 0.5,
               duration: const Duration(milliseconds: 200),
               child: Container(
                 width: 150,

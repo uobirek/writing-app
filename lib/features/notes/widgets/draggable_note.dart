@@ -3,14 +3,13 @@ import 'package:writing_app/features/notes/models/note.dart';
 import 'package:writing_app/features/notes/widgets/note_card.dart';
 
 class DraggableNote extends StatelessWidget {
-  // New callback for delete
-
   const DraggableNote({
     super.key,
     required this.note,
     required this.onNoteDropped,
     required this.onDelete,
   });
+
   final Note note;
   final Function(String draggedNoteId, String targetNoteId) onNoteDropped;
   final VoidCallback onDelete;
@@ -25,7 +24,7 @@ class DraggableNote extends StatelessWidget {
         onNoteDropped(details.data, note.id);
       },
       builder: (context, candidateData, rejectedData) {
-        return Draggable<String>(
+        return LongPressDraggable<String>(
           data: note.id,
           feedback: Material(
             color: Colors.transparent,

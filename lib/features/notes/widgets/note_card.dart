@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -31,13 +33,13 @@ class NoteCard extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 12,
+            spacing: _isMobile() ? 9 : 12,
             children: [
               if (note.imageUrl != null)
                 DynamicImageWidget(
                   imagePath: note.imageUrl,
-                  width: 140,
-                  height: 140,
+                  width: _isMobile() ? 130 : 140,
+                  height: _isMobile() ? 130 : 140,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                 ),
               NoteInfo(note: note),
@@ -47,6 +49,10 @@ class NoteCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  bool _isMobile() {
+    return Platform.isAndroid || Platform.isIOS;
   }
 
   Widget _noteMenu(BuildContext context) {
@@ -209,6 +215,10 @@ class NoteInfo extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  bool _isMobile() {
+    return Platform.isAndroid || Platform.isIOS;
   }
 }
 

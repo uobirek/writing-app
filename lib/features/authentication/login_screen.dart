@@ -43,8 +43,9 @@ class LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
+                textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               // Login Form
               Form(
                 key: _formKey,

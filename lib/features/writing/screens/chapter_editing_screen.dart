@@ -9,6 +9,7 @@ import 'package:writing_app/features/writing/cubit/chapter_cubit.dart';
 import 'package:writing_app/features/writing/cubit/chapter_state.dart';
 import 'package:writing_app/features/writing/models/chapter.dart';
 import 'package:writing_app/l10n/app_localizations.dart';
+import 'package:writing_app/utils/scaffold_messenger.dart';
 import 'package:writing_app/widgets/minimal_text_field.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
 
@@ -31,7 +32,7 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
   late TextEditingController _titleController;
   late int _chapterPosition;
   bool _showToolbar = true;
-  bool _isInitialized = false; // Prevent reinitialization
+  bool _isInitialized = false;
 
   @override
   void initState() {
@@ -57,7 +58,7 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
     );
 
     _titleController = TextEditingController(text: chapter.title ?? '');
-    _chapterPosition = chapter.position ?? 1; // Ensure valid initial value
+    _chapterPosition = chapter.position ?? 1;
   }
 
   void _saveChapter(BuildContext context) {
@@ -81,13 +82,9 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
     final localizations = AppLocalizations.of(context);
 
     saveFuture.then((_) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(localizations!.chapterSavedSuccessfully)),
-      );
+      showMessage(context, localizations!.chapterSavedSuccessfully);
     }).catchError((err) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(localizations!.failedToSaveChapter(''))),
-      );
+      showMessage(context, localizations!.failedToSaveChapter(''));
     });
   }
 
@@ -113,7 +110,7 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
                 orElse: Chapter.empty,
               );
               _initializeControllers(chapter);
-              _isInitialized = true; // Prevent reinitialization
+              _isInitialized = true;
             }
           }
 
@@ -121,7 +118,7 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
             activeRoute: '/chapters',
             child: Padding(
               padding: _isMobile()
-                  ? const EdgeInsets.symmetric(horizontal: 20, vertical: 10)
+                  ? const EdgeInsets.symmetric(horizontal: 0, vertical: 10)
                   : const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
               child: Container(
                 decoration: _isMobile()
@@ -152,25 +149,19 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
                               hintText: localizations!.title,
                             ),
                           ),
-                          InkWell(
-                            child: const Icon(Icons.save),
-                            onTap: () {
-                              _saveChapter(context);
-                            },
+                          IconButton(
+                            icon: const Icon(Icons.save),
+                            onPressed: () => _saveChapter(context),
                           ),
                           const SizedBox(width: 15),
                           SizedBox(
-                            width: 100,
-                            height: 100,
+                            width: _isMobile() ? 50 : 80,
                             child: DropdownButtonFormField<int>(
-                              value: _chapterPosition.clamp(
-                                1,
-                                100,
-                              ), // Ensure value is valid
+                              value: _chapterPosition.clamp(1, 100),
                               onChanged: (value) {
                                 if (value != null) {
                                   setState(() {
-                                    _chapterPosition = value; // Update state
+                                    _chapterPosition = value;
                                   });
                                 }
                               },
@@ -178,7 +169,11 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
                                 100,
                                 (index) => DropdownMenuItem(
                                   value: index + 1,
-                                  child: Text('${index + 1}'),
+                                  child: Text(
+                                    '${index + 1}',
+                                    style:
+                                        Theme.of(context).textTheme.labelLarge,
+                                  ),
                                 ),
                               ),
                             ),
@@ -190,9 +185,6 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
                                   : Icons.arrow_drop_down,
                             ),
                             onPressed: () {
-                              _saveChapter(
-                                context,
-                              ); // Save changes before toggling
                               setState(() {
                                 _showToolbar = !_showToolbar;
                               });
@@ -204,26 +196,12 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
                       if (_showToolbar)
                         QuillSimpleToolbar(
                           controller: _controller,
-                          configurations: _isMobile()
-                              ? const QuillSimpleToolbarConfigurations(
-                                  customButtons: [
-                                    QuillToolbarCustomButtonOptions(),
-                                  ],
-                                  multiRowsDisplay: false,
-                                  showFontFamily: false,
-                                  showFontSize: false,
-                                )
-                              : QuillSimpleToolbarConfigurations(
-                                  customButtons: [
-                                    QuillToolbarCustomButtonOptions(
-                                      icon: const Icon(Icons.save),
-                                      onPressed: () {
-                                        _saveChapter(context);
-                                      },
-                                    ),
-                                  ],
-                                  showAlignmentButtons: true,
-                                ),
+                          configurations:
+                              const QuillSimpleToolbarConfigurations(
+                            multiRowsDisplay: false,
+                            showFontFamily: false,
+                            showFontSize: false,
+                          ),
                         ),
                       const SizedBox(height: 10),
                       Expanded(

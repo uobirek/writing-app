@@ -1,11 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class GlobalTextStyles {
   static TextStyle titleLarge(ColorScheme colorScheme, bool isMobile) {
     return GoogleFonts.workSans(
-      fontSize: isMobile ? 48 : 72, // Smaller on mobile
+      fontSize: isMobile ? 32 : 72, // Smaller on mobile
       fontWeight: FontWeight.w800,
       color: colorScheme.onPrimary,
     );
@@ -39,7 +38,7 @@ class GlobalTextStyles {
 
   static TextStyle labelSmall(ColorScheme colorScheme, bool isMobile) {
     return GoogleFonts.workSans(
-      fontSize: isMobile ? 14 : 16,
+      fontSize: isMobile ? 12 : 16,
       fontWeight: FontWeight.w300,
       color: colorScheme.onSecondary,
       letterSpacing: 0.5,

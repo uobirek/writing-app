@@ -32,75 +32,80 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
     final theme = Theme.of(context);
     final localizations = AppLocalizations.of(context);
 
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: BlocBuilder<ProjectCubit, ProjectState>(
-        builder: (context, state) {
-          if (state is ProjectLoading) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state is ProjectLoaded) {
-            final projects = state.projects;
-            return Padding(
-              padding: const EdgeInsets.all(50),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      localizations!.chooseAProject,
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.secondary,
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: BlocBuilder<ProjectCubit, ProjectState>(
+          builder: (context, state) {
+            if (state is ProjectLoading) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is ProjectLoaded) {
+              final projects = state.projects;
+              return Padding(
+                padding: const EdgeInsets.all(30),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        localizations!.chooseAProject,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        textAlign: TextAlign.center,
+                        localizations.workingOnToday,
+                        style: Theme.of(context).textTheme.labelMedium,
+                      ),
+                      const SizedBox(height: 20), // Spacing
+                      Expanded(
+                        // Makes only the project list scrollable
+                        child: SizedBox(
+                          width: 600,
+                          child: ListView.builder(
+                            itemCount: projects.length,
+                            itemBuilder: (context, index) {
+                              final project = projects[index];
+                              return GestureDetector(
+                                onTap: () {
+                                  _selectProject(context, project);
+                                }, // Pass the project id
+                                child: ProjectListItem(
+                                  imageUrl: project.imageUrl ?? '',
+                                  title: project.title,
+                                  description: project.description,
+                                ),
+                              );
+                            },
                           ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      localizations.workingOnToday,
-                      style: Theme.of(context).textTheme.labelMedium,
-                    ),
-                    const SizedBox(height: 20), // Spacing
-                    Expanded(
-                      // Makes only the project list scrollable
-                      child: SizedBox(
-                        width: 600,
-                        child: ListView.builder(
-                          itemCount: projects.length,
-                          itemBuilder: (context, index) {
-                            final project = projects[index];
-                            return GestureDetector(
-                              onTap: () {
-                                _selectProject(context, project);
-                              }, // Pass the project id
-                              child: ProjectListItem(
-                                imageUrl: project.imageUrl ?? '',
-                                title: project.title,
-                                description: project.description,
-                              ),
-                            );
-                          },
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            );
-          } else {
-            return Center(
-              child: Text(
-                localizations!.failedToLoadProjects,
-                style: theme.textTheme.bodyMedium,
-              ),
-            );
-          }
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.go('/add_project');
-        },
-        child: const Icon(Icons.add),
+              );
+            } else {
+              return Center(
+                child: Text('No projects yet?\nTry to create one!',
+                    style: theme.textTheme.labelLarge,
+                    textAlign: TextAlign.center),
+              );
+            }
+          },
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            context.go('/add_project');
+          },
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }

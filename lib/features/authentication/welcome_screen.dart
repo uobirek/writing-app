@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:writing_app/l10n/app_localizations.dart';
-import 'package:writing_app/locale_provider.dart'; // Import LocaleProvider
+
+import 'package:writing_app/widgets/settings_dialog.dart';
 
 import 'base_screen.dart';
 
@@ -43,7 +43,7 @@ class WelcomeScreen extends StatelessWidget {
 
           ElevatedButton(
             onPressed: () {
-              context.go('/login');
+              context.go('/register');
             },
             child: Text(localizations.getStartedNow),
           ),
@@ -68,21 +68,7 @@ class WelcomeScreen extends StatelessWidget {
           ),
 
           // Language Dropdown
-          DropdownButton<String>(
-            value: context.read<LocaleProvider>().locale.languageCode,
-            onChanged: (newLanguageCode) {
-              if (newLanguageCode != null) {
-                context
-                    .read<LocaleProvider>()
-                    .setLocale(Locale(newLanguageCode));
-              }
-            },
-            items: const [
-              DropdownMenuItem(value: 'en', child: Text('English')),
-              DropdownMenuItem(value: 'pl', child: Text('Polski')),
-              DropdownMenuItem(value: 'es', child: Text('Español')),
-            ],
-          ),
+          LanguageDropDown(),
         ],
       ),
     );
