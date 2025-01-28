@@ -242,7 +242,9 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
 
   int _getWordCount() {
     final text = _controller.document.toPlainText().trim();
-    if (text.isEmpty) return 0;
+    if (text.isEmpty) {
+      return 0;
+    }
     return text.split(RegExp(r'\s+')).length;
   }
 }

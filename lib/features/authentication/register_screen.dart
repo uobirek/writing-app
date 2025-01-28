@@ -47,7 +47,9 @@ class RegisterScreenState extends State<RegisterScreen> {
                 TextFormField(
                   controller: _emailController,
                   decoration: formInputDecoration(
-                      label: localizations.email, context: context),
+                    label: localizations.email,
+                    context: context,
+                  ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return localizations.pleaseEnterAnEmail;
@@ -60,7 +62,9 @@ class RegisterScreenState extends State<RegisterScreen> {
                   controller: _passwordController,
                   obscureText: true,
                   decoration: formInputDecoration(
-                      label: localizations.password, context: context),
+                    label: localizations.password,
+                    context: context,
+                  ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return localizations.pleaseEnterAPassword;

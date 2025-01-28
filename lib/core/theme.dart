@@ -32,7 +32,7 @@ class GlobalThemeData {
           textStyle: GlobalTextStyles.labelLarge(
             colorScheme,
             isMobile,
-          ), // Example for button text
+          ),
         ),
       ),
       textButtonTheme: TextButtonThemeData(

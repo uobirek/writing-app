@@ -22,7 +22,6 @@ class _NoteDetailsScreenState extends State<NoteDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    // Fetch the note using the Bloc
     final noteCubit = context.read<NoteCubit>();
     final projectCubit = context.read<ProjectCubit>();
     final project = projectCubit.selectedProject;

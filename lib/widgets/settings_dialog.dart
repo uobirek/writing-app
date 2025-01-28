@@ -89,18 +89,11 @@ class SettingsDialog extends StatelessWidget {
   }
 
   Future<void> _logout(BuildContext context) async {
-    final localizations = AppLocalizations.of(context);
-
     try {
-      final navigator = Navigator.of(context);
       await FirebaseAuth.instance.signOut();
-      if (context.mounted) {
-        await navigator.pushReplacementNamed('/login');
-      }
+      context.go('/login'); // Navigate to login screen after logging out
     } catch (err) {
-      if (context.mounted) {
-        showMessage(context, localizations!.logoutFailed);
-      }
+      showMessage(context, 'Logout failed');
     }
   }
 }

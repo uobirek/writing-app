@@ -85,8 +85,7 @@ class MyApp extends StatelessWidget {
                       isMobile,
                     ),
                     title: 'Writing App',
-                    routerConfig:
-                        AppRouter.router, // Use static router instance
+                    routerConfig: AppRouter.router,
                   );
                 },
               );
@@ -111,24 +110,21 @@ class AuthWrapper extends StatelessWidget {
         }
 
         if (snapshot.hasData) {
-          // User is signed in, trigger fetchProjects
           final userId = snapshot.data?.uid ?? '';
           if (userId.isNotEmpty) {
             context.read<ProjectCubit>().fetchProjects(userId);
           }
 
-          // Navigate to the projects screen after fetching
           WidgetsBinding.instance.addPostFrameCallback((_) {
             context.go('/projects');
           });
 
-          return const SizedBox.shrink(); // Placeholder while navigating
+          return const SizedBox.shrink();
         } else {
-          // User is not signed in
           WidgetsBinding.instance.addPostFrameCallback((_) {
             context.go('/login');
           });
-          return const SizedBox.shrink(); // Placeholder while navigating
+          return const SizedBox.shrink();
         }
       },
     );

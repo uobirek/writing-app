@@ -8,12 +8,12 @@ class LocaleProvider extends ChangeNotifier {
   void setLocale(Locale locale) {
     if (_locale != locale) {
       _locale = locale;
-      notifyListeners(); // Notify the app about the locale change
+      notifyListeners();
     }
   }
 
   void clearLocale() {
-    _locale = const Locale('en'); // Reset to default
+    _locale = const Locale('en');
     notifyListeners();
   }
 }

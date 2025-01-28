@@ -20,8 +20,8 @@ class MinimalTextField extends StatelessWidget {
       focusNode: focusNode,
       style: textStyle ??
           const TextStyle(
-            fontSize: 24, // Default font size for big, pretty text
-            fontWeight: FontWeight.w600, // Semi-bold for emphasis
+            fontSize: 24,
+            fontWeight: FontWeight.w600,
           ),
       decoration: InputDecoration(
         hintText: hintText,
@@ -31,11 +31,11 @@ class MinimalTextField extends StatelessWidget {
               fontWeight: FontWeight.w600,
               color: Colors.grey,
             ),
-        border: InputBorder.none, // No border
-        isDense: true, // Minimal padding
-        contentPadding: EdgeInsets.zero, // Remove internal padding
+        border: InputBorder.none,
+        isDense: true,
+        contentPadding: EdgeInsets.zero,
       ),
-      cursorColor: Theme.of(context).colorScheme.secondary, // Pretty cursor
+      cursorColor: Theme.of(context).colorScheme.secondary,
     );
   }
 }

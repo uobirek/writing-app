@@ -41,8 +41,7 @@ class ProjectRepository {
 
   Future<void> deleteImageFromCloudinary(String imageUrl) async {
     try {
-      final String publicId =
-          imageUrl.split('/').last.split('.').first; // Extract public ID
+      final String publicId = imageUrl.split('/').last.split('.').first;
       final deleteUrl =
           'https://api.cloudinary.com/v1_1/$cloudName/delete_by_token';
 

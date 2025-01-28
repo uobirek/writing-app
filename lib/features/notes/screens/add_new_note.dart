@@ -22,7 +22,7 @@ class AddNoteScreenState extends State<AddNoteScreen> {
   final _formKey = GlobalKey<FormState>();
   String _selectedNoteType = 'WorldbuildingNote';
   bool _isLoading = true;
-  bool _initialized = false; // Flag to ensure it only runs once
+  bool _initialized = false;
 
   @override
   void didChangeDependencies() {
@@ -30,7 +30,7 @@ class AddNoteScreenState extends State<AddNoteScreen> {
 
     if (!_initialized) {
       _initializeNoteDetailsUI();
-      _initialized = true; // Prevents multiple calls
+      _initialized = true;
     }
   }
 
@@ -41,7 +41,7 @@ class AddNoteScreenState extends State<AddNoteScreen> {
 
     final blankNote = await createBlankNote(
       _selectedNoteType,
-      context.read<NoteCubit>().allNotes, // Safe to use here
+      context.read<NoteCubit>().allNotes,
       context,
     );
 
@@ -56,18 +56,16 @@ class AddNoteScreenState extends State<AddNoteScreen> {
       setState(() {
         _selectedNoteType = newType;
       });
-      _initializeNoteDetailsUI(); // Reinitialize with the new note type
+      _initializeNoteDetailsUI();
     }
   }
 
   void _saveNote() {
     if (_formKey.currentState!.validate()) {
-      // Update the note with image path
       final newNote = noteEditing.buildUpdatedNote();
       final projectCubit = context.read<ProjectCubit>();
       final project = projectCubit.selectedProject;
 
-      // Use the NoteCubit to add the note
       context
           .read<NoteCubit>()
           .addNote(newNote, noteEditing.selectedImage, project!.id);
@@ -81,10 +79,8 @@ class AddNoteScreenState extends State<AddNoteScreen> {
     return BlocListener<NoteCubit, NoteState>(
       listener: (context, state) {
         if (state is NoteError) {
-          // Show an error message if the note addition fails
           showMessage(context, state.message);
         } else if (state is NoteLoaded) {
-          // Navigate back to the notes list on successful addition
           context.go('/notes');
         }
       },
@@ -97,13 +93,6 @@ class AddNoteScreenState extends State<AddNoteScreen> {
               localizations!.addNewNote,
               style: Theme.of(context).textTheme.titleMedium,
             ),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.save),
-                onPressed:
-                    _isLoading ? null : _saveNote, // Disable save while loading
-              ),
-            ],
           ),
           body: _isLoading
               ? const Center(child: CircularProgressIndicator())
@@ -148,6 +137,16 @@ class AddNoteScreenState extends State<AddNoteScreen> {
                         child: SingleChildScrollView(
                           child:
                               noteEditing.buildDetailsForm(_formKey, context),
+                        ),
+                      ),
+                      Center(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                Theme.of(context).colorScheme.secondary,
+                          ),
+                          onPressed: () => _saveNote(),
+                          child: Text(localizations.saveChanges),
                         ),
                       ),
                     ],

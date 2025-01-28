@@ -14,7 +14,6 @@ Future<Note> createBlankNote(
   const defaultImage = 'assets/images/placeholder.png';
   final localizations = AppLocalizations.of(context);
 
-  // Determine the next position based on the cached notes
   final nextPosition = cachedNotes.isEmpty
       ? 0
       : cachedNotes

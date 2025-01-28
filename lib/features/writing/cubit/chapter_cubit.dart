@@ -25,7 +25,6 @@ class ChapterCubit extends Cubit<ChapterState> {
   Future<void> addChapter(Chapter newChapter, String projectId) async {
     emit(ChapterUpdating());
     final userId = FirebaseAuth.instance.currentUser?.uid ?? '';
-    // Access the ProjectCubit to get the projectId
 
     if (projectId.isEmpty) {
       emit(ChapterError('No project found'));

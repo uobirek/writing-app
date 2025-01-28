@@ -5,8 +5,6 @@ import 'package:writing_app/features/notes/screens/editing/note_editing.dart';
 import 'package:writing_app/features/notes/screens/editing/worldbuilding_note_editing.dart';
 
 class WorldbuildingNote extends Note {
-  // List of important locations
-
   WorldbuildingNote({
     required super.id,
     required super.title,
@@ -35,14 +33,13 @@ class WorldbuildingNote extends Note {
       imageUrl: json['imageUrl'] as String? ??
           json['image'] as String? ??
           'assets/images/placeholder.jpg',
-      position:
-          (json['position'] as num?)?.toInt() ?? 0, // Safe conversion to int
+      position: (json['position'] as num?)?.toInt() ?? 0,
     );
   }
 
-  final String placeName; // Name of the place
-  final String? geography; // Description of geography
-  final String? culture; // Culture or societal description
+  final String placeName;
+  final String? geography;
+  final String? culture;
   final List<String>? pointsOfInterest;
 
   @override

@@ -9,6 +9,7 @@ import 'package:writing_app/features/projects/cubit/project_cubit.dart';
 import 'package:writing_app/features/projects/cubit/project_states.dart';
 import 'package:writing_app/features/projects/models/project.dart';
 import 'package:writing_app/l10n/app_localizations.dart';
+import 'package:writing_app/utils/input_decoration.dart';
 
 class AddProjectScreen extends StatefulWidget {
   AddProjectScreen({super.key});
@@ -29,7 +30,8 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(localizations!.addNewProject),
+        title: Text(localizations!.addNewProject,
+            style: Theme.of(context).textTheme.titleMedium),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -48,8 +50,9 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                 children: [
                   TextFormField(
                     controller: _titleController,
-                    decoration: InputDecoration(
-                      labelText: localizations.projectTitle,
+                    decoration: formInputDecoration(
+                      context: context,
+                      label: localizations.projectTitle,
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -61,9 +64,13 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                   const SizedBox(height: 16),
                   TextFormField(
                     controller: _descriptionController,
-                    decoration: InputDecoration(
-                      labelText: localizations.pleaseEnterProjectTitle,
+                    decoration: formInputDecoration(
+                      context: context,
+                      label: localizations.projectDescription,
                     ),
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    minLines: 1,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return localizations.pleaseEnterDescription;
@@ -133,7 +140,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
   void _showErrorDialog(String message, BuildContext context) {
     final localizations = AppLocalizations.of(context);
 
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) {
         return AlertDialog(

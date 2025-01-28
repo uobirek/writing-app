@@ -103,7 +103,7 @@ class OutlineNoteEditing extends NoteEditing {
               onPressed: () {
                 // Add a new Act
                 acts.add(Act(heading: '', plotPoints: []));
-                (context as Element).markNeedsBuild(); // Trigger UI update
+                (context as Element).markNeedsBuild();
               },
               child: const Text('Add Act'),
             ),
@@ -140,7 +140,6 @@ class OutlineNoteEditing extends NoteEditing {
 
   @override
   OutlineNote buildUpdatedNote() {
-    // Update each act's heading and summary
     for (int i = 0; i < acts.length; i++) {
       acts[i].heading = acts[i].heading;
       acts[i].summary = acts[i].summary;

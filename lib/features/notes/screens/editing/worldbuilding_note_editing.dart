@@ -7,13 +7,11 @@ import 'package:writing_app/widgets/custom_text_field.dart';
 import 'package:writing_app/widgets/large_text_field.dart';
 
 class WorldbuildingNoteEditing extends NoteEditing {
-  // Dynamic list
-
   WorldbuildingNoteEditing(this.note) : super(note.imageUrl) {
     placeNameController = TextEditingController(text: note.placeName);
     geographyController = TextEditingController(text: note.geography);
     cultureController = TextEditingController(text: note.culture);
-    pointsOfInterest = note.pointsOfInterest ?? []; // Initialize dynamically
+    pointsOfInterest = note.pointsOfInterest ?? [];
   }
   final WorldbuildingNote note;
   late TextEditingController placeNameController;
@@ -63,13 +61,11 @@ class WorldbuildingNoteEditing extends NoteEditing {
       position: note.position,
       createdAt: note.createdAt,
       imageUrl: imagePath ?? 'assets/images/placeholder.png',
-
       placeName: placeNameController.text,
       geography: geographyController.text,
       culture: cultureController.text,
-      pointsOfInterest: pointsOfInterest
-          .where((item) => item.isNotEmpty)
-          .toList(), // Filter out empty items
+      pointsOfInterest:
+          pointsOfInterest.where((item) => item.isNotEmpty).toList(),
     );
   }
 }

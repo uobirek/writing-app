@@ -40,77 +40,81 @@ class EditNoteScreenState extends State<EditNoteScreen> {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);
 
-    return BlocListener<NoteCubit, NoteState>(
-      listener: (context, state) {
-        if (state is NoteError) {
-          showMessage(context, state.message);
-        }
-      },
-      child: SidebarLayout(
-        activeRoute: '/notes',
-        child: currentNote == null
-            ? const Center(child: CircularProgressIndicator())
-            : Padding(
-                padding: _isMobile()
-                    ? const EdgeInsets.symmetric(horizontal: 10, vertical: 15)
-                    : const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.1),
-                        blurRadius: 30,
-                        spreadRadius: 6,
-                      ),
-                    ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(14),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: 16),
-                          noteEditing.buildDetailsForm(_formKey, context),
-                          const SizedBox(height: 16),
-                          Center(
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.secondary,
+    return SafeArea(
+      child: BlocListener<NoteCubit, NoteState>(
+        listener: (context, state) {
+          if (state is NoteError) {
+            showMessage(context, state.message);
+          }
+        },
+        child: SidebarLayout(
+          activeRoute: '/notes',
+          child: currentNote == null
+              ? const Center(child: CircularProgressIndicator())
+              : Padding(
+                  padding: _isMobile()
+                      ? const EdgeInsets.symmetric(horizontal: 10, vertical: 15)
+                      : const EdgeInsets.symmetric(
+                          horizontal: 40, vertical: 30),
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.1),
+                          blurRadius: 30,
+                          spreadRadius: 6,
+                        ),
+                      ],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(14),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 16),
+                            noteEditing.buildDetailsForm(_formKey, context),
+                            const SizedBox(height: 16),
+                            Center(
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      Theme.of(context).colorScheme.secondary,
+                                ),
+                                onPressed: () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    final updatedNote =
+                                        noteEditing.buildUpdatedNote();
+                                    final projectCubit =
+                                        context.read<ProjectCubit>();
+                                    final project =
+                                        projectCubit.selectedProject;
+
+                                    await context.read<NoteCubit>().updateNote(
+                                          updatedNote,
+                                          noteEditing.selectedImage,
+                                          project!.id,
+                                        );
+                                    showMessage(
+                                      context,
+                                      'Note saved succesfully',
+                                    );
+
+                                    context.go('/notes');
+                                  }
+                                },
+                                child: Text(localizations!.saveChanges),
                               ),
-                              onPressed: () async {
-                                if (_formKey.currentState!.validate()) {
-                                  final updatedNote =
-                                      noteEditing.buildUpdatedNote();
-                                  final projectCubit =
-                                      context.read<ProjectCubit>();
-                                  final project = projectCubit.selectedProject;
-
-                                  await context.read<NoteCubit>().updateNote(
-                                        updatedNote,
-                                        noteEditing.selectedImage,
-                                        project!.id,
-                                      );
-                                  showMessage(
-                                    context,
-                                    'Note saved succesfully',
-                                  );
-
-                                  context.go('/notes');
-                                }
-                              },
-                              child: Text(localizations!.saveChanges),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
+        ),
       ),
     );
   }

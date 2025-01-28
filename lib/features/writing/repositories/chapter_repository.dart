@@ -17,7 +17,7 @@ class ChapterRepository {
           .collection('projects')
           .doc(projectId)
           .collection('chapters')
-          .orderBy('position') // Fetch chapters in order
+          .orderBy('position')
           .get();
       return querySnapshot.docs
           .map((doc) => Chapter.fromJson(doc.data()))

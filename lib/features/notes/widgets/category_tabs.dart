@@ -10,7 +10,7 @@ class CategoryTabs extends StatelessWidget {
 
   final String currentCategory;
   final ValueChanged<String> onCategorySelected;
-  final Map<String, String> categories; // Original-to-localized map
+  final Map<String, String> categories;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class CategoryTabs extends StatelessWidget {
         children: categories.keys.map((category) {
           final isActive = currentCategory == category;
           return InkWell(
-            onTap: () => onCategorySelected(category), // Use the original key
+            onTap: () => onCategorySelected(category),
             child: Container(
               height: 50,
               width: 150,
@@ -37,7 +37,7 @@ class CategoryTabs extends StatelessWidget {
                     const BorderRadius.vertical(top: Radius.circular(12)),
               ),
               child: Text(
-                categories[category]!, // Use localized text here
+                categories[category]!,
                 style: Theme.of(context).textTheme.labelLarge,
               ),
             ),

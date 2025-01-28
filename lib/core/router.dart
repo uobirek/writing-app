@@ -19,7 +19,6 @@ import 'package:writing_app/features/writing/screens/chapters_screen.dart';
 import 'package:writing_app/widgets/settings_dialog.dart';
 
 class AppRouter {
-  // Singleton instance of GoRouter
   static final GoRouter _router = GoRouter(
     initialLocation: '/welcome',
     routes: [
