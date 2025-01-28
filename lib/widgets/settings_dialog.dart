@@ -29,7 +29,7 @@ class SettingsDialog extends StatelessWidget {
                 style: Theme.of(context).textTheme.labelMedium,
               ),
               const SizedBox(width: 16),
-              LanguageDropDown(),
+              const LanguageDropDown(),
             ],
           ),
           const SizedBox(height: 20),
@@ -89,12 +89,17 @@ class SettingsDialog extends StatelessWidget {
     );
   }
 
-  void _logout(BuildContext context) async {
+  Future<void> _logout(BuildContext context) async {
     try {
+      final navigator = Navigator.of(context);
       await FirebaseAuth.instance.signOut();
-      context.go('/login'); // Navigate to login screen after logging out
+      if (context.mounted) {
+        await navigator.pushReplacementNamed('/login');
+      }
     } catch (err) {
-      showMessage(context, 'Logout failed');
+      if (context.mounted) {
+        showMessage(context, 'Logout failed');
+      }
     }
   }
 }

@@ -128,10 +128,7 @@ class NoteRepository {
       final noteData = await noteRef.get();
 
       if (noteData.exists) {
-        final imageUrl =
-            noteData.data()?['imageUrl'] as String?; // Cast to String?
-
-        await noteRef.delete(); // Delete the note
+        await noteRef.delete();
       }
     } catch (err) {
       rethrow;
@@ -147,7 +144,7 @@ class NoteRepository {
           .collection('projects')
           .doc(projectId)
           .collection('notes')
-          .orderBy('position') // Order notes by 'position'
+          .orderBy('position')
           .get();
 
       return snapshot.docs.map((doc) {
@@ -186,7 +183,6 @@ class NoteRepository {
 
   Future<int> getNextPosition(String userId, String projectId) async {
     try {
-      // Query Firestore to get the note with the highest position
       final querySnapshot = await _firestore
           .collection('users')
           .doc(userId)
@@ -198,10 +194,8 @@ class NoteRepository {
           .get();
 
       if (querySnapshot.docs.isNotEmpty) {
-        // Safely extract and cast the highest position from the document
         return (querySnapshot.docs.first['position'] as int?) ?? 0 + 1;
       } else {
-        // If no notes exist, start from position 0
         return 0;
       }
     } catch (err) {
@@ -228,11 +222,11 @@ class NoteRepository {
 
       batch.update(noteRef, {
         'position': i,
-      }); // Assuming "position" is the field that tracks order
+      });
     }
 
     try {
-      await batch.commit(); // Perform all updates in a batch
+      await batch.commit();
     } catch (err) {
       rethrow;
     }
@@ -241,7 +235,7 @@ class NoteRepository {
   /// Helper function to map JSON data to a Note object
   Note _mapJsonToNote(Map<String, dynamic> data, String id) {
     final type = data['type'];
-    data['id'] = id; // Include document ID in the data
+    data['id'] = id;
 
     if (type == 'CharacterNote') {
       return CharacterNote.fromJson(data);

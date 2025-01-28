@@ -11,7 +11,7 @@ class DraggableNote extends StatelessWidget {
   });
 
   final Note note;
-  final Function(String draggedNoteId, String targetNoteId) onNoteDropped;
+  final void Function(String draggedNoteId, String targetNoteId) onNoteDropped;
   final VoidCallback onDelete;
 
   @override

@@ -1,12 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:writing_app/features/projects/cubit/project_cubit.dart';
 import 'package:writing_app/l10n/app_localizations.dart';
-import 'package:writing_app/locale_provider.dart';
-import 'package:writing_app/theme_cubit.dart';
-import 'package:writing_app/utils/scaffold_messenger.dart';
 import 'package:writing_app/widgets/settings_dialog.dart';
 
 class AppSidebar extends StatefulWidget {
@@ -42,15 +38,6 @@ class _AppSidebarState extends State<AppSidebar> {
     });
   }
 
-  Future<void> _logout() async {
-    try {
-      await FirebaseAuth.instance.signOut();
-      context.go('/login'); // Navigate to the login screen after logging out
-    } catch (err) {
-      showMessage(context, 'Logout failed');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);
@@ -75,14 +62,17 @@ class _AppSidebarState extends State<AppSidebar> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (_isExpanded) const Icon(Icons.circle_outlined, size: 25),
               if (_isExpanded) const SizedBox(width: 20),
               if (_isExpanded)
-                InkWell(
-                  onTap: () => {context.go('/projects')},
-                  child: Text(
-                    project!.title,
-                    style: Theme.of(context).textTheme.labelLarge,
+                Flexible(
+                  child: InkWell(
+                    onTap: () => {context.go('/projects')},
+                    child: Text(
+                      project!.title,
+                      style: Theme.of(context).textTheme.labelLarge,
+                      softWrap: true,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
               const SizedBox(width: 20),
@@ -195,7 +185,12 @@ class _AppSidebarState extends State<AppSidebar> {
       onEnter: (_) => _onHover('settings'),
       onExit: (_) => _onExitHover(),
       child: GestureDetector(
-        onTap: () => _showSettingsDialog(context), // Opens the settings modal
+        onTap: () => {
+          showDialog<void>(
+            context: context,
+            builder: (context) => const SettingsDialog(),
+          ),
+        },
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           height: 45,
@@ -225,87 +220,6 @@ class _AppSidebarState extends State<AppSidebar> {
           ),
         ),
       ),
-    );
-  }
-
-  void _showSettingsDialog(BuildContext context) {
-    final localizations = AppLocalizations.of(context);
-    final themeCubit = context.read<ThemeCubit>();
-    final isDarkMode = context.watch<ThemeCubit>().state == ThemeMode.dark;
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title:
-              Text('Settings', style: Theme.of(context).textTheme.labelLarge),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Language Dropdown
-              Row(
-                children: [
-                  Text(
-                    'Language',
-                    style: Theme.of(context).textTheme.labelMedium,
-                  ),
-                  const SizedBox(width: 16),
-                  LanguageDropDown(),
-                ],
-              ),
-              const SizedBox(height: 20),
-              // Dark Mode Toggle
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Dark Mode',
-                    style: Theme.of(context).textTheme.labelMedium,
-                  ),
-                  Switch(
-                    value: isDarkMode,
-                    onChanged: (value) {
-                      themeCubit.toggleTheme();
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              // "Go to Projects" Button
-              ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.pop(context); // Close the dialog
-                  context.go('/projects'); // Navigate to projects
-                },
-                icon: const Icon(Icons.apps),
-                label: const Text('Go to Projects'),
-              ),
-              const SizedBox(height: 20),
-              // Logout Button
-              ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.pop(context); // Close the dialog
-                  _logout(); // Perform logout action
-                },
-                icon: const Icon(Icons.logout),
-                label: const Text('Logout'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.error,
-                  foregroundColor: Theme.of(context).colorScheme.onError,
-                ),
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text(localizations!.cancel),
-            ),
-          ],
-        );
-      },
     );
   }
 }

@@ -33,7 +33,8 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
   late int _chapterPosition;
   bool _showToolbar = true;
   bool _isInitialized = false;
-
+  late FocusNode _titleFocusNode;
+  late FocusNode _editorFocusNode;
   @override
   void initState() {
     super.initState();
@@ -59,6 +60,15 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
 
     _titleController = TextEditingController(text: chapter.title ?? '');
     _chapterPosition = chapter.position ?? 1;
+
+    _titleFocusNode = FocusNode();
+    _editorFocusNode = FocusNode();
+
+    _controller.document.changes.listen((event) {
+      if (_editorFocusNode.hasFocus) {
+        setState(() {});
+      }
+    });
   }
 
   void _saveChapter(BuildContext context) {
@@ -115,10 +125,10 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
           }
 
           return SidebarLayout(
-            activeRoute: '/chapters',
+            activeRoute: '/writing',
             child: Padding(
               padding: _isMobile()
-                  ? const EdgeInsets.symmetric(horizontal: 0, vertical: 10)
+                  ? const EdgeInsets.symmetric(vertical: 10)
                   : const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
               child: Container(
                 decoration: _isMobile()
@@ -147,12 +157,20 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
                             child: MinimalTextField(
                               controller: _titleController,
                               hintText: localizations!.title,
+                              focusNode: _titleFocusNode,
                             ),
                           ),
                           IconButton(
                             icon: const Icon(Icons.save),
                             onPressed: () => _saveChapter(context),
                           ),
+                          if (!_isMobile()) ...[
+                            const SizedBox(width: 15),
+                            Text(
+                              '${_getWordCount()} words',
+                              style: Theme.of(context).textTheme.labelLarge,
+                            ),
+                          ],
                           const SizedBox(width: 15),
                           SizedBox(
                             width: _isMobile() ? 50 : 80,
@@ -206,6 +224,7 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
                       const SizedBox(height: 10),
                       Expanded(
                         child: QuillEditor.basic(
+                          focusNode: _editorFocusNode,
                           controller: _controller,
                           configurations: const QuillEditorConfigurations(),
                         ),
@@ -219,5 +238,11 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
         },
       ),
     );
+  }
+
+  int _getWordCount() {
+    final text = _controller.document.toPlainText().trim();
+    if (text.isEmpty) return 0;
+    return text.split(RegExp(r'\s+')).length;
   }
 }

@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_quill/extensions.dart';
 import 'package:writing_app/l10n/app_localizations.dart';
 import 'package:writing_app/utils/input_decoration.dart';
 
@@ -23,11 +22,11 @@ class DynamicListField extends StatelessWidget {
 
     return Padding(
       padding: _isMobile()
-          ? EdgeInsets.symmetric(horizontal: 0, vertical: 10)
-          : EdgeInsets.all(15),
+          ? const EdgeInsets.symmetric(vertical: 10)
+          : const EdgeInsets.all(15),
       child: DecoratedBox(
         decoration: _isMobile()
-            ? BoxDecoration()
+            ? const BoxDecoration()
             : BoxDecoration(
                 color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(8),
@@ -40,7 +39,8 @@ class DynamicListField extends StatelessWidget {
                 ],
               ),
         child: Padding(
-          padding: _isMobile() ? const EdgeInsets.all(4) : EdgeInsets.all(10),
+          padding:
+              _isMobile() ? const EdgeInsets.all(4) : const EdgeInsets.all(10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -89,8 +89,8 @@ class DynamicListField extends StatelessWidget {
                 ),
                 label: Text(localizations!.addItem),
                 onPressed: () {
-                  list.add(''); // Add an empty item
-                  (context as Element).markNeedsBuild(); // Rebuild UI
+                  list.add('');
+                  (context as Element).markNeedsBuild();
                 },
               ),
             ],

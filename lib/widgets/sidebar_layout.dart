@@ -106,22 +106,17 @@ class SidebarLayout extends StatelessWidget {
     switch (index) {
       case 0:
         context.go('/');
-        break;
       case 1:
         context.go('/notes');
-        break;
       case 2:
-        showDialog(
+        showDialog<void>(
           context: context,
           builder: (context) => const SettingsDialog(), // Use the new widget
         );
-        break;
       case 3:
         context.go('/writing');
-        break;
       case 4:
         context.go('/research');
-        break;
     }
   }
 }

@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:writing_app/features/projects/cubit/project_cubit.dart';
-import 'package:writing_app/features/writing/chapter_card.dart';
 import 'package:writing_app/features/writing/cubit/chapter_cubit.dart';
-import 'package:writing_app/features/writing/cubit/chapter_state.dart';
 import 'package:writing_app/features/writing/repositories/chapter_repository.dart';
 import 'package:writing_app/features/writing/widgets/chapter_list.dart';
 import 'package:writing_app/l10n/app_localizations.dart';
@@ -23,21 +21,18 @@ class ChaptersScreen extends StatelessWidget {
       create: (context) =>
           ChapterCubit(ChapterRepository())..fetchChapters(project!.id),
       child: SafeArea(
-        // Wrap the entire content inside SafeArea
         child: SidebarLayout(
           activeRoute: '/writing',
           child: LayoutBuilder(
             builder: (context, constraints) {
-              // Determine if the device is mobile based on width using constraints
               final bool isMobile = constraints.maxWidth < 600;
 
               return Padding(
                 padding: EdgeInsets.all(
                   isMobile ? 0 : 50.0,
-                ), // Adjust padding based on screen size
+                ),
                 child: Container(
                   decoration: BoxDecoration(
-                    // Remove shadow and border-radius on mobile
                     borderRadius: isMobile
                         ? BorderRadius.zero
                         : BorderRadius.circular(20),

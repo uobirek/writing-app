@@ -28,7 +28,6 @@ class EditNoteScreenState extends State<EditNoteScreen> {
   @override
   void initState() {
     super.initState();
-    // Fetch the note using the Bloc
     final noteCubit = context.read<NoteCubit>();
     final note = noteCubit.getNoteById(widget.noteId);
     if (note != null) {
@@ -44,7 +43,6 @@ class EditNoteScreenState extends State<EditNoteScreen> {
     return BlocListener<NoteCubit, NoteState>(
       listener: (context, state) {
         if (state is NoteError) {
-          // Handle errors
           showMessage(context, state.message);
         }
       },
@@ -75,13 +73,8 @@ class EditNoteScreenState extends State<EditNoteScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 16),
-
-                          // Render dynamic form fields
                           noteEditing.buildDetailsForm(_formKey, context),
-
                           const SizedBox(height: 16),
-
-                          // Submit button
                           Center(
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
@@ -95,14 +88,16 @@ class EditNoteScreenState extends State<EditNoteScreen> {
                                   final projectCubit =
                                       context.read<ProjectCubit>();
                                   final project = projectCubit.selectedProject;
-                                  // Use the NoteCubit to add the note
+
                                   await context.read<NoteCubit>().updateNote(
                                         updatedNote,
                                         noteEditing.selectedImage,
                                         project!.id,
                                       );
                                   showMessage(
-                                      context, 'Note saved succesfully');
+                                    context,
+                                    'Note saved succesfully',
+                                  );
 
                                   context.go('/notes');
                                 }

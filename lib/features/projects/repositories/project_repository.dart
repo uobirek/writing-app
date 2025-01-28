@@ -34,8 +34,8 @@ class ProjectRepository {
           'Cloudinary upload failed',
         );
       }
-    } catch (e) {
-      throw Exception('Failed to upload image to Cloudinary: $e');
+    } catch (err) {
+      throw Exception('Failed to upload image to Cloudinary: $err');
     }
   }
 
@@ -116,7 +116,7 @@ class ProjectRepository {
       String? imageUrl = project.imageUrl;
 
       if (imageFile != null) {
-        imageUrl = await uploadImageToCloudinary(imageFile); // Upload new image
+        imageUrl = await uploadImageToCloudinary(imageFile);
       }
 
       await _firestore
@@ -144,9 +144,7 @@ class ProjectRepository {
       final projectData = await projectRef.get();
 
       if (projectData.exists) {
-        final imageUrl = projectData.data()?['imageUrl'] as String?;
-
-        await projectRef.delete(); // Delete project
+        await projectRef.delete();
       } else {
         throw Exception('Project not found for ID: $projectId');
       }

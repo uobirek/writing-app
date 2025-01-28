@@ -21,7 +21,6 @@ class OutlineNote extends Note {
     return OutlineNote(
       id: json['id'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
-      imageUrl: json['image'] as String? ?? 'assets/images/placeholder.jpg',
       genre: json['genre'] as String?,
       themes: (json['themes'] as List<dynamic>? ?? []).cast<String>(),
       acts: (json['acts'] as List<dynamic>? ?? [])
@@ -31,15 +30,18 @@ class OutlineNote extends Note {
       subplots: (json['subplots'] as List<dynamic>? ?? []).cast<String>(),
       notes: (json['notes'] as List<dynamic>? ?? []).cast<String>(),
       position: json['position'] as int,
+      imageUrl: json['imageUrl'] as String? ??
+          json['image'] as String? ??
+          'assets/images/placeholder.jpg',
     );
   }
 
-  final String? genre; // Genre of the novel
-  final List<String> themes; // List of story themes
-  final List<Act> acts; // List of acts or chapters
-  final List<String> conflicts; // Major conflicts in the story
-  final List<String> subplots; // Subplot summaries
-  final List<String> notes; // General notes for the writer
+  final String? genre;
+  final List<String> themes;
+  final List<Act> acts;
+  final List<String> conflicts;
+  final List<String> subplots;
+  final List<String> notes;
 
   @override
   Map<String, dynamic> toJson() {
@@ -70,7 +72,6 @@ class OutlineNote extends Note {
   }
 }
 
-// Helper class for acts
 class Act {
   Act({
     required this.heading,
@@ -79,15 +80,15 @@ class Act {
   });
   factory Act.fromJson(Map<String, dynamic> json) {
     return Act(
-      heading: json['heading'] as String ?? '',
-      summary: json['summary'] as String ?? '',
-      plotPoints: List<String>.from(json['plotPoints'] as List<dynamic> ?? []),
+      heading: json['heading'] as String,
+      summary: json['summary'] as String,
+      plotPoints: List<String>.from(json['plotPoints'] as List<dynamic>),
     );
   }
 
-  String heading; // Act or Chapter title
-  String summary; // Summary of the act
-  final List<String> plotPoints; // Key events or plot points
+  String heading;
+  String summary;
+  final List<String> plotPoints;
 
   Map<String, dynamic> toJson() {
     return {

@@ -163,7 +163,9 @@ class NoteCubit extends Cubit<NoteState> {
         userId,
         projectId,
       ); // Fetch from repository
-      if (!(note == null)) emit(NoteLoaded([note])); // Update state
+      if (!(note == null)) {
+        emit(NoteLoaded([note])); // Update state
+      }
       return note;
     } catch (err) {
       emit(NoteError('Failed to fetch note: $err'));

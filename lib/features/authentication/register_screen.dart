@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:writing_app/utils/input_decoration.dart';
 import 'package:writing_app/utils/scaffold_messenger.dart';
 
-import 'base_screen.dart'; // Import BaseScreen
+import 'base_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -38,7 +38,6 @@ class RegisterScreenState extends State<RegisterScreen> {
           ),
           const SizedBox(height: 30),
 
-          // Registration Form
           Form(
             key: _formKey,
             child: Column(
@@ -81,7 +80,6 @@ class RegisterScreenState extends State<RegisterScreen> {
             ),
           ),
 
-          // Login Button
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -106,15 +104,28 @@ class RegisterScreenState extends State<RegisterScreen> {
   }
 
   Future<void> _register() async {
+    if (!mounted) {
+      return;
+    }
+
     try {
-      final UserCredential userCredential =
+      final userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
       );
+
       await userCredential.user?.updateDisplayName(_nameController.text);
+
+      if (!mounted) {
+        return;
+      }
       context.go('/projects');
     } on FirebaseAuthException catch (err) {
+      if (!mounted) {
+        return;
+      }
+
       String errorMessage;
       switch (err.code) {
         case 'email-already-in-use':
@@ -129,15 +140,12 @@ class RegisterScreenState extends State<RegisterScreen> {
           errorMessage = 'Registration failed. Please try again later.';
       }
 
-      showMessage(
-        context,
-        errorMessage,
-      );
+      showMessage(context, errorMessage);
     } catch (err) {
-      showMessage(
-        context,
-        'An unexpected error occurred.',
-      );
+      if (!mounted) {
+        return;
+      }
+      showMessage(context, 'An unexpected error occurred.');
     }
   }
 }

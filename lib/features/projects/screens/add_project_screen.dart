@@ -36,7 +36,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
         child: BlocConsumer<ProjectCubit, ProjectState>(
           listener: (context, state) {
             if (state is ProjectError) {
-              _showErrorDialog(state.message);
+              _showErrorDialog(state.message, context);
             } else if (state is ProjectLoaded) {
               context.go('/projects');
             }
@@ -86,7 +86,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton(
-                    onPressed: () => _addProject(context), // Pass context
+                    onPressed: () => _addProject(context),
                     child: state is ProjectUpdating
                         ? const CircularProgressIndicator()
                         : Text(localizations.addNewProject),
@@ -113,12 +113,12 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
     final localizations = AppLocalizations.of(context);
 
     if (_titleController.text.isEmpty || _descriptionController.text.isEmpty) {
-      _showErrorDialog('Please fill in all fields');
+      _showErrorDialog(localizations!.pleaseFillInAllFields, context);
       return;
     }
 
     final newProject = Project(
-      id: '', // Leave the ID empty for now; it will be set on the backend
+      id: '',
       title: _titleController.text,
       description: _descriptionController.text,
     );
@@ -130,19 +130,21 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
     );
   }
 
-  void _showErrorDialog(String message) {
+  void _showErrorDialog(String message, BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Error'),
+          title: Text(localizations!.error),
           content: Text(message),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('OK'),
+              child: Text(localizations.ok),
             ),
           ],
         );

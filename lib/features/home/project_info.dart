@@ -24,10 +24,10 @@ class ProjectInfo extends StatefulWidget {
 class ProjectInfoState extends State<ProjectInfo> {
   late TextEditingController _titleController;
   late TextEditingController _descriptionController;
-  String? _imagePath; // Dynamic image path
-  File? _imageFile; // Selected image file
+  String? _imagePath;
+  File? _imageFile;
   bool _isDescriptionExpanded = false;
-  bool _isEditing = false; // Track editing mode
+  bool _isEditing = false;
 
   @override
   void initState() {
@@ -35,7 +35,7 @@ class ProjectInfoState extends State<ProjectInfo> {
     _titleController = TextEditingController(text: widget.project.title);
     _descriptionController =
         TextEditingController(text: widget.project.description);
-    _imagePath = widget.project.imageUrl ?? 'assets/images/dottie.jpg';
+    _imagePath = widget.project.imageUrl ?? 'assets/images/placeholder.png';
   }
 
   @override
@@ -46,7 +46,6 @@ class ProjectInfoState extends State<ProjectInfo> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header image
             GestureDetector(
               onTap: _isEditing ? _changeImage : null,
               child: DynamicImageWidget(
@@ -56,8 +55,6 @@ class ProjectInfoState extends State<ProjectInfo> {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-
-            // Title and Save Button
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               child: Row(
@@ -99,8 +96,6 @@ class ProjectInfoState extends State<ProjectInfo> {
                 ],
               ),
             ),
-
-            // Description Section with Expand/Collapse Feature
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: GestureDetector(
@@ -124,14 +119,12 @@ class ProjectInfoState extends State<ProjectInfo> {
                         _isDescriptionExpanded
                             ? _descriptionController.text
                             : _descriptionController.text.length > 100
-                                ? '${_descriptionController.text.substring(0, 100)}...' // Preview text
+                                ? '${_descriptionController.text.substring(0, 100)}...'
                                 : _descriptionController.text,
                         style: Theme.of(context).textTheme.labelLarge,
                       ),
               ),
             ),
-
-            // Add some spacing at the bottom of the screen
             const SizedBox(height: 20),
           ],
         ),
@@ -139,7 +132,6 @@ class ProjectInfoState extends State<ProjectInfo> {
     );
   }
 
-  /// Toggle editing mode
   void _toggleEditing() {
     setState(() {
       _isEditing = !_isEditing;
@@ -151,12 +143,10 @@ class ProjectInfoState extends State<ProjectInfo> {
       return;
     }
 
-    // Safely obtain the ProjectCubit reference early
     final projectCubit = context.read<ProjectCubit>();
     final userId = FirebaseAuth.instance.currentUser?.uid;
 
     if (userId == null) {
-      // Handle the case where the user is not logged in
       if (mounted) {
         showMessage(context, 'User is not logged in');
       }
@@ -164,7 +154,6 @@ class ProjectInfoState extends State<ProjectInfo> {
     }
 
     try {
-      // Update the project
       final updatedProject = widget.project.copyWith(
         title: _titleController.text,
         description: _descriptionController.text,
@@ -173,25 +162,21 @@ class ProjectInfoState extends State<ProjectInfo> {
 
       await projectCubit.updateProject(updatedProject, userId, _imageFile);
 
-      // Fetch the updated list of projects
       await projectCubit.fetchProjectById(userId);
 
       if (mounted) {
-        // Exit editing mode and show success message
         setState(() {
           _isEditing = false;
         });
         showMessage(context, 'Project updated succesfully');
       }
-    } catch (e) {
+    } catch (err) {
       if (mounted) {
-        // Handle errors safely
         showMessage(context, 'Failed to update project');
       }
     }
   }
 
-  /// Change image (e.g., pick new image path)
   Future<void> _changeImage() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -199,7 +184,7 @@ class ProjectInfoState extends State<ProjectInfo> {
     if (pickedFile != null) {
       setState(() {
         _imageFile = File(pickedFile.path);
-        _imagePath = null; // Clear existing path if a new file is selected
+        _imagePath = null;
       });
     }
   }

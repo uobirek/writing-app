@@ -10,7 +10,7 @@ import 'package:writing_app/widgets/minimal_text_field.dart';
 class OutlineNoteEditing extends NoteEditing {
   OutlineNoteEditing(this.note) : super(note.imageUrl) {
     genreController = TextEditingController(text: note.genre);
-    themes = note.themes ?? [];
+    themes = note.themes;
     acts = note.acts
         .map(
           (act) => Act(
@@ -20,9 +20,9 @@ class OutlineNoteEditing extends NoteEditing {
           ),
         )
         .toList();
-    conflicts = note.conflicts ?? [];
-    subplots = note.subplots ?? [];
-    notes = note.notes ?? [];
+    conflicts = note.conflicts;
+    subplots = note.subplots;
+    notes = note.notes;
   }
 
   final OutlineNote note;

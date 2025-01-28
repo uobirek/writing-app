@@ -145,7 +145,7 @@ class NoteCard extends StatelessWidget {
               },
               child: Text(
                 localizations.delete,
-                style: TextStyle(color: Colors.red),
+                style: const TextStyle(color: Colors.red),
               ),
             ),
           ],
@@ -216,10 +216,6 @@ class NoteInfo extends StatelessWidget {
       ),
     );
   }
-
-  bool _isMobile() {
-    return Platform.isAndroid || Platform.isIOS;
-  }
 }
 
 String _getLocalizedCategory(BuildContext context, String category) {
@@ -233,6 +229,6 @@ String _getLocalizedCategory(BuildContext context, String category) {
     case 'Outline':
       return localizations!.outline;
     default:
-      return localizations!.showAll; // Fallback for unknown categories
+      return localizations!.showAll;
   }
 }

@@ -6,15 +6,18 @@ class MinimalTextField extends StatelessWidget {
     required this.controller,
     this.hintText = '',
     this.textStyle,
+    this.focusNode,
   });
   final TextEditingController controller;
   final String hintText;
   final TextStyle? textStyle;
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
+      focusNode: focusNode,
       style: textStyle ??
           const TextStyle(
             fontSize: 24, // Default font size for big, pretty text

@@ -67,8 +67,7 @@ class WelcomeScreen extends StatelessWidget {
             ],
           ),
 
-          // Language Dropdown
-          LanguageDropDown(),
+          const LanguageDropDown(),
         ],
       ),
     );

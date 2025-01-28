@@ -105,7 +105,6 @@ class _NotesScreenState extends State<NotesScreen> {
                               final localizations =
                                   AppLocalizations.of(context)!;
 
-                              // Map of original category names to their localized counterparts
                               final categoryMap = {
                                 'Show All': localizations.showAll,
                                 'Worldbuilding': localizations.worldbuilding,
@@ -137,8 +136,9 @@ class _NotesScreenState extends State<NotesScreen> {
                                   } else if (state is NoteError) {
                                     return Center(child: Text(state.message));
                                   }
-                                  return const Center(
-                                    child: Text('No notes available.'),
+                                  return Center(
+                                    child:
+                                        Text(localizations!.noNotesAvailable),
                                   );
                                 },
                               ),

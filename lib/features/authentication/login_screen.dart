@@ -6,7 +6,7 @@ import 'package:writing_app/features/projects/cubit/project_cubit.dart';
 import 'package:writing_app/l10n/app_localizations.dart';
 import 'package:writing_app/utils/input_decoration.dart';
 
-import 'base_screen.dart'; // Assuming BaseScreen handles common layout
+import 'base_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -27,7 +27,6 @@ class LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);
     return BaseScreen(
-      // Ensure this is scrollable for small screens
       child: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -46,7 +45,6 @@ class LoginScreenState extends State<LoginScreen> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20),
-              // Login Form
               Form(
                 key: _formKey,
                 child: Column(
@@ -131,12 +129,21 @@ class LoginScreenState extends State<LoginScreen> {
 
       final userId = FirebaseAuth.instance.currentUser?.uid;
       if (userId != null && userId.isNotEmpty) {
-        context.read<ProjectCubit>().fetchProjects(userId);
+        if (!mounted) {
+          return;
+        }
+        final projectCubit = context.read<ProjectCubit>();
+        await projectCubit.fetchProjects(userId);
       }
 
-      // Navigate to the home screen after successful login
+      if (!mounted) {
+        return;
+      }
       context.go('/projects');
     } catch (err) {
+      if (!mounted) {
+        return;
+      }
       _showErrorDialog('Login failed. Please check your email and password.');
     } finally {
       setState(() {
@@ -146,7 +153,7 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   void _showErrorDialog(String message) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Error'),

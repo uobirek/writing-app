@@ -24,8 +24,8 @@ class GradientText extends StatelessWidget {
         text,
         style: style?.copyWith(color: Colors.white) ??
             const TextStyle(color: Colors.white),
-        softWrap: true, // Allow text to wrap onto multiple lines
-        overflow: TextOverflow.visible, // Make sure text is not truncated
+        softWrap: true,
+        overflow: TextOverflow.visible,
       ),
     );
   }

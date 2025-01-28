@@ -64,9 +64,8 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
                         localizations.workingOnToday,
                         style: Theme.of(context).textTheme.labelMedium,
                       ),
-                      const SizedBox(height: 20), // Spacing
+                      const SizedBox(height: 20),
                       Expanded(
-                        // Makes only the project list scrollable
                         child: SizedBox(
                           width: 600,
                           child: ListView.builder(
@@ -76,7 +75,7 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
                               return GestureDetector(
                                 onTap: () {
                                   _selectProject(context, project);
-                                }, // Pass the project id
+                                },
                                 child: ProjectListItem(
                                   imageUrl: project.imageUrl ?? '',
                                   title: project.title,
@@ -93,9 +92,11 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
               );
             } else {
               return Center(
-                child: Text('No projects yet?\nTry to create one!',
-                    style: theme.textTheme.labelLarge,
-                    textAlign: TextAlign.center),
+                child: Text(
+                  'No projects yet?\nTry to create one!',
+                  style: theme.textTheme.labelLarge,
+                  textAlign: TextAlign.center,
+                ),
               );
             }
           },

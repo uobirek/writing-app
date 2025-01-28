@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:writing_app/features/notes/models/character_note.dart';
 import 'package:writing_app/features/notes/models/note.dart';
 import 'package:writing_app/features/notes/models/outline_note.dart';
-import 'package:writing_app/features/notes/models/simple_note.dart';
 import 'package:writing_app/features/notes/models/worldbuilding_note.dart';
 import 'package:writing_app/l10n/app_localizations.dart';
 
@@ -24,14 +23,6 @@ Future<Note> createBlankNote(
           1;
 
   switch (type) {
-    case 'SimpleNote':
-      return SimpleNote(
-        '',
-        id: '', // Generate or pass a valid unique ID
-        createdAt: now,
-        title: '',
-        imageUrl: defaultImage,
-      );
     case 'CharacterNote':
       return CharacterNote(
         id: '',

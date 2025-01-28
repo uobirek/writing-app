@@ -69,16 +69,16 @@ class ProjectListItem extends StatelessWidget {
   Widget _buildTitleAndSubtitle(BuildContext context) {
     return Positioned(
       left: 10,
-      right: 10, // Added right padding to keep it consistent
+      right: 10,
       bottom: 10,
       child: Padding(
-        padding: const EdgeInsets.all(8), // Same padding from all sides
+        padding: const EdgeInsets.all(8),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              width: double.infinity, // Ensures constraints are respected
+              width: double.infinity,
               child: Text(
                 title,
                 style: Theme.of(context)
@@ -86,20 +86,22 @@ class ProjectListItem extends StatelessWidget {
                     .titleMedium!
                     .copyWith(color: Theme.of(context).colorScheme.surface),
                 overflow: TextOverflow.ellipsis,
-                maxLines: 1, // Ensures "..." is shown for long text
+                maxLines: 1,
               ),
             ),
-            SizedBox(height: 4), // Adds spacing between title and description
+            const SizedBox(
+              height: 4,
+            ),
             SizedBox(
-              width: double.infinity, // Ensures constraints are respected
+              width: double.infinity,
               child: Text(
                 description,
                 style: Theme.of(context)
                     .textTheme
                     .labelLarge!
                     .copyWith(color: Theme.of(context).colorScheme.surface),
-                overflow: TextOverflow.ellipsis, // Ensures "..." is shown
-                maxLines: 2, // Allows two lines before truncating
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
               ),
             ),
           ],
