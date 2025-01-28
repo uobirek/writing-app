@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:writing_app/features/notes/widgets/dynamic_image.dart';
 import 'package:writing_app/features/projects/cubit/project_cubit.dart';
-import 'package:writing_app/features/projects/cubit/project_states.dart';
 import 'package:writing_app/features/projects/models/project.dart';
 import 'package:writing_app/utils/gradient_text.dart';
 
@@ -40,96 +39,99 @@ class ProjectInfoState extends State<ProjectInfo> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Header image
-          GestureDetector(
-            onTap: _isEditing ? _changeImage : null,
-            child: DynamicImageWidget(
-              imagePath: _imageFile?.path ?? _imagePath,
-              width: 400,
-              height: 250,
-              borderRadius: BorderRadius.circular(8),
+    return Padding(
+      padding: EdgeInsets.all(20),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Header image
+            GestureDetector(
+              onTap: _isEditing ? _changeImage : null,
+              child: DynamicImageWidget(
+                imagePath: _imageFile?.path ?? _imagePath,
+                width: 400,
+                height: 250,
+                borderRadius: BorderRadius.circular(8),
+              ),
             ),
-          ),
 
-          // Title and Save Button
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                if (_isEditing)
-                  Expanded(
-                    child: TextField(
-                      controller: _titleController,
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(),
-                        hintText: 'Enter project title',
-                      ),
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                  )
-                else
-                  GradientText(
-                    _titleController.text,
-                    style: Theme.of(context).textTheme.titleLarge,
-                    gradient: LinearGradient(
-                      colors: [
-                        Theme.of(context).colorScheme.secondary,
-                        Theme.of(context).colorScheme.onSecondary,
-                      ],
-                    ),
-                  ),
-                IconButton(
-                  icon: Icon(
-                    _isEditing ? Icons.save : Icons.edit,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  onPressed: _isEditing
-                      ? () => {_saveChanges(context)}
-                      : _toggleEditing,
-                ),
-              ],
-            ),
-          ),
-
-          // Description Section with Expand/Collapse Feature
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: GestureDetector(
-              onTap: _isEditing
-                  ? null
-                  : () {
-                      setState(() {
-                        _isDescriptionExpanded = !_isDescriptionExpanded;
-                      });
-                    },
-              child: _isEditing
-                  ? TextField(
-                      controller: _descriptionController,
-                      maxLines: null,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Enter project description',
+            // Title and Save Button
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  if (_isEditing)
+                    Expanded(
+                      child: TextField(
+                        controller: _titleController,
+                        decoration: const InputDecoration(
+                          border: UnderlineInputBorder(),
+                          hintText: 'Enter project title',
+                        ),
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                     )
-                  : Text(
-                      _isDescriptionExpanded
-                          ? _descriptionController.text
-                          : _descriptionController.text.length > 100
-                              ? '${_descriptionController.text.substring(0, 100)}...' // Preview text
-                              : _descriptionController.text,
-                      style: Theme.of(context).textTheme.labelLarge,
+                  else
+                    GradientText(
+                      _titleController.text,
+                      style: Theme.of(context).textTheme.titleLarge,
+                      gradient: LinearGradient(
+                        colors: [
+                          Theme.of(context).colorScheme.secondary,
+                          Theme.of(context).colorScheme.onSecondary,
+                        ],
+                      ),
                     ),
+                  IconButton(
+                    icon: Icon(
+                      _isEditing ? Icons.save : Icons.edit,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                    onPressed: _isEditing
+                        ? () => {_saveChanges(context)}
+                        : _toggleEditing,
+                  ),
+                ],
+              ),
             ),
-          ),
 
-          // Add some spacing at the bottom of the screen
-          const SizedBox(height: 20),
-        ],
+            // Description Section with Expand/Collapse Feature
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: GestureDetector(
+                onTap: _isEditing
+                    ? null
+                    : () {
+                        setState(() {
+                          _isDescriptionExpanded = !_isDescriptionExpanded;
+                        });
+                      },
+                child: _isEditing
+                    ? TextField(
+                        controller: _descriptionController,
+                        maxLines: null,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Enter project description',
+                        ),
+                      )
+                    : Text(
+                        _isDescriptionExpanded
+                            ? _descriptionController.text
+                            : _descriptionController.text.length > 100
+                                ? '${_descriptionController.text.substring(0, 100)}...' // Preview text
+                                : _descriptionController.text,
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
+              ),
+            ),
+
+            // Add some spacing at the bottom of the screen
+            const SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }
@@ -193,7 +195,7 @@ class ProjectInfoState extends State<ProjectInfo> {
   }
 
   /// Change image (e.g., pick new image path)
-  void _changeImage() async {
+  Future<void> _changeImage() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 

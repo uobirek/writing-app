@@ -17,6 +17,22 @@ class OutlineNote extends Note {
     this.notes = const [],
     required super.position,
   }) : super(category: 'Outline', title: 'Outline');
+  factory OutlineNote.fromJson(Map<String, dynamic> json) {
+    return OutlineNote(
+      id: json['id'] as String,
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      imageUrl: json['image'] as String? ?? 'assets/images/placeholder.jpg',
+      genre: json['genre'] as String?,
+      themes: (json['themes'] as List<dynamic>? ?? []).cast<String>(),
+      acts: (json['acts'] as List<dynamic>? ?? [])
+          .map((actJson) => Act.fromJson(actJson as Map<String, dynamic>))
+          .toList(),
+      conflicts: (json['conflicts'] as List<dynamic>? ?? []).cast<String>(),
+      subplots: (json['subplots'] as List<dynamic>? ?? []).cast<String>(),
+      notes: (json['notes'] as List<dynamic>? ?? []).cast<String>(),
+      position: json['position'] as int,
+    );
+  }
 
   final String? genre; // Genre of the novel
   final List<String> themes; // List of story themes
@@ -43,23 +59,6 @@ class OutlineNote extends Note {
     };
   }
 
-  factory OutlineNote.fromJson(Map<String, dynamic> json) {
-    return OutlineNote(
-      id: json['id'] as String,
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      imageUrl: json['image'] as String? ?? 'assets/images/placeholder.jpg',
-      genre: json['genre'] as String?,
-      themes: (json['themes'] as List<dynamic>? ?? []).cast<String>(),
-      acts: (json['acts'] as List<dynamic>? ?? [])
-          .map((actJson) => Act.fromJson(actJson as Map<String, dynamic>))
-          .toList(),
-      conflicts: (json['conflicts'] as List<dynamic>? ?? []).cast<String>(),
-      subplots: (json['subplots'] as List<dynamic>? ?? []).cast<String>(),
-      notes: (json['notes'] as List<dynamic>? ?? []).cast<String>(),
-      position: json['position'] as int,
-    );
-  }
-
   @override
   NoteDetails getNoteDetails() {
     return OutlineNoteDetails(this);
@@ -78,6 +77,13 @@ class Act {
     this.summary = '',
     this.plotPoints = const [],
   });
+  factory Act.fromJson(Map<String, dynamic> json) {
+    return Act(
+      heading: json['heading'] as String ?? '',
+      summary: json['summary'] as String ?? '',
+      plotPoints: List<String>.from(json['plotPoints'] as List<dynamic> ?? []),
+    );
+  }
 
   String heading; // Act or Chapter title
   String summary; // Summary of the act
@@ -89,13 +95,5 @@ class Act {
       'summary': summary,
       'plotPoints': plotPoints,
     };
-  }
-
-  factory Act.fromJson(Map<String, dynamic> json) {
-    return Act(
-      heading: json['heading'] as String ?? '',
-      summary: json['summary'] as String ?? '',
-      plotPoints: List<String>.from(json['plotPoints'] as List<dynamic> ?? []),
-    );
   }
 }

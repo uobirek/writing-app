@@ -5,12 +5,15 @@ import 'package:writing_app/features/notes/cubit/note_cubit.dart';
 import 'package:writing_app/features/notes/cubit/note_state.dart';
 import 'package:writing_app/features/notes/widgets/draggable_note.dart';
 import 'package:writing_app/features/projects/cubit/project_cubit.dart';
+import 'package:writing_app/l10n/app_localizations.dart';
 
 class NotesList extends StatelessWidget {
   const NotesList({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return LayoutBuilder(
       builder: (context, constraints) {
         final isMobile = constraints.maxWidth < 600;
@@ -57,7 +60,7 @@ class NotesList extends StatelessWidget {
                   ),
                 );
               } else {
-                return const Center(child: Text('No notes available.'));
+                return Center(child: Text(localizations!.noNotesAvailable));
               }
             },
           ),

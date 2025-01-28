@@ -1,6 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:writing_app/features/home/project_info.dart';
 import 'package:writing_app/features/projects/cubit/project_cubit.dart';
 import 'package:writing_app/features/projects/cubit/project_states.dart';

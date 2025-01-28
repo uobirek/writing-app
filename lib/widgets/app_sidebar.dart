@@ -211,8 +211,10 @@ class _AppSidebarState extends State<AppSidebar> {
           child: Row(
             children: [
               const SizedBox(width: 15),
-              Icon(Icons.settings,
-                  color: Theme.of(context).colorScheme.onPrimary),
+              Icon(
+                Icons.settings,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
               if (_isExpanded) const SizedBox(width: 12),
               if (_isExpanded)
                 Text(
@@ -229,9 +231,11 @@ class _AppSidebarState extends State<AppSidebar> {
   }
 
   void _showSettingsDialog(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (context) {
         return AlertDialog(
           title:
               Text('Settings', style: Theme.of(context).textTheme.labelLarge),
@@ -248,7 +252,7 @@ class _AppSidebarState extends State<AppSidebar> {
                   const SizedBox(width: 16),
                   DropdownButton<String>(
                     value: context.read<LocaleProvider>().locale.languageCode,
-                    onChanged: (String? newLanguageCode) {
+                    onChanged: (newLanguageCode) {
                       if (newLanguageCode != null) {
                         context
                             .read<LocaleProvider>()
@@ -257,19 +261,26 @@ class _AppSidebarState extends State<AppSidebar> {
                     },
                     items: [
                       DropdownMenuItem(
-                          value: 'en',
-                          child: Text(
-                            'English',
-                            style: Theme.of(context).textTheme.labelMedium,
-                          )),
+                        value: 'en',
+                        child: Text(
+                          'English',
+                          style: Theme.of(context).textTheme.labelMedium,
+                        ),
+                      ),
                       DropdownMenuItem(
-                          value: 'pl',
-                          child: Text('Polski',
-                              style: Theme.of(context).textTheme.labelMedium)),
+                        value: 'pl',
+                        child: Text(
+                          'Polski',
+                          style: Theme.of(context).textTheme.labelMedium,
+                        ),
+                      ),
                       DropdownMenuItem(
-                          value: 'es',
-                          child: Text('Español',
-                              style: Theme.of(context).textTheme.labelMedium)),
+                        value: 'es',
+                        child: Text(
+                          'Español',
+                          style: Theme.of(context).textTheme.labelMedium,
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -282,7 +293,7 @@ class _AppSidebarState extends State<AppSidebar> {
                   _logout(); // Perform logout action
                 },
                 icon: const Icon(Icons.logout),
-                label: Text('Logout'),
+                label: const Text('Logout'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).colorScheme.error,
                   foregroundColor: Theme.of(context).colorScheme.onError,
@@ -295,7 +306,7 @@ class _AppSidebarState extends State<AppSidebar> {
               onPressed: () {
                 Navigator.pop(context); // Close the dialog
               },
-              child: Text('Cancel'),
+              child: Text(localizations!.cancel),
             ),
           ],
         );

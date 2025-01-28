@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:writing_app/features/notes/models/worldbuilding_note.dart';
 import 'package:writing_app/features/notes/screens/editing/note_editing.dart';
 import 'package:writing_app/features/notes/widgets/dynamic_list_field.dart';
+import 'package:writing_app/l10n/app_localizations.dart';
 import 'package:writing_app/widgets/custom_text_field.dart';
 import 'package:writing_app/widgets/large_text_field.dart';
 
@@ -22,6 +23,8 @@ class WorldbuildingNoteEditing extends NoteEditing {
 
   @override
   Widget buildDetailsForm(GlobalKey<FormState> formKey, BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return Form(
       key: formKey,
       child: Column(
@@ -31,20 +34,20 @@ class WorldbuildingNoteEditing extends NoteEditing {
           const SizedBox(height: 16),
           CustomTextField(
             controller: placeNameController,
-            label: 'Place Name',
+            label: localizations!.placeName,
           ),
           LargeTextField(
             controller: geographyController,
-            label: 'Geography Description',
+            label: localizations.geography,
           ),
           LargeTextField(
             controller: cultureController,
-            label: 'Culture Description',
+            label: localizations.culture,
           ),
           const SizedBox(height: 16),
           DynamicListField(
             context: context,
-            label: 'Points of Interest',
+            label: localizations.pointsOfInterest,
             list: pointsOfInterest,
           ),
         ],

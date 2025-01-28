@@ -510,6 +510,240 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Are you sure you want to delete this note?'**
   String get areYouSureDeleteNote;
+
+  /// No description provided for @characterDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Character Details'**
+  String get characterDetails;
+
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get name;
+
+  /// No description provided for @role.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get role;
+
+  /// No description provided for @gender.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get gender;
+
+  /// No description provided for @age.
+  ///
+  /// In en, this message translates to:
+  /// **'Age'**
+  String get age;
+
+  /// No description provided for @physicalAppearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Physical Appearance'**
+  String get physicalAppearance;
+
+  /// No description provided for @eyeColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Eye Color'**
+  String get eyeColor;
+
+  /// No description provided for @hairColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Hair Color'**
+  String get hairColor;
+
+  /// No description provided for @skinColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Skin Color'**
+  String get skinColor;
+
+  /// No description provided for @fashionStyle.
+  ///
+  /// In en, this message translates to:
+  /// **'Fashion Style'**
+  String get fashionStyle;
+
+  /// No description provided for @distinguishingFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'Distinguishing Features'**
+  String get distinguishingFeatures;
+
+  /// No description provided for @notSpecified.
+  ///
+  /// In en, this message translates to:
+  /// **'Not specified'**
+  String get notSpecified;
+
+  /// No description provided for @personalityTraits.
+  ///
+  /// In en, this message translates to:
+  /// **'Personality Traits'**
+  String get personalityTraits;
+
+  /// No description provided for @keyFamilyMembers.
+  ///
+  /// In en, this message translates to:
+  /// **'Key Family Members'**
+  String get keyFamilyMembers;
+
+  /// No description provided for @notableEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Notable Events'**
+  String get notableEvents;
+
+  /// No description provided for @characterGrowth.
+  ///
+  /// In en, this message translates to:
+  /// **'Character Growth'**
+  String get characterGrowth;
+
+  /// No description provided for @goals.
+  ///
+  /// In en, this message translates to:
+  /// **'Goals'**
+  String get goals;
+
+  /// No description provided for @internalConflicts.
+  ///
+  /// In en, this message translates to:
+  /// **'Internal Conflicts'**
+  String get internalConflicts;
+
+  /// No description provided for @externalConflicts.
+  ///
+  /// In en, this message translates to:
+  /// **'External Conflicts'**
+  String get externalConflicts;
+
+  /// No description provided for @coreValues.
+  ///
+  /// In en, this message translates to:
+  /// **'Core Values'**
+  String get coreValues;
+
+  /// No description provided for @outlineDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Outline Details'**
+  String get outlineDetails;
+
+  /// No description provided for @genre.
+  ///
+  /// In en, this message translates to:
+  /// **'Genre'**
+  String get genre;
+
+  /// No description provided for @themes.
+  ///
+  /// In en, this message translates to:
+  /// **'Themes'**
+  String get themes;
+
+  /// No description provided for @acts.
+  ///
+  /// In en, this message translates to:
+  /// **'Acts'**
+  String get acts;
+
+  /// No description provided for @conflicts.
+  ///
+  /// In en, this message translates to:
+  /// **'Conflicts'**
+  String get conflicts;
+
+  /// No description provided for @subplots.
+  ///
+  /// In en, this message translates to:
+  /// **'Subplots'**
+  String get subplots;
+
+  /// No description provided for @notes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get notes;
+
+  /// No description provided for @none.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get none;
+
+  /// No description provided for @noActsAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No acts available'**
+  String get noActsAvailable;
+
+  /// No description provided for @worldbuildingDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Worldbuilding Details'**
+  String get worldbuildingDetails;
+
+  /// No description provided for @placeName.
+  ///
+  /// In en, this message translates to:
+  /// **'Place Name'**
+  String get placeName;
+
+  /// No description provided for @geography.
+  ///
+  /// In en, this message translates to:
+  /// **'Geography'**
+  String get geography;
+
+  /// No description provided for @culture.
+  ///
+  /// In en, this message translates to:
+  /// **'Culture'**
+  String get culture;
+
+  /// No description provided for @pointsOfInterest.
+  ///
+  /// In en, this message translates to:
+  /// **'Points of Interest'**
+  String get pointsOfInterest;
+
+  /// No description provided for @personality.
+  ///
+  /// In en, this message translates to:
+  /// **'Personality'**
+  String get personality;
+
+  /// No description provided for @hobbiesAndSkills.
+  ///
+  /// In en, this message translates to:
+  /// **'Hobbies and Skills'**
+  String get hobbiesAndSkills;
+
+  /// No description provided for @otherPersonalityDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Other Personality Details'**
+  String get otherPersonalityDetails;
+
+  /// No description provided for @history.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get history;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

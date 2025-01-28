@@ -12,6 +12,7 @@ import 'package:writing_app/features/notes/screens/note_editing_screen.dart';
 import 'package:writing_app/features/notes/screens/notes_screen.dart';
 import 'package:writing_app/features/projects/screens/add_project_screen.dart';
 import 'package:writing_app/features/projects/screens/project_list_screen.dart';
+import 'package:writing_app/features/research/research_screen.dart';
 import 'package:writing_app/features/writing/cubit/chapter_cubit.dart';
 import 'package:writing_app/features/writing/screens/chapter_editing_screen.dart';
 import 'package:writing_app/features/writing/screens/chapters_screen.dart';
@@ -36,6 +37,12 @@ class AppRouter {
         builder: (context, state) => const ChaptersScreen(),
         pageBuilder: (context, state) =>
             _noAnimationPage(const ChaptersScreen()),
+      ),
+      GoRoute(
+        path: '/research',
+        builder: (context, state) => const ResearchScreen(),
+        pageBuilder: (context, state) =>
+            _noAnimationPage(const ResearchScreen()),
       ),
       GoRoute(
         path: '/note/:id',

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:writing_app/features/notes/models/outline_note.dart';
 import 'package:writing_app/features/notes/screens/editing/note_editing.dart';
 import 'package:writing_app/features/notes/widgets/dynamic_list_field.dart';
+import 'package:writing_app/l10n/app_localizations.dart';
 import 'package:writing_app/widgets/custom_text_field.dart';
 import 'package:writing_app/widgets/large_text_field.dart';
 import 'package:writing_app/widgets/minimal_text_field.dart';
@@ -11,11 +12,13 @@ class OutlineNoteEditing extends NoteEditing {
     genreController = TextEditingController(text: note.genre);
     themes = note.themes ?? [];
     acts = note.acts
-        .map((act) => Act(
-              heading: act.heading,
-              summary: act.summary,
-              plotPoints: act.plotPoints.toList(),
-            ))
+        .map(
+          (act) => Act(
+            heading: act.heading,
+            summary: act.summary,
+            plotPoints: act.plotPoints.toList(),
+          ),
+        )
         .toList();
     conflicts = note.conflicts ?? [];
     subplots = note.subplots ?? [];
@@ -33,6 +36,8 @@ class OutlineNoteEditing extends NoteEditing {
 
   @override
   Widget buildDetailsForm(GlobalKey<FormState> formKey, BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return Form(
       key: formKey,
       child: SingleChildScrollView(
@@ -45,14 +50,14 @@ class OutlineNoteEditing extends NoteEditing {
             // Genre Section
             CustomTextField(
               controller: genreController,
-              label: 'Genre',
+              label: localizations!.genre,
             ),
             const SizedBox(height: 16),
 
             // Themes Section
             DynamicListField(
               context: context,
-              label: 'Themes',
+              label: localizations.themes,
               list: themes,
             ),
             const SizedBox(height: 16),
@@ -62,7 +67,7 @@ class OutlineNoteEditing extends NoteEditing {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Acts',
+                  localizations.acts,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 8),
@@ -97,7 +102,7 @@ class OutlineNoteEditing extends NoteEditing {
             ElevatedButton(
               onPressed: () {
                 // Add a new Act
-                acts.add(Act(heading: '', summary: '', plotPoints: []));
+                acts.add(Act(heading: '', plotPoints: []));
                 (context as Element).markNeedsBuild(); // Trigger UI update
               },
               child: const Text('Add Act'),
@@ -108,7 +113,7 @@ class OutlineNoteEditing extends NoteEditing {
             // Conflicts Section
             DynamicListField(
               context: context,
-              label: 'Conflicts',
+              label: localizations.conflicts,
               list: conflicts,
             ),
             const SizedBox(height: 16),
@@ -116,7 +121,7 @@ class OutlineNoteEditing extends NoteEditing {
             // Subplots Section
             DynamicListField(
               context: context,
-              label: 'Subplots',
+              label: localizations.subplots,
               list: subplots,
             ),
             const SizedBox(height: 16),
@@ -124,7 +129,7 @@ class OutlineNoteEditing extends NoteEditing {
             // Notes Section
             DynamicListField(
               context: context,
-              label: 'Notes',
+              label: localizations.notes,
               list: notes,
             ),
           ],

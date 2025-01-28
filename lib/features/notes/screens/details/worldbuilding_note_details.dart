@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:writing_app/features/notes/models/worldbuilding_note.dart';
 import 'package:writing_app/features/notes/screens/details/note_details.dart';
+import 'package:writing_app/l10n/app_localizations.dart';
 
 class WorldbuildingNoteDetails implements NoteDetails {
   WorldbuildingNoteDetails(this.note);
@@ -8,22 +9,24 @@ class WorldbuildingNoteDetails implements NoteDetails {
 
   @override
   Widget buildDetailsScreen(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _sectionTitle('Place Name'),
+            _sectionTitle(localizations!.placeName),
             Text(note.placeName, style: _infoTextStyle),
             const SizedBox(height: 10),
-            _sectionTitle('Geography'),
+            _sectionTitle(localizations.geography),
             Text(note.geography ?? '', style: _infoTextStyle),
             const SizedBox(height: 10),
-            _sectionTitle('Culture'),
+            _sectionTitle(localizations.culture),
             Text(note.culture ?? '', style: _infoTextStyle),
             const SizedBox(height: 10),
-            _sectionTitle('Points of Interest'),
+            _sectionTitle(localizations.pointsOfInterest),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children:

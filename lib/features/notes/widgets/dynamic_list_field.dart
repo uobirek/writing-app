@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:writing_app/l10n/app_localizations.dart';
 import 'package:writing_app/utils/input_decoration.dart';
 
 class DynamicListField extends StatelessWidget {
@@ -15,6 +16,8 @@ class DynamicListField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return Padding(
       padding: const EdgeInsets.all(15),
       child: DecoratedBox(
@@ -78,7 +81,7 @@ class DynamicListField extends StatelessWidget {
                   Icons.add,
                   color: Theme.of(context).colorScheme.secondary,
                 ),
-                label: const Text('Add Item'),
+                label: Text(localizations!.addItem),
                 onPressed: () {
                   list.add(''); // Add an empty item
                   (context as Element).markNeedsBuild(); // Rebuild UI

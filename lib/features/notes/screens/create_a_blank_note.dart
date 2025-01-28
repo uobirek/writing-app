@@ -1,12 +1,16 @@
+import 'package:flutter/material.dart';
 import 'package:writing_app/features/notes/models/character_note.dart';
 import 'package:writing_app/features/notes/models/note.dart';
 import 'package:writing_app/features/notes/models/outline_note.dart';
 import 'package:writing_app/features/notes/models/simple_note.dart';
 import 'package:writing_app/features/notes/models/worldbuilding_note.dart';
+import 'package:writing_app/l10n/app_localizations.dart';
 
-Future<Note> createBlankNote(String type, List<Note> cachedNotes) async {
+Future<Note> createBlankNote(
+    String type, List<Note> cachedNotes, BuildContext context) async {
   final now = DateTime.now();
   const defaultImage = 'assets/images/placeholder.png';
+  final localizations = AppLocalizations.of(context);
 
   // Determine the next position based on the cached notes
   final nextPosition = cachedNotes.isEmpty
@@ -75,6 +79,6 @@ Future<Note> createBlankNote(String type, List<Note> cachedNotes) async {
         position: nextPosition,
       );
     default:
-      throw Exception('Unsupported note type');
+      throw Exception(localizations!.unsupportedNoteType);
   }
 }

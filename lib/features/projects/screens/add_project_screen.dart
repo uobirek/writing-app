@@ -50,11 +50,11 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                   TextFormField(
                     controller: _titleController,
                     decoration: InputDecoration(
-                      labelText: localizations!.projectTitle,
+                      labelText: localizations.projectTitle,
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter a project title';
+                        return localizations.pleaseEnterProjectTitle;
                       }
                       return null;
                     },
@@ -67,7 +67,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter a description';
+                        return localizations.pleaseEnterDescription;
                       }
                       return null;
                     },
@@ -76,7 +76,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                   Row(
                     children: [
                       if (_imageFile == null)
-                        const Text('No image selected')
+                        Text(localizations.noImageSelected)
                       else
                         Image.file(_imageFile!, width: 100, height: 100),
                       IconButton(
@@ -87,7 +87,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton(
-                    onPressed: _addProject,
+                    onPressed: () => _addProject(context), // Pass context
                     child: state is ProjectUpdating
                         ? const CircularProgressIndicator()
                         : Text(localizations.addNewProject),
@@ -110,7 +110,9 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
     }
   }
 
-  void _addProject() {
+  void _addProject(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     if (_titleController.text.isEmpty || _descriptionController.text.isEmpty) {
       _showErrorDialog('Please fill in all fields');
       return;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:writing_app/features/notes/models/outline_note.dart';
 import 'package:writing_app/features/notes/screens/details/note_details.dart';
+import 'package:writing_app/l10n/app_localizations.dart';
 
 class OutlineNoteDetails implements NoteDetails {
   OutlineNoteDetails(this.note);
@@ -8,6 +9,8 @@ class OutlineNoteDetails implements NoteDetails {
 
   @override
   Widget buildDetailsScreen(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -15,24 +18,24 @@ class OutlineNoteDetails implements NoteDetails {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (note.genre != null) ...[
-              _sectionTitle('Genre'),
+              _sectionTitle(localizations!.genre),
               Text(note.genre ?? '', style: _infoTextStyle),
               const SizedBox(height: 10),
             ],
-            _sectionTitle('Themes'),
-            _listSection(note.themes),
+            _sectionTitle(localizations!.themes),
+            _listSection(note.themes, context),
             const SizedBox(height: 10),
-            _sectionTitle('Acts'),
-            _actsSection(note.acts),
+            _sectionTitle(localizations.acts),
+            _actsSection(note.acts, context),
             const SizedBox(height: 10),
-            _sectionTitle('Conflicts'),
-            _listSection(note.conflicts),
+            _sectionTitle(localizations.conflicts),
+            _listSection(note.conflicts, context),
             const SizedBox(height: 10),
-            _sectionTitle('Subplots'),
-            _listSection(note.subplots),
+            _sectionTitle(localizations.subplots),
+            _listSection(note.subplots, context),
             const SizedBox(height: 10),
-            _sectionTitle('Notes'),
-            _listSection(note.notes),
+            _sectionTitle(localizations.notes),
+            _listSection(note.notes, context),
           ],
         ),
       ),
@@ -46,9 +49,11 @@ class OutlineNoteDetails implements NoteDetails {
     );
   }
 
-  Widget _listSection(List<String> items) {
+  Widget _listSection(List<String> items, BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     if (items.isEmpty) {
-      return Text('None', style: _infoTextStyle);
+      return Text(localizations!.none, style: _infoTextStyle);
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,9 +62,11 @@ class OutlineNoteDetails implements NoteDetails {
     );
   }
 
-  Widget _actsSection(List<Act> acts) {
+  Widget _actsSection(List<Act> acts, BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     if (acts.isEmpty) {
-      return Text('No acts available', style: _infoTextStyle);
+      return Text(localizations!.noActsAvailable, style: _infoTextStyle);
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,12 +74,14 @@ class OutlineNoteDetails implements NoteDetails {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(act.heading,
-                style:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            Text(
+              act.heading,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
             if (act.summary.isNotEmpty)
               Text(act.summary, style: _infoTextStyle),
-            if (act.plotPoints.isNotEmpty) _listSection(act.plotPoints),
+            if (act.plotPoints.isNotEmpty)
+              _listSection(act.plotPoints, context),
             const SizedBox(height: 10),
           ],
         );

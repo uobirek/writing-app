@@ -2,6 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:writing_app/features/notes/models/character_note.dart';
 import 'package:writing_app/features/notes/screens/editing/note_editing.dart';
 import 'package:writing_app/features/notes/widgets/dynamic_list_field.dart';
+import 'package:writing_app/l10n/app_localizations.dart';
+import 'package:writing_app/widgets/custom_text_field.dart';
+import 'package:writing_app/widgets/large_text_field.dart';
+import 'package:writing_app/widgets/minimal_text_field.dart';
+
+import 'package:flutter/material.dart';
+import 'package:writing_app/features/notes/models/character_note.dart';
+import 'package:writing_app/features/notes/screens/editing/note_editing.dart';
+import 'package:writing_app/features/notes/screens/details/note_details.dart';
+import 'package:writing_app/features/notes/widgets/dynamic_list_field.dart';
+import 'package:writing_app/l10n/app_localizations.dart';
 import 'package:writing_app/widgets/custom_text_field.dart';
 import 'package:writing_app/widgets/large_text_field.dart';
 import 'package:writing_app/widgets/minimal_text_field.dart';
@@ -17,7 +28,6 @@ class CharacterNoteEditing extends NoteEditing {
     skinColorController = TextEditingController(text: note.skinColor);
     fashionStyleController = TextEditingController(text: note.fashionStyle);
 
-    // Initialize list-based fields
     distinguishingFeatures = note.distinguishingFeatures ?? [];
     traits = note.traits ?? [];
     hobbiesSkills = note.hobbiesSkills ?? [];
@@ -28,13 +38,11 @@ class CharacterNoteEditing extends NoteEditing {
     externalConflicts = note.externalConflicts ?? [];
     coreValues = note.coreValues ?? [];
 
-    // Large text field
     otherPersonalityDetailsController =
         TextEditingController(text: note.otherPersonalityDetails ?? '');
   }
   final CharacterNote note;
 
-  // Controllers for single-line text fields
   late TextEditingController nameController;
   late TextEditingController roleController;
   late TextEditingController genderController;
@@ -44,7 +52,6 @@ class CharacterNoteEditing extends NoteEditing {
   late TextEditingController skinColorController;
   late TextEditingController fashionStyleController;
 
-  // List fields
   late List<String> distinguishingFeatures;
   late List<String> traits;
   late List<String> hobbiesSkills;
@@ -55,11 +62,12 @@ class CharacterNoteEditing extends NoteEditing {
   late List<String> externalConflicts;
   late List<String> coreValues;
 
-  // Large text field
   late TextEditingController otherPersonalityDetailsController;
 
   @override
   Widget buildDetailsForm(GlobalKey<FormState> formKey, BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return Form(
       key: formKey,
       child: SingleChildScrollView(
@@ -68,8 +76,6 @@ class CharacterNoteEditing extends NoteEditing {
           children: [
             buildImageField(context),
             const SizedBox(height: 16),
-
-            // General Information Section
             _buildSection(
               context,
               'General Information',
@@ -83,126 +89,121 @@ class CharacterNoteEditing extends NoteEditing {
                           color: Theme.of(context).colorScheme.secondary,
                         ),
                   ),
-                  CustomTextField(controller: roleController, label: 'Role'),
+                  CustomTextField(
+                    controller: roleController,
+                    label: localizations!.role,
+                  ),
                   CustomTextField(
                     controller: genderController,
-                    label: 'Gender',
+                    label: localizations.gender,
                   ),
                   CustomTextField(
                     controller: ageController,
-                    label: 'Age',
+                    label: localizations.age,
                     isNumber: true,
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 16),
-
-            // Physical Appearance Section
             _buildSection(
               context,
-              'Physical Appearance',
+              localizations.physicalAppearance,
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomTextField(
                     controller: eyeColorController,
-                    label: 'Eye Color',
+                    label: localizations.eyeColor,
                   ),
                   CustomTextField(
                     controller: hairColorController,
-                    label: 'Hair Color',
+                    label: localizations.hairColor,
                   ),
                   CustomTextField(
                     controller: skinColorController,
-                    label: 'Skin Color',
+                    label: localizations.skinColor,
                   ),
                   CustomTextField(
                     controller: fashionStyleController,
-                    label: 'Fashion Style',
+                    label: localizations.fashionStyle,
                   ),
                   DynamicListField(
                     context: context,
-                    label: 'Distinguishing Features',
+                    label: localizations.distinguishingFeatures,
                     list: distinguishingFeatures,
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 16),
-
-            // Personality Section
             _buildSection(
               context,
-              'Personality',
+              localizations.personality,
               Column(
                 children: [
                   DynamicListField(
                     context: context,
-                    label: 'Traits',
+                    label: localizations.personalityTraits,
                     list: traits,
                   ),
                   DynamicListField(
                     context: context,
-                    label: 'Hobbies and Skills',
+                    label: localizations.hobbiesAndSkills,
                     list: hobbiesSkills,
                   ),
                   LargeTextField(
                     controller: otherPersonalityDetailsController,
-                    label: 'Other Personality Details',
+                    label: localizations.otherPersonalityDetails,
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 16),
-
-            // History Section
             _buildSection(
               context,
-              'History',
+              localizations.history,
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   DynamicListField(
                     context: context,
-                    label: 'Key Family Members',
+                    label: localizations.keyFamilyMembers,
                     list: keyFamilyMembers,
                   ),
                   DynamicListField(
                     context: context,
-                    label: 'Notable Events',
+                    label: localizations.notableEvents,
                     list: notableEvents,
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 16),
-
-            // Character Growth Section
             _buildSection(
               context,
-              'Character Growth',
+              localizations.characterGrowth,
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   DynamicListField(
                     context: context,
-                    label: 'Goals',
+                    label: localizations.goals,
                     list: goals,
                   ),
                   DynamicListField(
                     context: context,
-                    label: 'Internal Conflicts',
+                    label: localizations.internalConflicts,
                     list: internalConflicts,
                   ),
                   DynamicListField(
                     context: context,
-                    label: 'External Conflicts',
+                    label: localizations.externalConflicts,
                     list: externalConflicts,
                   ),
                   DynamicListField(
                     context: context,
-                    label: 'Core Values',
+                    label: localizations.coreValues,
                     list: coreValues,
                   ),
                 ],
@@ -223,7 +224,7 @@ class CharacterNoteEditing extends NoteEditing {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: Colors.black.withAlpha(50),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
@@ -234,7 +235,7 @@ class CharacterNoteEditing extends NoteEditing {
         children: [
           _buildSectionHeader(title, context),
           const SizedBox(height: 8),
-          child, // Content of the section
+          child,
         ],
       ),
     );

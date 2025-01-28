@@ -216,4 +216,121 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get areYouSureDeleteNote => 'Are you sure you want to delete this note?';
+
+  @override
+  String get characterDetails => 'Character Details';
+
+  @override
+  String get name => 'Name';
+
+  @override
+  String get role => 'Role';
+
+  @override
+  String get gender => 'Gender';
+
+  @override
+  String get age => 'Age';
+
+  @override
+  String get physicalAppearance => 'Physical Appearance';
+
+  @override
+  String get eyeColor => 'Eye Color';
+
+  @override
+  String get hairColor => 'Hair Color';
+
+  @override
+  String get skinColor => 'Skin Color';
+
+  @override
+  String get fashionStyle => 'Fashion Style';
+
+  @override
+  String get distinguishingFeatures => 'Distinguishing Features';
+
+  @override
+  String get notSpecified => 'Not specified';
+
+  @override
+  String get personalityTraits => 'Personality Traits';
+
+  @override
+  String get keyFamilyMembers => 'Key Family Members';
+
+  @override
+  String get notableEvents => 'Notable Events';
+
+  @override
+  String get characterGrowth => 'Character Growth';
+
+  @override
+  String get goals => 'Goals';
+
+  @override
+  String get internalConflicts => 'Internal Conflicts';
+
+  @override
+  String get externalConflicts => 'External Conflicts';
+
+  @override
+  String get coreValues => 'Core Values';
+
+  @override
+  String get outlineDetails => 'Outline Details';
+
+  @override
+  String get genre => 'Genre';
+
+  @override
+  String get themes => 'Themes';
+
+  @override
+  String get acts => 'Acts';
+
+  @override
+  String get conflicts => 'Conflicts';
+
+  @override
+  String get subplots => 'Subplots';
+
+  @override
+  String get notes => 'Notes';
+
+  @override
+  String get none => 'None';
+
+  @override
+  String get noActsAvailable => 'No acts available';
+
+  @override
+  String get worldbuildingDetails => 'Worldbuilding Details';
+
+  @override
+  String get placeName => 'Place Name';
+
+  @override
+  String get geography => 'Geography';
+
+  @override
+  String get culture => 'Culture';
+
+  @override
+  String get pointsOfInterest => 'Points of Interest';
+
+  @override
+  String get personality => 'Personality';
+
+  @override
+  String get hobbiesAndSkills => 'Hobbies and Skills';
+
+  @override
+  String get otherPersonalityDetails => 'Other Personality Details';
+
+  @override
+  String get history => 'History';
+
+  @override
+  String get cancel => 'Cancel';
 }

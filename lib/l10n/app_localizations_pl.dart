@@ -58,10 +58,10 @@ class AppLocalizationsPl extends AppLocalizations {
   String get hiWelcomeTo => 'Cześć! Witamy w';
 
   @override
-  String get fantasies => 'fantazjach';
+  String get fantasies => 'fantasies';
 
   @override
-  String get perfectOrganizationTool => 'Idealne narzędzie do organizacji pisania, budowania światów i planowania';
+  String get perfectOrganizationTool => 'Idealne narzędzie do organizacji pisania, worldbuildingu i planowania';
 
   @override
   String get getStartedNow => 'Rozpocznij teraz';
@@ -123,7 +123,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get chooseAProject => 'Wybierz projekt';
 
   @override
-  String get workingOnToday => 'Nad którym dziś pracujemy?';
+  String get workingOnToday => 'Nad którym projektem chcesz dzisiaj pracować?';
 
   @override
   String get failedToLoadProjects => 'Nie udało się załadować projektów';
@@ -138,7 +138,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get sidebarWriting => 'Pisanie';
 
   @override
-  String get sidebarResearch => 'Badania';
+  String get sidebarResearch => 'Research';
 
   @override
   String get sidebarLogout => 'Wyloguj się';
@@ -182,13 +182,13 @@ class AppLocalizationsPl extends AppLocalizations {
   String get showAll => 'Pokaż wszystko';
 
   @override
-  String get worldbuilding => 'Budowanie świata';
+  String get worldbuilding => 'Worldbuilding';
 
   @override
   String get characters => 'Postacie';
 
   @override
-  String get outline => 'Zarys';
+  String get outline => 'Outline';
 
   @override
   String get noNotesAvailable => 'Brak dostępnych notatek.';
@@ -216,4 +216,121 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get areYouSureDeleteNote => 'Czy na pewno chcesz usunąć tę notatkę?';
+
+  @override
+  String get characterDetails => 'Szczegóły Postaci';
+
+  @override
+  String get name => 'Imię';
+
+  @override
+  String get role => 'Rola';
+
+  @override
+  String get gender => 'Płeć';
+
+  @override
+  String get age => 'Wiek';
+
+  @override
+  String get physicalAppearance => 'Wygląd Fizyczny';
+
+  @override
+  String get eyeColor => 'Kolor Oczu';
+
+  @override
+  String get hairColor => 'Kolor Włosów';
+
+  @override
+  String get skinColor => 'Kolor Skóry';
+
+  @override
+  String get fashionStyle => 'Styl Ubioru';
+
+  @override
+  String get distinguishingFeatures => 'Cecha Charakterystyczna';
+
+  @override
+  String get notSpecified => 'Nie określono';
+
+  @override
+  String get personalityTraits => 'Cechy Osobowości';
+
+  @override
+  String get keyFamilyMembers => 'Kluczowi Członkowie Rodziny';
+
+  @override
+  String get notableEvents => 'Ważne Wydarzenia';
+
+  @override
+  String get characterGrowth => 'Rozwój Postaci';
+
+  @override
+  String get goals => 'Cele';
+
+  @override
+  String get internalConflicts => 'Konflikty Wewnętrzne';
+
+  @override
+  String get externalConflicts => 'Konflikty Zewnętrzne';
+
+  @override
+  String get coreValues => 'Podstawowe Wartości';
+
+  @override
+  String get outlineDetails => 'Szczegóły Zarysu';
+
+  @override
+  String get genre => 'Gatunek';
+
+  @override
+  String get themes => 'Motywy';
+
+  @override
+  String get acts => 'Akty';
+
+  @override
+  String get conflicts => 'Konflikty';
+
+  @override
+  String get subplots => 'Wątki Poboczne';
+
+  @override
+  String get notes => 'Notatki';
+
+  @override
+  String get none => 'Brak';
+
+  @override
+  String get noActsAvailable => 'Brak dostępnych aktów';
+
+  @override
+  String get worldbuildingDetails => 'Szczegóły Świata';
+
+  @override
+  String get placeName => 'Nazwa Miejsca';
+
+  @override
+  String get geography => 'Geografia';
+
+  @override
+  String get culture => 'Kultura';
+
+  @override
+  String get pointsOfInterest => 'Ważne miejsca';
+
+  @override
+  String get personality => 'Personality';
+
+  @override
+  String get hobbiesAndSkills => 'Hobbies and Skills';
+
+  @override
+  String get otherPersonalityDetails => 'Other Personality Details';
+
+  @override
+  String get history => 'History';
+
+  @override
+  String get cancel => 'Cancel';
 }

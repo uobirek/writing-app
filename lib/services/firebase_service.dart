@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:writing_app/features/notes/models/character_note.dart';
 import 'package:writing_app/features/notes/models/note.dart';
-import 'package:writing_app/features/notes/models/worldbuilding_note.dart';
 import 'package:writing_app/features/notes/models/outline_note.dart'; // Import OutlineNote
+import 'package:writing_app/features/notes/models/worldbuilding_note.dart';
 
 class FirebaseService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;

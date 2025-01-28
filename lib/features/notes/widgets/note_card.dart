@@ -6,6 +6,7 @@ import 'package:writing_app/features/notes/models/character_note.dart';
 import 'package:writing_app/features/notes/models/note.dart';
 import 'package:writing_app/features/notes/widgets/dynamic_image.dart';
 import 'package:writing_app/features/projects/cubit/project_cubit.dart';
+import 'package:writing_app/l10n/app_localizations.dart';
 
 class NoteCard extends StatelessWidget {
   // Callback for delete
@@ -49,6 +50,8 @@ class NoteCard extends StatelessWidget {
   }
 
   Widget _noteMenu(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return PopupMenuButton<int>(
       itemBuilder: (context) => [
         PopupMenuItem<int>(
@@ -57,7 +60,7 @@ class NoteCard extends StatelessWidget {
             children: [
               Icon(Icons.edit, color: Theme.of(context).colorScheme.secondary),
               const SizedBox(width: 8),
-              const Text('Edit'),
+              Text(localizations!.edit),
             ],
           ),
         ),
@@ -70,7 +73,7 @@ class NoteCard extends StatelessWidget {
                 color: Theme.of(context).colorScheme.secondary,
               ),
               const SizedBox(width: 8),
-              const Text('Preview'),
+              Text(localizations.preview),
             ],
           ),
         ),
@@ -83,7 +86,7 @@ class NoteCard extends StatelessWidget {
                 color: Theme.of(context).colorScheme.secondary,
               ),
               const SizedBox(width: 8),
-              const Text('Delete'),
+              Text(localizations.delete),
             ],
           ),
         ),
@@ -109,18 +112,20 @@ class NoteCard extends StatelessWidget {
   }
 
   void _showDeleteConfirmationDialog(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     showDialog<void>(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Confirm Delete'),
-          content: const Text('Are you sure you want to delete this note?'),
+          title: Text(localizations!.confirmDelete),
+          content: Text(localizations.areYouSureDeleteNote),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: const Text('Cancel'),
+              child: Text(localizations.cancel),
             ),
             TextButton(
               onPressed: () {
@@ -132,8 +137,8 @@ class NoteCard extends StatelessWidget {
                     ); // Trigger the delete action
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: const Text(
-                'Delete',
+              child: Text(
+                localizations.delete,
                 style: TextStyle(color: Colors.red),
               ),
             ),
@@ -175,7 +180,7 @@ class NoteInfo extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
               child: Text(
-                note.category,
+                _getLocalizedCategory(context, note.category),
                 style: note.category == 'Worldbuilding'
                     ? Theme.of(context).textTheme.labelSmall
                     : Theme.of(context).textTheme.labelSmall?.copyWith(
@@ -204,5 +209,20 @@ class NoteInfo extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+String _getLocalizedCategory(BuildContext context, String category) {
+  final localizations = AppLocalizations.of(context);
+
+  switch (category) {
+    case 'Worldbuilding':
+      return localizations!.worldbuilding;
+    case 'Characters':
+      return localizations!.characters;
+    case 'Outline':
+      return localizations!.outline;
+    default:
+      return localizations!.showAll; // Fallback for unknown categories
   }
 }

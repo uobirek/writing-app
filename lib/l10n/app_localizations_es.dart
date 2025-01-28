@@ -200,7 +200,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get unsupportedNoteType => 'Tipo de nota no compatible';
 
   @override
-  String get addItem => 'Agregar elemento';
+  String get addItem => 'Agregar Elemento';
 
   @override
   String get edit => 'Editar';
@@ -216,4 +216,121 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get areYouSureDeleteNote => '¿Estás seguro de que deseas eliminar esta nota?';
+
+  @override
+  String get characterDetails => 'Detalles del Personaje';
+
+  @override
+  String get name => 'Nombre';
+
+  @override
+  String get role => 'Rol';
+
+  @override
+  String get gender => 'Género';
+
+  @override
+  String get age => 'Edad';
+
+  @override
+  String get physicalAppearance => 'Apariencia Física';
+
+  @override
+  String get eyeColor => 'Color de Ojos';
+
+  @override
+  String get hairColor => 'Color de Cabello';
+
+  @override
+  String get skinColor => 'Color de Piel';
+
+  @override
+  String get fashionStyle => 'Estilo de Moda';
+
+  @override
+  String get distinguishingFeatures => 'Rasgos Distintivos';
+
+  @override
+  String get notSpecified => 'No especificado';
+
+  @override
+  String get personalityTraits => 'Rasgos de Personalidad';
+
+  @override
+  String get keyFamilyMembers => 'Miembros Clave de la Familia';
+
+  @override
+  String get notableEvents => 'Eventos Notables';
+
+  @override
+  String get characterGrowth => 'Crecimiento del Personaje';
+
+  @override
+  String get goals => 'Metas';
+
+  @override
+  String get internalConflicts => 'Conflictos Internos';
+
+  @override
+  String get externalConflicts => 'Conflictos Externos';
+
+  @override
+  String get coreValues => 'Valores Fundamentales';
+
+  @override
+  String get outlineDetails => 'Detalles del Esquema';
+
+  @override
+  String get genre => 'Género';
+
+  @override
+  String get themes => 'Temas';
+
+  @override
+  String get acts => 'Actos';
+
+  @override
+  String get conflicts => 'Conflictos';
+
+  @override
+  String get subplots => 'Subtramas';
+
+  @override
+  String get notes => 'Notas';
+
+  @override
+  String get none => 'Ninguno';
+
+  @override
+  String get noActsAvailable => 'No hay actos disponibles';
+
+  @override
+  String get worldbuildingDetails => 'Detalles del Mundo';
+
+  @override
+  String get placeName => 'Nombre del Lugar';
+
+  @override
+  String get geography => 'Geografía';
+
+  @override
+  String get culture => 'Cultura';
+
+  @override
+  String get pointsOfInterest => 'Puntos de Interés';
+
+  @override
+  String get personality => 'Personalidad';
+
+  @override
+  String get hobbiesAndSkills => 'Aficiones y Habilidades';
+
+  @override
+  String get otherPersonalityDetails => 'Otros Detalles de Personalidad';
+
+  @override
+  String get history => 'Historia';
+
+  @override
+  String get cancel => 'Cancelar';
 }

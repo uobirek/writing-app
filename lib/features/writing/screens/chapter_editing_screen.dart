@@ -9,7 +9,6 @@ import 'package:writing_app/features/writing/cubit/chapter_cubit.dart';
 import 'package:writing_app/features/writing/cubit/chapter_state.dart';
 import 'package:writing_app/features/writing/models/chapter.dart';
 import 'package:writing_app/l10n/app_localizations.dart';
-import 'package:writing_app/widgets/custom_text_field.dart';
 import 'package:writing_app/widgets/minimal_text_field.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
 
@@ -154,17 +153,20 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
                             ),
                           ),
                           InkWell(
-                              child: const Icon(Icons.save),
-                              onTap: () {
-                                _saveChapter(context);
-                              }),
+                            child: const Icon(Icons.save),
+                            onTap: () {
+                              _saveChapter(context);
+                            },
+                          ),
                           const SizedBox(width: 15),
                           SizedBox(
                             width: 100,
                             height: 100,
                             child: DropdownButtonFormField<int>(
                               value: _chapterPosition.clamp(
-                                  1, 100), // Ensure value is valid
+                                1,
+                                100,
+                              ), // Ensure value is valid
                               onChanged: (value) {
                                 if (value != null) {
                                   setState(() {
@@ -189,7 +191,8 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
                             ),
                             onPressed: () {
                               _saveChapter(
-                                  context); // Save changes before toggling
+                                context,
+                              ); // Save changes before toggling
                               setState(() {
                                 _showToolbar = !_showToolbar;
                               });
@@ -202,8 +205,8 @@ class _EditChapterScreenState extends State<EditChapterScreen> {
                         QuillSimpleToolbar(
                           controller: _controller,
                           configurations: _isMobile()
-                              ? QuillSimpleToolbarConfigurations(
-                                  customButtons: const [
+                              ? const QuillSimpleToolbarConfigurations(
+                                  customButtons: [
                                     QuillToolbarCustomButtonOptions(),
                                   ],
                                   multiRowsDisplay: false,

@@ -53,7 +53,9 @@ class LoginScreenState extends State<LoginScreen> {
                     TextFormField(
                       controller: _emailController,
                       decoration: formInputDecoration(
-                          label: localizations!.email, context: context),
+                        label: localizations.email,
+                        context: context,
+                      ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return localizations.pleaseEnterAnEmail;

@@ -34,9 +34,7 @@ class AddNoteScreenState extends State<AddNoteScreen> {
     });
 
     final blankNote = await createBlankNote(
-      _selectedNoteType,
-      context.read<NoteCubit>().allNotes,
-    );
+        _selectedNoteType, context.read<NoteCubit>().allNotes, context);
 
     setState(() {
       noteEditing = blankNote.getNoteEditing();
@@ -88,8 +86,10 @@ class AddNoteScreenState extends State<AddNoteScreen> {
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
-            title: Text(localizations!.addNewNote,
-                style: Theme.of(context).textTheme.titleMedium),
+            title: Text(
+              localizations!.addNewNote,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
             actions: [
               IconButton(
                 icon: const Icon(Icons.save),
@@ -110,18 +110,24 @@ class AddNoteScreenState extends State<AddNoteScreen> {
                         items: [
                           DropdownMenuItem(
                             value: 'OutlineNote',
-                            child: Text('Outline',
-                                style: Theme.of(context).textTheme.labelMedium),
+                            child: Text(
+                              'Outline',
+                              style: Theme.of(context).textTheme.labelMedium,
+                            ),
                           ),
                           DropdownMenuItem(
                             value: 'CharacterNote',
-                            child: Text(localizations.characterNote,
-                                style: Theme.of(context).textTheme.labelMedium),
+                            child: Text(
+                              localizations.characterNote,
+                              style: Theme.of(context).textTheme.labelMedium,
+                            ),
                           ),
                           DropdownMenuItem(
                             value: 'WorldbuildingNote',
-                            child: Text(localizations.worldbuildingNote,
-                                style: Theme.of(context).textTheme.labelMedium),
+                            child: Text(
+                              localizations.worldbuildingNote,
+                              style: Theme.of(context).textTheme.labelMedium,
+                            ),
                           ),
                         ],
                         onChanged: _onNoteTypeChanged,

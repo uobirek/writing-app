@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:writing_app/features/notes/models/character_note.dart';
 import 'package:writing_app/features/notes/screens/details/note_details.dart';
+import 'package:writing_app/l10n/app_localizations.dart';
 
 class CharacterNoteDetails implements NoteDetails {
   CharacterNoteDetails(this.note);
@@ -8,63 +9,89 @@ class CharacterNoteDetails implements NoteDetails {
 
   @override
   Widget buildDetailsScreen(BuildContext context) {
-    Theme.of(context);
+    final localizations = AppLocalizations.of(context);
 
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildSection(context, 'Name', note.name),
-              _buildSection(context, 'Role', note.role),
-              _buildSection(context, 'Gender', note.gender),
-              _buildSection(context, 'Age', note.age.toString()),
-              _buildAppearanceSection(),
-              _buildTraitsSection(context),
-              _buildSection(
-                context,
-                'Key Family Members',
-                _listToString(note.keyFamilyMembers),
-              ),
-              _buildSection(
-                context,
-                'Notable Events',
-                _listToString(note.notableEvents),
-              ),
-              _buildCharacterGrowthSection(context),
-            ],
-          ),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildSection(context, localizations!.name, note.name),
+            _buildSection(context, localizations.role, note.role),
+            _buildSection(context, localizations.gender, note.gender),
+            _buildSection(context, localizations.age, note.age.toString()),
+            _buildAppearanceSection(context),
+            _buildTraitsSection(context),
+            _buildSection(
+              context,
+              localizations.hobbiesAndSkills,
+              _listToString(note.hobbiesSkills, context),
+            ),
+            _buildSection(
+              context,
+              localizations.otherPersonalityDetails,
+              note.otherPersonalityDetails ?? localizations.notSpecified,
+            ),
+            _buildSection(
+              context,
+              localizations.keyFamilyMembers,
+              _listToString(note.keyFamilyMembers, context),
+            ),
+            _buildSection(
+              context,
+              localizations.notableEvents,
+              _listToString(note.notableEvents, context),
+            ),
+            _buildCharacterGrowthSection(context),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildAppearanceSection() {
+  Widget _buildAppearanceSection(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return _buildSectionWithChildren(
-      'Physical Appearance',
+      localizations!.physicalAppearance,
       [
-        _infoRow('Eye Color', note.eyeColor ?? 'Not specified'),
-        _infoRow('Hair Color', note.hairColor ?? 'Not specified'),
-        _infoRow('Skin Color', note.skinColor ?? 'Not specified'),
-        _infoRow('Fashion Style', note.fashionStyle ?? 'Not specified'),
+        _infoRow(
+          localizations.eyeColor,
+          note.eyeColor ?? localizations.notSpecified,
+        ),
+        _infoRow(
+          localizations.hairColor,
+          note.hairColor ?? localizations.notSpecified,
+        ),
+        _infoRow(
+          localizations.skinColor,
+          note.skinColor ?? localizations.notSpecified,
+        ),
+        _infoRow(
+          localizations.fashionStyle,
+          note.fashionStyle ?? localizations.notSpecified,
+        ),
         if (note.distinguishingFeatures != null &&
             note.distinguishingFeatures!.isNotEmpty)
           _infoRow(
-            'Distinguishing Features',
+            localizations.distinguishingFeatures,
             note.distinguishingFeatures!.join(', '),
           )
         else
-          _infoRow('Distinguishing Features', 'Not specified'),
+          _infoRow(
+            localizations.distinguishingFeatures,
+            localizations.notSpecified,
+          ),
       ],
     );
   }
 
   Widget _buildTraitsSection(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return _buildSectionWithChildren(
-      'Personality Traits',
+      localizations!.personalityTraits,
       [
         if (note.traits != null && note.traits!.isNotEmpty)
           Wrap(
@@ -80,27 +107,40 @@ class CharacterNoteDetails implements NoteDetails {
                 .toList(),
           )
         else
-          Text('Not specified', style: Theme.of(context).textTheme.bodyMedium),
+          Text(
+            localizations.notSpecified,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
       ],
     );
   }
 
   Widget _buildCharacterGrowthSection(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return _buildSectionWithChildren(
-      'Character Growth',
+      localizations!.characterGrowth,
       [
-        _buildSection(context, 'Goals', _listToString(note.goals)),
         _buildSection(
           context,
-          'Internal Conflicts',
-          _listToString(note.internalConflicts),
+          localizations.goals,
+          _listToString(note.goals, context),
         ),
         _buildSection(
           context,
-          'External Conflicts',
-          _listToString(note.externalConflicts),
+          localizations.internalConflicts,
+          _listToString(note.internalConflicts, context),
         ),
-        _buildSection(context, 'Core Values', _listToString(note.coreValues)),
+        _buildSection(
+          context,
+          localizations.externalConflicts,
+          _listToString(note.externalConflicts, context),
+        ),
+        _buildSection(
+          context,
+          localizations.coreValues,
+          _listToString(note.coreValues, context),
+        ),
       ],
     );
   }
@@ -149,7 +189,11 @@ class CharacterNoteDetails implements NoteDetails {
     );
   }
 
-  String _listToString(List<String>? list) {
-    return (list == null || list.isEmpty) ? 'Not specified' : list.join(', ');
+  String _listToString(List<String>? list, BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
+    return (list == null || list.isEmpty)
+        ? localizations!.notSpecified
+        : list.join(', ');
   }
 }
