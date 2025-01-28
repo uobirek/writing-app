@@ -333,4 +333,52 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get cancel => 'Cancelar';
+
+  @override
+  String get failedToUpdateProject => 'Error al actualizar el proyecto';
+
+  @override
+  String get projectUpdatedSuccessfully => 'Proyecto actualizado con éxito';
+
+  @override
+  String get userNotLoggedIn => 'El usuario no ha iniciado sesión';
+
+  @override
+  String get enterProjectTitle => 'Introduce el título del proyecto';
+
+  @override
+  String get emailAlreadyInUse => 'Este correo electrónico ya está en uso. Intenta iniciar sesión.';
+
+  @override
+  String get invalidEmail => 'Por favor, introduce una dirección de correo válida.';
+
+  @override
+  String get weakPassword => 'Tu contraseña es demasiado débil. Usa una más segura.';
+
+  @override
+  String get operationNotAllowed => 'La creación de cuentas está deshabilitada actualmente.';
+
+  @override
+  String get registrationFailed => 'El registro ha fallado. Por favor, inténtalo de nuevo más tarde.';
+
+  @override
+  String get unexpectedError => 'Ocurrió un error inesperado.';
+
+  @override
+  String get settings => 'Configuración';
+
+  @override
+  String get logout => 'Cerrar sesión';
+
+  @override
+  String get goToProjects => 'Ir a Proyectos';
+
+  @override
+  String get darkMode => 'Modo oscuro';
+
+  @override
+  String get language => 'Idioma';
+
+  @override
+  String get logoutFailed => 'Error al cerrar sesión';
 }

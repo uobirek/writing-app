@@ -17,10 +17,8 @@ abstract class Note {
   final String category;
   final int position;
 
-  // Abstract method to convert a Note to a JSON map
   Map<String, dynamic> toJson();
 
-  // Abstract method to create a Note from a JSON map
   static Note fromJson(Map<String, dynamic> json) {
     throw UnimplementedError('Use specific subclass factory methods');
   }

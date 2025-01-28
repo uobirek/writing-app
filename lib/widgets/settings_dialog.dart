@@ -17,15 +17,15 @@ class SettingsDialog extends StatelessWidget {
     final isDarkMode = context.watch<ThemeCubit>().state == ThemeMode.dark;
 
     return AlertDialog(
-      title: Text('Settings', style: Theme.of(context).textTheme.labelLarge),
+      title: Text(localizations!.settings,
+          style: Theme.of(context).textTheme.labelLarge),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Language Dropdown
           Row(
             children: [
               Text(
-                'Language',
+                localizations.language,
                 style: Theme.of(context).textTheme.labelMedium,
               ),
               const SizedBox(width: 16),
@@ -33,12 +33,11 @@ class SettingsDialog extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
-          // Dark Mode Toggle
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Dark Mode',
+                localizations.darkMode,
                 style: Theme.of(context).textTheme.labelMedium,
               ),
               Switch(
@@ -50,24 +49,22 @@ class SettingsDialog extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
-          // "Go to Projects" Button
           ElevatedButton.icon(
             onPressed: () {
-              Navigator.pop(context); // Close the dialog
-              context.go('/projects'); // Navigate to projects
+              Navigator.pop(context);
+              context.go('/projects');
             },
             icon: const Icon(Icons.apps),
-            label: const Text('Go to Projects'),
+            label: Text(localizations.goToProjects),
           ),
           const SizedBox(height: 20),
-          // Logout Button
           ElevatedButton.icon(
             onPressed: () {
-              Navigator.pop(context); // Close the dialog
-              _logout(context); // Perform logout action
+              Navigator.pop(context);
+              _logout(context);
             },
             icon: const Icon(Icons.logout),
-            label: const Text('Logout'),
+            label: Text(localizations.logout),
             style: ElevatedButton.styleFrom(
               backgroundColor: Theme.of(context).colorScheme.error,
               foregroundColor: Theme.of(context).colorScheme.onError,
@@ -81,7 +78,7 @@ class SettingsDialog extends StatelessWidget {
             Navigator.pop(context);
           },
           child: Text(
-            localizations!.cancel,
+            localizations.cancel,
             style: Theme.of(context).textTheme.labelMedium,
           ),
         ),
@@ -90,6 +87,8 @@ class SettingsDialog extends StatelessWidget {
   }
 
   Future<void> _logout(BuildContext context) async {
+    final localizations = AppLocalizations.of(context);
+
     try {
       final navigator = Navigator.of(context);
       await FirebaseAuth.instance.signOut();
@@ -98,7 +97,7 @@ class SettingsDialog extends StatelessWidget {
       }
     } catch (err) {
       if (context.mounted) {
-        showMessage(context, 'Logout failed');
+        showMessage(context, localizations!.logoutFailed);
       }
     }
   }

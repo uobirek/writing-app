@@ -90,7 +90,7 @@ class CharacterNote extends Note {
   final String name;
   final String gender;
   final int age;
-  final String role; // Role in the story (e.g., protagonist, antagonist)
+  final String role;
 
   // Physical appearance
   final String? eyeColor;

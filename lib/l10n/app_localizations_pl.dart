@@ -61,10 +61,10 @@ class AppLocalizationsPl extends AppLocalizations {
   String get fantasies => 'fantasies';
 
   @override
-  String get perfectOrganizationTool => 'Idealne narzędzie do organizacji pisania, worldbuildingu i planowania';
+  String get perfectOrganizationTool => 'To narzędzie stworzone z myślą o organizacji pisania i worldbuildingu';
 
   @override
-  String get getStartedNow => 'Rozpocznij teraz';
+  String get getStartedNow => 'Rozpocznij';
 
   @override
   String get alreadyAUser => 'Jesteś już użytkownikiem?';
@@ -200,7 +200,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get unsupportedNoteType => 'Nieobsługiwany typ notatki';
 
   @override
-  String get addItem => 'Dodaj element';
+  String get addItem => 'Dodaj Element';
 
   @override
   String get edit => 'Edytuj';
@@ -218,7 +218,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get areYouSureDeleteNote => 'Czy na pewno chcesz usunąć tę notatkę?';
 
   @override
-  String get characterDetails => 'Szczegóły Postaci';
+  String get characterDetails => 'Szczegóły postaci';
 
   @override
   String get name => 'Imię';
@@ -233,52 +233,52 @@ class AppLocalizationsPl extends AppLocalizations {
   String get age => 'Wiek';
 
   @override
-  String get physicalAppearance => 'Wygląd Fizyczny';
+  String get physicalAppearance => 'Wygląd';
 
   @override
-  String get eyeColor => 'Kolor Oczu';
+  String get eyeColor => 'Kolor oczu';
 
   @override
-  String get hairColor => 'Kolor Włosów';
+  String get hairColor => 'Kolor włosów';
 
   @override
-  String get skinColor => 'Kolor Skóry';
+  String get skinColor => 'Kolor skóry';
 
   @override
-  String get fashionStyle => 'Styl Ubioru';
+  String get fashionStyle => 'Styl ubioru';
 
   @override
-  String get distinguishingFeatures => 'Cecha Charakterystyczna';
+  String get distinguishingFeatures => 'Cechy charakterystyczne';
 
   @override
   String get notSpecified => 'Nie określono';
 
   @override
-  String get personalityTraits => 'Cechy Osobowości';
+  String get personalityTraits => 'Cechy osobowości';
 
   @override
-  String get keyFamilyMembers => 'Kluczowi Członkowie Rodziny';
+  String get keyFamilyMembers => 'Istotni krewni';
 
   @override
-  String get notableEvents => 'Ważne Wydarzenia';
+  String get notableEvents => 'Ważne wydarzenia';
 
   @override
-  String get characterGrowth => 'Rozwój Postaci';
+  String get characterGrowth => 'Rozwój postaci';
 
   @override
   String get goals => 'Cele';
 
   @override
-  String get internalConflicts => 'Konflikty Wewnętrzne';
+  String get internalConflicts => 'Konflikty wewnętrzne';
 
   @override
-  String get externalConflicts => 'Konflikty Zewnętrzne';
+  String get externalConflicts => 'Konflikty zewnętrzne';
 
   @override
-  String get coreValues => 'Podstawowe Wartości';
+  String get coreValues => 'Wartości moralne';
 
   @override
-  String get outlineDetails => 'Szczegóły Zarysu';
+  String get outlineDetails => 'Szczegóły';
 
   @override
   String get genre => 'Gatunek';
@@ -308,7 +308,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get worldbuildingDetails => 'Szczegóły Świata';
 
   @override
-  String get placeName => 'Nazwa Miejsca';
+  String get placeName => 'Nazwa';
 
   @override
   String get geography => 'Geografia';
@@ -320,17 +320,65 @@ class AppLocalizationsPl extends AppLocalizations {
   String get pointsOfInterest => 'Ważne miejsca';
 
   @override
-  String get personality => 'Personality';
+  String get personality => 'Osobowość';
 
   @override
-  String get hobbiesAndSkills => 'Hobbies and Skills';
+  String get hobbiesAndSkills => 'Zainteresowania i Umiejętności';
 
   @override
-  String get otherPersonalityDetails => 'Other Personality Details';
+  String get otherPersonalityDetails => 'Inne informacje';
 
   @override
-  String get history => 'History';
+  String get history => 'Historia';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'Anuluj';
+
+  @override
+  String get failedToUpdateProject => 'Nie udało się zaktualizować projektu';
+
+  @override
+  String get projectUpdatedSuccessfully => 'Projekt zaktualizowany pomyślnie';
+
+  @override
+  String get userNotLoggedIn => 'Użytkownik nie jest zalogowany';
+
+  @override
+  String get enterProjectTitle => 'Wprowadź tytuł projektu';
+
+  @override
+  String get emailAlreadyInUse => 'Ten adres e-mail jest już używany. Spróbuj się zalogować.';
+
+  @override
+  String get invalidEmail => 'Wprowadź poprawny adres e-mail.';
+
+  @override
+  String get weakPassword => 'Twoje hasło jest zbyt słabe. Użyj silniejszego.';
+
+  @override
+  String get operationNotAllowed => 'Tworzenie kont jest obecnie wyłączone.';
+
+  @override
+  String get registrationFailed => 'Rejestracja nie powiodła się. Spróbuj ponownie później.';
+
+  @override
+  String get unexpectedError => 'Wystąpił nieoczekiwany błąd.';
+
+  @override
+  String get settings => 'Ustawienia';
+
+  @override
+  String get logout => 'Wyloguj się';
+
+  @override
+  String get goToProjects => 'Zmień projekt';
+
+  @override
+  String get darkMode => 'Tryb ciemny';
+
+  @override
+  String get language => 'Język';
+
+  @override
+  String get logoutFailed => 'Nie udało się wylogować';
 }

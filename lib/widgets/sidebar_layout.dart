@@ -15,8 +15,7 @@ class SidebarLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomInset:
-            false, // Keep this as it is for preventing screen resize when keyboard appears
+        resizeToAvoidBottomInset: false,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: LayoutBuilder(
           builder: (context, constraints) {
@@ -91,11 +90,11 @@ class SidebarLayout extends StatelessWidget {
         return 1;
       case '/writing':
         return 3;
-      case '/projects': // No longer used, replaced by settings
+      case '/projects':
         return 2;
       case '/research':
         return 4;
-      case '/settings': // Ensure settings is handled
+      case '/settings':
         return 2;
       default:
         return 0;
@@ -111,7 +110,7 @@ class SidebarLayout extends StatelessWidget {
       case 2:
         showDialog<void>(
           context: context,
-          builder: (context) => const SettingsDialog(), // Use the new widget
+          builder: (context) => const SettingsDialog(),
         );
       case 3:
         context.go('/writing');

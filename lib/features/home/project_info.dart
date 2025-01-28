@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:writing_app/features/notes/widgets/dynamic_image.dart';
 import 'package:writing_app/features/projects/cubit/project_cubit.dart';
 import 'package:writing_app/features/projects/models/project.dart';
+import 'package:writing_app/l10n/app_localizations.dart';
 import 'package:writing_app/utils/gradient_text.dart';
 import 'package:writing_app/utils/scaffold_messenger.dart';
 
@@ -40,6 +41,8 @@ class ProjectInfoState extends State<ProjectInfo> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+
     return Padding(
       padding: const EdgeInsets.all(20),
       child: SingleChildScrollView(
@@ -64,9 +67,9 @@ class ProjectInfoState extends State<ProjectInfo> {
                     Expanded(
                       child: TextField(
                         controller: _titleController,
-                        decoration: const InputDecoration(
-                          border: UnderlineInputBorder(),
-                          hintText: 'Enter project title',
+                        decoration: InputDecoration(
+                          border: const UnderlineInputBorder(),
+                          hintText: localizations!.enterProjectTitle,
                         ),
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
@@ -142,13 +145,14 @@ class ProjectInfoState extends State<ProjectInfo> {
     if (!_isEditing) {
       return;
     }
+    final localizations = AppLocalizations.of(context);
 
     final projectCubit = context.read<ProjectCubit>();
     final userId = FirebaseAuth.instance.currentUser?.uid;
 
     if (userId == null) {
       if (mounted) {
-        showMessage(context, 'User is not logged in');
+        showMessage(context, localizations!.userNotLoggedIn);
       }
       return;
     }
@@ -168,11 +172,11 @@ class ProjectInfoState extends State<ProjectInfo> {
         setState(() {
           _isEditing = false;
         });
-        showMessage(context, 'Project updated succesfully');
+        showMessage(context, localizations!.projectUpdatedSuccessfully);
       }
     } catch (err) {
       if (mounted) {
-        showMessage(context, 'Failed to update project');
+        showMessage(context, localizations!.failedToUpdateProject);
       }
     }
   }

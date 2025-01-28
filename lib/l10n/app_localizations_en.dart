@@ -333,4 +333,52 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cancel => 'Cancel';
+
+  @override
+  String get failedToUpdateProject => 'Failed to update project';
+
+  @override
+  String get projectUpdatedSuccessfully => 'Project updated successfully';
+
+  @override
+  String get userNotLoggedIn => 'User is not logged in';
+
+  @override
+  String get enterProjectTitle => 'Enter project title';
+
+  @override
+  String get emailAlreadyInUse => 'This email is already in use. Try logging in.';
+
+  @override
+  String get invalidEmail => 'Please enter a valid email address.';
+
+  @override
+  String get weakPassword => 'Your password is too weak. Use a stronger one.';
+
+  @override
+  String get operationNotAllowed => 'Account creation is currently disabled.';
+
+  @override
+  String get registrationFailed => 'Registration failed. Please try again later.';
+
+  @override
+  String get unexpectedError => 'An unexpected error occurred.';
+
+  @override
+  String get settings => 'Settings';
+
+  @override
+  String get logout => 'Logout';
+
+  @override
+  String get goToProjects => 'Go to Projects';
+
+  @override
+  String get darkMode => 'Dark Mode';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get logoutFailed => 'Logout failed';
 }

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:writing_app/features/home/project_info.dart';
 import 'package:writing_app/features/projects/cubit/project_cubit.dart';
 import 'package:writing_app/features/projects/cubit/project_states.dart';
+import 'package:writing_app/l10n/app_localizations.dart';
 import 'package:writing_app/widgets/sidebar_layout.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -13,8 +14,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final projectCubit = context.read<ProjectCubit>();
     final userId = FirebaseAuth.instance.currentUser?.uid;
+    final localizations = AppLocalizations.of(context);
 
-    // Fetch projects only if necessary
     if (userId != null && projectCubit.selectedProject == null) {
       projectCubit.fetchProjects(userId);
     }
@@ -32,14 +33,14 @@ class HomeScreen extends StatelessWidget {
                 project: project,
               );
             } else {
-              return const Center(child: Text('No project selected'));
+              return Center(child: Text(localizations!.noProjectSelected));
             }
           } else if (state is ProjectError) {
             return Center(
               child: Text('Error: ${state.message}'),
             );
           } else {
-            return const Center(child: Text('No projects available'));
+            return Center(child: Text(localizations!.noProjectsAvailable));
           }
         },
       ),

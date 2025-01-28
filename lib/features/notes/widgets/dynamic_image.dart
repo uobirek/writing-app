@@ -12,21 +12,19 @@ class DynamicImageWidget extends StatelessWidget {
     this.fit = BoxFit.cover,
     this.borderRadius,
   });
-  final String? imagePath; // Local path or remote Cloudinary URL
-  final double? width; // Desired width of the image
-  final double? height; // Desired height of the image
+  final String? imagePath;
+  final double? width;
+  final double? height;
   final BoxFit fit;
   final BorderRadius? borderRadius;
 
   @override
   Widget build(BuildContext context) {
     if (imagePath == null || imagePath!.isEmpty) {
-      // Handle null or empty image paths gracefully
       return _buildPlaceholder();
     }
 
     if (imagePath!.startsWith('http')) {
-      // Cloudinary or other remote image (URL)
       final optimizedUrl = _getOptimizedCloudinaryUrl(imagePath!);
       return ClipRRect(
         borderRadius: borderRadius ?? BorderRadius.zero,
@@ -35,14 +33,11 @@ class DynamicImageWidget extends StatelessWidget {
           width: width,
           height: height,
           fit: fit,
-          placeholder: (context, url) =>
-              _buildLoadingPlaceholder(), // Show loading indicator
-          errorWidget: (context, url, error) =>
-              _buildPlaceholder(), // Handle broken URL
+          placeholder: (context, url) => _buildLoadingPlaceholder(),
+          errorWidget: (context, url, error) => _buildPlaceholder(),
         ),
       );
     } else if (imagePath!.startsWith('assets/')) {
-      // Asset image
       return ClipRRect(
         borderRadius: borderRadius ?? BorderRadius.zero,
         child: Image.asset(
@@ -51,12 +46,11 @@ class DynamicImageWidget extends StatelessWidget {
           height: height,
           fit: fit,
           errorBuilder: (context, error, stackTrace) {
-            return _buildPlaceholder(); // Handle missing asset
+            return _buildPlaceholder();
           },
         ),
       );
     } else {
-      // Local file image
       final file = File(imagePath!);
       if (file.existsSync()) {
         return ClipRRect(
@@ -67,23 +61,18 @@ class DynamicImageWidget extends StatelessWidget {
             height: height,
             fit: fit,
             errorBuilder: (context, error, stackTrace) {
-              return _buildPlaceholder(); // Handle broken image
+              return _buildPlaceholder();
             },
           ),
         );
       } else {
-        // File does not exist
         return _buildPlaceholder();
       }
     }
   }
 
-  /// Optimize Cloudinary URL with transformations
   String _getOptimizedCloudinaryUrl(String url) {
-    // Example Cloudinary transformation: Resize to width & height
-    // Add transformations like 'w_200,h_200,c_fill' in the URL
-    const transformation =
-        'c_fill'; // Use BoxFit.cover equivalent transformation
+    const transformation = 'c_fill';
     final widthParam = width != null ? 'w_${width!.toInt()}' : '';
     final heightParam = height != null ? 'h_${height!.toInt()}' : '';
 
@@ -91,15 +80,13 @@ class DynamicImageWidget extends StatelessWidget {
         .where((param) => param.isNotEmpty)
         .join(',');
 
-    // Insert transformation into the Cloudinary URL
     if (url.contains('/upload/')) {
       return url.replaceFirst('/upload/', '/upload/$transformationParams/');
     }
 
-    return url; // Return unmodified if not a valid Cloudinary URL
+    return url;
   }
 
-  /// Builds a placeholder widget for missing or invalid images
   Widget _buildPlaceholder() {
     return ClipRRect(
       borderRadius: borderRadius ?? BorderRadius.zero,
@@ -116,7 +103,6 @@ class DynamicImageWidget extends StatelessWidget {
     );
   }
 
-  /// Builds a loading placeholder while the remote image is fetched
   Widget _buildLoadingPlaceholder() {
     return ClipRRect(
       borderRadius: borderRadius ?? BorderRadius.zero,

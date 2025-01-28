@@ -1,11 +1,9 @@
 class Project {
-  // Add image URL
-
   Project({
     required this.id,
     required this.title,
     required this.description,
-    this.imageUrl, // Optional image URL
+    this.imageUrl,
   });
 
   factory Project.fromJson(Map<String, dynamic> json) {
@@ -13,7 +11,7 @@ class Project {
       id: json['id'] as String? ?? '',
       title: json['title'] as String? ?? 'Untitled',
       description: json['description'] as String? ?? 'No description',
-      imageUrl: json['imageUrl'] as String?, // Explicitly cast to String?
+      imageUrl: json['imageUrl'] as String?,
     );
   }
   final String id;
@@ -26,7 +24,7 @@ class Project {
       'id': id,
       'title': title,
       'description': description,
-      'imageUrl': imageUrl, // Include image in JSON
+      'imageUrl': imageUrl,
     };
   }
 

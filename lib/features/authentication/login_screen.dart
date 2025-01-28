@@ -113,6 +113,8 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _login() async {
+    final localizations = AppLocalizations.of(context);
+
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -144,7 +146,7 @@ class LoginScreenState extends State<LoginScreen> {
       if (!mounted) {
         return;
       }
-      _showErrorDialog('Login failed. Please check your email and password.');
+      _showErrorDialog(localizations!.loginFailed);
     } finally {
       setState(() {
         _isLoading = false;
@@ -153,15 +155,17 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   void _showErrorDialog(String message) {
+    final localizations = AppLocalizations.of(context);
+
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Error'),
+        title: Text(localizations!.error),
         content: Text(message),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('OK'),
+            child: Text(localizations.ok),
           ),
         ],
       ),

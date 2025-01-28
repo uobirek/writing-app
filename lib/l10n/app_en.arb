@@ -107,6 +107,24 @@
   "hobbiesAndSkills": "Hobbies and Skills",
   "otherPersonalityDetails": "Other Personality Details",
   "history": "History",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+      "noProjectSelected": "No project selected",
+    "noProjectsAvailable": "No projects available",
+    "failedToUpdateProject": "Failed to update project",
+    "projectUpdatedSuccessfully": "Project updated successfully",
+    "userNotLoggedIn": "User is not logged in",
+    "enterProjectTitle": "Enter project title",
+    "emailAlreadyInUse": "This email is already in use. Try logging in.",
+    "invalidEmail": "Please enter a valid email address.",
+    "weakPassword": "Your password is too weak. Use a stronger one.",
+    "operationNotAllowed": "Account creation is currently disabled.",
+    "registrationFailed": "Registration failed. Please try again later.",
+    "unexpectedError": "An unexpected error occurred.",
+    "settings": "Settings",
+    "logout": "Logout",
+    "goToProjects": "Go to Projects",
+    "darkMode": "Dark Mode",
+    "language": "Language",
+    "logoutFailed": "Logout failed"
 
 }

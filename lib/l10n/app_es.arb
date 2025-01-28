@@ -106,6 +106,24 @@
   "otherPersonalityDetails": "Otros Detalles de Personalidad",
   "history": "Historia",
   "addItem": "Agregar Elemento",
-  "cancel": "Cancelar"
+  "cancel": "Cancelar",
+      "noProjectSelected": "Ningún proyecto seleccionado",
+    "noProjectsAvailable": "No hay proyectos disponibles",
+    "failedToUpdateProject": "Error al actualizar el proyecto",
+    "projectUpdatedSuccessfully": "Proyecto actualizado con éxito",
+    "userNotLoggedIn": "El usuario no ha iniciado sesión",
+    "enterProjectTitle": "Introduce el título del proyecto",
+    "emailAlreadyInUse": "Este correo electrónico ya está en uso. Intenta iniciar sesión.",
+    "invalidEmail": "Por favor, introduce una dirección de correo válida.",
+    "weakPassword": "Tu contraseña es demasiado débil. Usa una más segura.",
+    "operationNotAllowed": "La creación de cuentas está deshabilitada actualmente.",
+    "registrationFailed": "El registro ha fallado. Por favor, inténtalo de nuevo más tarde.",
+    "unexpectedError": "Ocurrió un error inesperado.",
+    "settings": "Configuración",
+    "logout": "Cerrar sesión",
+    "goToProjects": "Ir a Proyectos",
+    "darkMode": "Modo oscuro",
+    "language": "Idioma",
+    "logoutFailed": "Error al cerrar sesión"
 
   }

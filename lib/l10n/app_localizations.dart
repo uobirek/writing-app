@@ -744,6 +744,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel'**
   String get cancel;
+
+  /// No description provided for @failedToUpdateProject.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update project'**
+  String get failedToUpdateProject;
+
+  /// No description provided for @projectUpdatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Project updated successfully'**
+  String get projectUpdatedSuccessfully;
+
+  /// No description provided for @userNotLoggedIn.
+  ///
+  /// In en, this message translates to:
+  /// **'User is not logged in'**
+  String get userNotLoggedIn;
+
+  /// No description provided for @enterProjectTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter project title'**
+  String get enterProjectTitle;
+
+  /// No description provided for @emailAlreadyInUse.
+  ///
+  /// In en, this message translates to:
+  /// **'This email is already in use. Try logging in.'**
+  String get emailAlreadyInUse;
+
+  /// No description provided for @invalidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email address.'**
+  String get invalidEmail;
+
+  /// No description provided for @weakPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Your password is too weak. Use a stronger one.'**
+  String get weakPassword;
+
+  /// No description provided for @operationNotAllowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Account creation is currently disabled.'**
+  String get operationNotAllowed;
+
+  /// No description provided for @registrationFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration failed. Please try again later.'**
+  String get registrationFailed;
+
+  /// No description provided for @unexpectedError.
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected error occurred.'**
+  String get unexpectedError;
+
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// No description provided for @logout.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logout;
+
+  /// No description provided for @goToProjects.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Projects'**
+  String get goToProjects;
+
+  /// No description provided for @darkMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark Mode'**
+  String get darkMode;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @logoutFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout failed'**
+  String get logoutFailed;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
