@@ -211,7 +211,7 @@ class _AppSidebarState extends State<AppSidebar> {
               if (_isExpanded) const SizedBox(width: 12),
               if (_isExpanded)
                 Text(
-                  'Settings',
+                  localizations!.settings,
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(
                         color: Theme.of(context).colorScheme.onPrimary,
                       ),

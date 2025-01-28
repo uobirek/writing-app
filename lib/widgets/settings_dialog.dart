@@ -17,8 +17,10 @@ class SettingsDialog extends StatelessWidget {
     final isDarkMode = context.watch<ThemeCubit>().state == ThemeMode.dark;
 
     return AlertDialog(
-      title: Text(localizations!.settings,
-          style: Theme.of(context).textTheme.labelLarge),
+      title: Text(
+        localizations!.settings,
+        style: Theme.of(context).textTheme.labelLarge,
+      ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
