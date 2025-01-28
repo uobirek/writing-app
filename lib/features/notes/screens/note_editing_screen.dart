@@ -55,7 +55,9 @@ class EditNoteScreenState extends State<EditNoteScreen> {
                   padding: _isMobile()
                       ? const EdgeInsets.symmetric(horizontal: 10, vertical: 15)
                       : const EdgeInsets.symmetric(
-                          horizontal: 40, vertical: 30),
+                          horizontal: 40,
+                          vertical: 30,
+                        ),
                   child: DecoratedBox(
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.primary,

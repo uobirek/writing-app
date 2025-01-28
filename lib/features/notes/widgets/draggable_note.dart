@@ -16,8 +16,8 @@ class DraggableNote extends StatelessWidget {
   final VoidCallback onDelete;
 
   bool _isMobile() {
-    return (defaultTargetPlatform == TargetPlatform.iOS ||
-        defaultTargetPlatform == TargetPlatform.android);
+    return defaultTargetPlatform == TargetPlatform.iOS ||
+        defaultTargetPlatform == TargetPlatform.android;
   }
 
   @override
@@ -56,7 +56,7 @@ class DraggableNote extends StatelessWidget {
                             color: Theme.of(context)
                                 .colorScheme
                                 .secondary
-                                .withOpacity(0.5),
+                                .withValues(alpha: 0.5),
                             width: 2,
                           )
                         : null,
@@ -93,7 +93,7 @@ class DraggableNote extends StatelessWidget {
                             color: Theme.of(context)
                                 .colorScheme
                                 .secondary
-                                .withOpacity(0.5),
+                                .withValues(alpha: 0.5),
                             width: 2,
                           )
                         : null,

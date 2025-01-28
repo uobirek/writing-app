@@ -145,7 +145,7 @@ class AddNoteScreenState extends State<AddNoteScreen> {
                             backgroundColor:
                                 Theme.of(context).colorScheme.secondary,
                           ),
-                          onPressed: () => _saveNote(),
+                          onPressed: _saveNote,
                           child: Text(localizations.saveChanges),
                         ),
                       ),

@@ -30,8 +30,10 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(localizations!.addNewProject,
-            style: Theme.of(context).textTheme.titleMedium),
+        title: Text(
+          localizations!.addNewProject,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
