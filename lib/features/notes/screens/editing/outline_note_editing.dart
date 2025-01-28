@@ -149,7 +149,7 @@ class OutlineNoteEditing extends NoteEditing {
       id: note.id,
       createdAt: note.createdAt,
       position: note.position,
-      imageUrl: imagePath ?? 'assets/images/placeholder.png',
+      imageUrl: imagePath ?? 'assets/images/placeholder.jpg',
       genre: genreController.text,
       themes: themes.where((item) => item.isNotEmpty).toList(),
       acts: acts,

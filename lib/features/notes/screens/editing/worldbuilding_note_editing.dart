@@ -60,7 +60,7 @@ class WorldbuildingNoteEditing extends NoteEditing {
       title: placeNameController.text,
       position: note.position,
       createdAt: note.createdAt,
-      imageUrl: imagePath ?? 'assets/images/placeholder.png',
+      imageUrl: imagePath ?? 'assets/images/placeholder.jpg',
       placeName: placeNameController.text,
       geography: geographyController.text,
       culture: cultureController.text,
