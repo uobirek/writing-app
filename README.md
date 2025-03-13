@@ -56,5 +56,3 @@ flutter pub get
 flutter run
 ```
 
-
-🎯 Happy Writing! ✨
