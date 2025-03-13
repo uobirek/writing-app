@@ -11,7 +11,7 @@ Future<Note> createBlankNote(
   BuildContext context,
 ) async {
   final now = DateTime.now();
-  const defaultImage = 'assets/images/placeholder.png';
+  const defaultImage = 'assets/images/placeholder.jpg';
   final localizations = AppLocalizations.of(context);
 
   final nextPosition = cachedNotes.isEmpty

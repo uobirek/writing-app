@@ -36,7 +36,7 @@ class ProjectInfoState extends State<ProjectInfo> {
     _titleController = TextEditingController(text: widget.project.title);
     _descriptionController =
         TextEditingController(text: widget.project.description);
-    _imagePath = widget.project.imageUrl ?? 'assets/images/placeholder.png';
+    _imagePath = widget.project.imageUrl ?? 'assets/images/placeholder.jpg';
   }
 
   @override

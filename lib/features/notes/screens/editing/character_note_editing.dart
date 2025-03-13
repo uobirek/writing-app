@@ -251,7 +251,7 @@ class CharacterNoteEditing extends NoteEditing {
     return CharacterNote(
       id: note.id,
       createdAt: note.createdAt,
-      imageUrl: imagePath ?? 'assets/images/placeholder.png',
+      imageUrl: imagePath ?? 'assets/images/placeholder.jpg',
       name: nameController.text,
       role: roleController.text,
       gender: genderController.text,

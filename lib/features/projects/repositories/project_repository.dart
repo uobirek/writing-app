@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../models/project.dart';
 
 class ProjectRepository {
@@ -9,10 +10,8 @@ class ProjectRepository {
   final FirebaseFirestore _firestore;
 
   // Cloudinary configuration
-  final String cloudName =
-      'do1dcq82t'; // Replace with your Cloudinary Cloud Name
-  final String uploadPreset =
-      'flutter_notes_upload'; // Replace with your Cloudinary preset
+  final String cloudName = dotenv.env['CLOUDINARY_CLOUD_NAME']!;
+  final String uploadPreset = dotenv.env['CLOUDINARY_UPLOAD_PRESET']!;
 
   Future<String> uploadImageToCloudinary(File imageFile) async {
     try {
